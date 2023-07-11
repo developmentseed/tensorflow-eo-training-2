@@ -4,7 +4,7 @@ Complete file set for [Jupyter Book](https://beta.jupyterbook.org/intro.html)
 
 Autor: Development Seed
 
-Date:  04 October 2021
+Date:  10 July 2023
 
 ISBN: (to come)
 

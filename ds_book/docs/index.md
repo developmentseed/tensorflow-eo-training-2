@@ -17,7 +17,7 @@ The content of this workshop assumes general familiarity with geospatial data su
 :class: tip
 
 - Jupyter Book: 
-[https://developmentseed.github.io/tensorflow-eo-training/docs/index.html)
+[https://developmentseed.github.io/tensorflow-eo-training-2/docs/index.html)
 
 ```
 
@@ -27,7 +27,7 @@ The content of this workshop assumes general familiarity with geospatial data su
 
 A major advantage of executable books is that the reader may enjoy running the source code, modifying them and playing around. No downloading, installation or configuration are required. Simply go to 
 
-[https://developmentseed.github.io/tensorflow-eo-training/docs/index.html](https://developmentseed.github.io/tensorflow-eo-training/docs/index.html),
+[https://developmentseed.github.io/tensorflow-eo-training-2/docs/index.html](https://developmentseed.github.io/tensorflow-eo-training/docs/index.html),
 
 and in the left menu select any topic, click the "rocket" icon at the top right of the screen, and choose “Colab." This will launch the page in a virtual runtime environment hosted by Google. From there, the code can be run using a free GPU.
 
