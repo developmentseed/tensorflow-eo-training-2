@@ -455,6 +455,17 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">44.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">52.1/52.1 kB</span> <span class=" -Color -Color-Red">4.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">12.0/12.0 MB</span> <span class=" -Color -Color-Red">60.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">137.4/137.4 kB</span> <span class=" -Color -Color-Red">15.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.0/2.0 MB</span> <span class=" -Color -Color-Red">78.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">78.5/78.5 kB</span> <span class=" -Color -Color-Red">8.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -469,6 +480,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from PIL import Image
 import numpy as np
+import tensorflow_datasets as tfds
 </pre></div>
 </div>
 </div>
@@ -777,6 +789,51 @@ x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Construct a tf.data.Dataset
+#train_dataset = tfds.load(name=&quot;eurosat&quot;, split=tfds.Split.TRAIN)
+all_dataset = dataset
+#train_dataset_df = tfds.as_dataframe(train_dataset)
+#test_dataset_df = train_test_split(train_dataset_df, test_size=0.3, random_state=1)
+test_dataset = all_dataset.take(int(len(all_dataset)*0.3))
+train_dataset = all_dataset.skip(int(len(all_dataset)*0.3))
+
+# Build your input pipeline
+#dataset = dataset.shuffle(1024).batch(32).prefetch(tf.data.experimental.AUTOTUNE)
+train_image_arrays = []
+train_label_integers = []
+test_image_arrays = []
+test_label_integers = []
+for features in train_dataset.take(len(train_dataset)):
+  image, label = features[&quot;image&quot;], features[&quot;label&quot;]
+  #print(type(image), image)
+  #print(type(label), label)
+  train_image_arrays.append(image)
+  train_label_integers.append(label)
+
+for features in test_dataset.take(len(test_dataset)):
+  image, label = features[&quot;image&quot;], features[&quot;label&quot;]
+  #print(type(image), image)
+  #print(type(label), label)
+  test_image_arrays.append(image)
+  test_label_integers.append(label)
+
+#x_train, y_train = train_dataset[&quot;image&quot;], train_dataset[&quot;label&quot;] # seperate the x and y
+#x_test, y_test = test_dataset[&quot;image&quot;], test_dataset[&quot;label&quot;]
+x_train, y_train = np.array(train_image_arrays), np.array(train_label_integers)
+x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set(train_label_integers), set(test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="build-a-machine-learning-model">
 <h2>Build a machine learning model<a class="headerlink" href="#build-a-machine-learning-model" title="Permalink to this heading">#</a></h2>
@@ -784,10 +841,10 @@ x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=(200, 200, 3)),
+  tf.keras.layers.Flatten(input_shape=(64, 64, 3)), #200, 200, 3)),
   tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
   tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(6)
+  tf.keras.layers.Dense(10)
 ])
 </pre></div>
 </div>
@@ -803,8 +860,9 @@ predictions
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 82.98346 , -67.60655 ,  -9.406067, 157.87369 , -69.06694 ,
-         80.105225]], dtype=float32)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ -40.767197,  -79.32184 ,  113.31708 ,   33.064262,   60.522034,
+        -104.23628 , -155.82251 ,  -15.079418,   17.857214,   34.78328 ]],
+      dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -817,8 +875,9 @@ predictions
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[2.9894212e-33, 0.0000000e+00, 0.0000000e+00, 1.0000000e+00,
-        0.0000000e+00, 1.6810692e-34]], dtype=float32)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.4016681e-35,
+        1.1787013e-23, 0.0000000e+00, 0.0000000e+00, 0.0000000e+00,
+        0.0000000e+00, 7.8199647e-35]], dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -833,7 +892,7 @@ predictions
 </div>
 </div>
 <p>The loss function takes a vector of ground truth values and a vector of logits and returns a scalar loss for each example. This loss is equal to the negative log probability of the true class: The loss is zero if the model is sure of the correct class.</p>
-<p>This untrained model gives probabilities close to random (1/6 for each class), so the initial loss should be close to <code class="docutils literal notranslate"><span class="pre">-tf.math.log(1/6)</span></code>.</p>
+<p>This untrained model gives probabilities close to random (1/6 for each class), so the initial loss should be close to <code class="docutils literal notranslate"><span class="pre">-tf.math.log(1/10)</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn(y_train[:1], predictions).numpy()
@@ -841,7 +900,7 @@ predictions
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>95.45986
 </pre></div>
 </div>
 </div>
@@ -868,18 +927,18 @@ predictions
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
-57/57 [==============================] - 21s 334ms/step - loss: 5801.9668 - accuracy: 0.2484
+591/591 [==============================] - 19s 30ms/step - loss: 26.9865 - accuracy: 0.1108
 Epoch 2/5
-57/57 [==============================] - 18s 310ms/step - loss: 1.7813 - accuracy: 0.2873
+591/591 [==============================] - 16s 27ms/step - loss: 2.2972 - accuracy: 0.1094
 Epoch 3/5
-57/57 [==============================] - 22s 385ms/step - loss: 1.7697 - accuracy: 0.2873
+591/591 [==============================] - 14s 24ms/step - loss: 2.2965 - accuracy: 0.1094
 Epoch 4/5
-57/57 [==============================] - 18s 310ms/step - loss: 1.7583 - accuracy: 0.2873
+591/591 [==============================] - 14s 24ms/step - loss: 2.2964 - accuracy: 0.1093
 Epoch 5/5
-57/57 [==============================] - 17s 307ms/step - loss: 1.7475 - accuracy: 0.2873
+591/591 [==============================] - 15s 26ms/step - loss: 2.2964 - accuracy: 0.1122
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x7fa5e34656c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x7f5f4e347430&gt;
 </pre></div>
 </div>
 </div>
@@ -892,10 +951,10 @@ Epoch 5/5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>25/25 - 1s - loss: 1.7301 - accuracy: 0.3248 - 1s/epoch - 41ms/step
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>254/254 - 1s - loss: 2.2921 - accuracy: 0.1086 - 1s/epoch - 6ms/step
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.730060338973999, 0.32480818033218384]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.292078733444214, 0.10864197462797165]
 </pre></div>
 </div>
 </div>
@@ -918,17 +977,18 @@ Epoch 5/5
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tf.Tensor: shape=(5, 6), dtype=float32, numpy=
-array([[0.16327359, 0.16869745, 0.19480447, 0.14407335, 0.18652132,
-        0.14262979],
-       [0.16327359, 0.16869745, 0.19480447, 0.14407335, 0.18652132,
-        0.14262979],
-       [0.16327359, 0.16869745, 0.19480447, 0.14407335, 0.18652132,
-        0.14262979],
-       [0.16327359, 0.16869745, 0.19480447, 0.14407335, 0.18652132,
-        0.14262979],
-       [0.16327359, 0.16869745, 0.19480447, 0.14407335, 0.1865213 ,
-        0.14262979]], dtype=float32)&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tf.Tensor: shape=(5, 10), dtype=float32, numpy=
+array([[0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282222, 0.11121381]],
+      dtype=float32)&gt;
 </pre></div>
 </div>
 </div>
