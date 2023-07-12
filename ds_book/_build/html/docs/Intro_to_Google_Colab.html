@@ -65,7 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to TensorFlow and Keras" href="Lesson1b_Intro_TensorFlow_Keras.html" />
+    <link rel="next" title="TensorFlow 2 and Keras quickstart for geospatial computer vision" href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html" />
     <link rel="prev" title="Introduction to machine learning, neural networks and deep learning" href="Lesson1a_Intro_ML_NN_DL.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -154,6 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Google Colab</a></li>
 
 
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson1b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson3_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
@@ -520,14 +521,13 @@ import matplotlib.pyplot as plt
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>m = Map(tiles=&quot;Stamen Terrain&quot;,
         control_scale=True,
-        location = [-77.042755, -12.046329], # Lima, Peru
+        location = [-12.046329, -77.042755], # Lima, Peru
         zoom_start = 10,
         max_zoom = 20,
-        min_zoom =6,
+        min_zoom =10,
         width = &#39;100%&#39;,
         height = &#39;100%&#39;,
         zoom_control=False )
-GeoJson(gdf).add_to(m)
 Figure(width=500, height=300).add_child(m)
 </pre></div>
 </div>
@@ -597,11 +597,11 @@ Figure(width=500, height=300).add_child(m)
       </div>
     </a>
     <a class="right-next"
-       href="Lesson1b_Intro_TensorFlow_Keras.html"
+       href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to TensorFlow and Keras</p>
+        <p class="prev-next-title">TensorFlow 2 and Keras quickstart for geospatial computer vision</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
