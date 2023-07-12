@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>TensorFlow 2 quickstart for geospatial cmoputer vision &#8212; Deep learning with TensorFlow</title>
+    <title>TensorFlow 2 and Keras quickstart for geospatial computer vision &#8212; Deep learning with TensorFlow</title>
   
   
   
@@ -154,7 +154,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">TensorFlow 2 quickstart for geospatial cmoputer vision</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson1b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson3_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
@@ -411,7 +411,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>TensorFlow 2 quickstart for geospatial cmoputer vision</h1>
+    <h1>TensorFlow 2 and Keras quickstart for geospatial computer vision</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -422,9 +422,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-tensorflow">Set up TensorFlow</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset">Load a dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-machine-learning-model">Build a machine learning model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tf-datasets">Let’s use a dataset from TF Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset-part-2-option-2">Load a dataset, part 2 (option 2)</a></li>
 </ul>
             </nav>
         </div>
@@ -436,16 +437,15 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="tensorflow-2-quickstart-for-geospatial-cmoputer-vision">
-<h1>TensorFlow 2 quickstart for geospatial cmoputer vision<a class="headerlink" href="#tensorflow-2-quickstart-for-geospatial-cmoputer-vision" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="tensorflow-2-and-keras-quickstart-for-geospatial-computer-vision">
+<h1>TensorFlow 2 and Keras quickstart for geospatial computer vision<a class="headerlink" href="#tensorflow-2-and-keras-quickstart-for-geospatial-computer-vision" title="Permalink to this heading">#</a></h1>
 <p>This short introduction uses <a class="reference external" href="https://www.tensorflow.org/guide/keras/overview">Keras</a> to:</p>
 <ol class="arabic simple">
-<li><p>Load a prebuilt geospatial dataset.</p></li>
+<li><p>Load a prebuilt geospatial dataset (two options).</p></li>
 <li><p>Build a neural network machine learning model that classifies images.</p></li>
 <li><p>Train this neural network.</p></li>
 <li><p>Evaluate the accuracy of the model.</p></li>
 </ol>
-<p>This tutorial is a <a class="reference external" href="https://colab.research.google.com/notebooks/welcome.ipynb">Google Colaboratory</a> notebook. Python programs are run directly in the browser—a great way to learn and use TensorFlow. To follow this tutorial, run the notebook in Google Colab by clicking the button at the top of this page.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># install required libraries
@@ -456,12 +456,12 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">44.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">52.1/52.1 kB</span> <span class=" -Color -Color-Red">4.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">12.0/12.0 MB</span> <span class=" -Color -Color-Red">60.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">137.4/137.4 kB</span> <span class=" -Color -Color-Red">15.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.0/2.0 MB</span> <span class=" -Color -Color-Red">78.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">78.5/78.5 kB</span> <span class=" -Color -Color-Red">8.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">31.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">52.1/52.1 kB</span> <span class=" -Color -Color-Red">2.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">12.0/12.0 MB</span> <span class=" -Color -Color-Red">81.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">137.4/137.4 kB</span> <span class=" -Color -Color-Red">15.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.0/2.0 MB</span> <span class=" -Color -Color-Red">77.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">78.5/78.5 kB</span> <span class=" -Color -Color-Red">9.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -474,7 +474,6 @@ from zipfile import ZipFile
 from itertools import product
 from pathlib import Path
 import urllib.request
-from radiant_mlhub import Dataset
 from radiant_mlhub import Dataset, client, get_session, Collection
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -497,34 +496,6 @@ print(&quot;TensorFlow version:&quot;, tf.__version__)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorFlow version: 2.12.0
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="load-a-dataset">
-<h2>Load a dataset<a class="headerlink" href="#load-a-dataset" title="Permalink to this heading">#</a></h2>
-<p>Load and prepare the <a class="reference external" href="https://mlhub.earth/data/rti_rwanda_crop_type">Drone Imagery Classification Training Dataset for Crop Types in Rwanda dataset from Radiant Earth</a>. You’ll need a Radiant Earth MLHub API key for this.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># configure Radiant Earth MLHub access
-!mlhub configure
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ds = Dataset.fetch(&#39;rti_rwanda_crop_type&#39;)
-for c in ds.collections:
-    print(c.id)
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rti_rwanda_crop_type_labels
-rti_rwanda_crop_type_source
-rti_rwanda_crop_type_raw
 </pre></div>
 </div>
 </div>
@@ -574,6 +545,254 @@ Running on Colab
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%cd $root_dir
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed-2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="let-s-use-a-dataset-from-tf-datasets">
+<h2>Let’s use a dataset from TF Datasets<a class="headerlink" href="#let-s-use-a-dataset-from-tf-datasets" title="Permalink to this heading">#</a></h2>
+<p>We will use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_train_test_splits(dataset, image_arrays_list, label_integers_list):
+  &quot;&quot;&quot;
+  Function to get dataset splits for training and testing.
+  &quot;&quot;&quot;
+  for features in train_dataset.take(len(train_dataset)):
+    image, label = features[&quot;image&quot;], features[&quot;label&quot;]
+    image_arrays_list.append(image)
+    label_integers_list.append(label)
+  x_dataset, y_dataset = np.array(image_arrays_list), np.array(label_integers_list)
+  return x_dataset, y_dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Construct tf.data.Dataset(s)
+all_dataset = tfds.load(name=&quot;eurosat&quot;, split=tfds.Split.TRAIN)
+all_dataset = all_dataset.shuffle(1024)
+test_dataset = all_dataset.take(int(len(all_dataset)*0.3))
+train_dataset = all_dataset.skip(int(len(all_dataset)*0.3))
+
+train_image_arrays = []
+train_label_integers = []
+test_image_arrays = []
+test_label_integers = []
+
+x_train, y_train = get_train_test_splits(train_dataset, train_image_arrays, train_label_integers)
+x_test, y_test = get_train_test_splits(test_dataset, test_image_arrays, test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Check for all classes in each split
+# set(train_label_integers), set(test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Dataset specific parameters to be used in the model structure
+input_shape=(64, 64, 3)
+num_classes = 10
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-let-s-build-a-very-basic-machine-learning-model">
+<h2>Now, let’s build a very basic machine learning model<a class="headerlink" href="#now-let-s-build-a-very-basic-machine-learning-model" title="Permalink to this heading">#</a></h2>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">tf.keras.Sequential</span></code> model structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=input_shape),
+  tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(num_classes)
+])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <a class="reference external" href="https://www.tensorflow.org/guide/keras/sequential_model"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> structure is designed to stack layers where each layer has an input <a class="reference external" href="https://www.tensorflow.org/guide/tensor">a tensor</a> and an output tensor. Layers themselves are simply functions performing matrix calculations. They may contain trainable variables and are reusable.</p>
+<p>It is most common for TensorFlow models to be composed of layers. This sequential model is composed of the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Flatten"><code class="docutils literal notranslate"><span class="pre">Flatten</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense"><code class="docutils literal notranslate"><span class="pre">Dense</span></code></a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a> layers.</p>
+<p>For each data sample provided the model, the corresponding output is a vector of <a class="reference external" href="https://developers.google.com/machine-learning/glossary#logits">logits</a> or <a class="reference external" href="https://developers.google.com/machine-learning/glossary#log-odds">log-odds</a> scores, for each class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>predictions = model(x_train[:1]).numpy()
+predictions
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  31.113968, -233.73282 ,  -13.396179, -187.52554 ,  283.56955 ,
+         140.87149 ,  -21.897041,  121.08661 , -132.10884 ,  327.67224 ]],
+      dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> function converts logits to <em>probabilities</em> for each class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.nn.softmax(predictions).numpy()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00,
+        7.021734e-20, 0.000000e+00, 0.000000e+00, 0.000000e+00,
+        0.000000e+00, 1.000000e+00]], dtype=float32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step is to specify a loss function for training. We will be using <code class="docutils literal notranslate"><span class="pre">losses.SparseCategoricalCrossentropy</span></code> as it is a commonly used loss function for multi-class data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The input to the loss function is a vector of ground truth values and a vector of logits. The returned output is a scalar loss for each data sample. Loss values close to zero are good, as they imply proximity to the correct class.</p>
+<p>The untrained model will produce probabilities close to random (1/n for each class), so the initial loss should be close to <code class="docutils literal notranslate"><span class="pre">-tf.math.log(1/n)</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn(y_train[:1], predictions).numpy()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>44.10269
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before the model can be trained, it needs to be configured and compiled, using Keras <code class="docutils literal notranslate"><span class="pre">Model.compile</span></code>. In this step, we establish the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers"><code class="docutils literal notranslate"><span class="pre">optimizer</span></code></a> class (which in this case will be <code class="docutils literal notranslate"><span class="pre">adam</span></code>), the <code class="docutils literal notranslate"><span class="pre">loss</span></code> to the <code class="docutils literal notranslate"><span class="pre">loss_fn</span></code> function defined earlier, and a metric that will be used evaluate the model at each iteration (herein we will use <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.compile(optimizer=&#39;adam&#39;,
+              loss=loss_fn,
+              metrics=[&#39;accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-and-evaluate-your-model">
+<h2>Train and evaluate your model<a class="headerlink" href="#train-and-evaluate-your-model" title="Permalink to this heading">#</a></h2>
+<p>No we will train the model using the <code class="docutils literal notranslate"><span class="pre">Model.fit</span></code> Keras method. During the following iterations, the model parameters will adjust and we will hope to see the loss.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.fit(x_train, y_train, epochs=5)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
+591/591 [==============================] - 14s 23ms/step - loss: 39.7340 - accuracy: 0.1045
+Epoch 2/5
+591/591 [==============================] - 16s 26ms/step - loss: 2.2971 - accuracy: 0.1094
+Epoch 3/5
+591/591 [==============================] - 18s 30ms/step - loss: 2.2966 - accuracy: 0.1092
+Epoch 4/5
+591/591 [==============================] - 15s 25ms/step - loss: 2.2965 - accuracy: 0.1116
+Epoch 5/5
+591/591 [==============================] - 16s 28ms/step - loss: 2.2965 - accuracy: 0.1095
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x7f29c43236a0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>To evaluate the mode, we will use the <code class="docutils literal notranslate"><span class="pre">Model.evaluate</span></code> Keras method. The performance is evaluated on a <a class="reference external" href="https://developers.google.com/machine-learning/glossary#test-set">test set</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.evaluate(x_test,  y_test, verbose=2)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>254/254 - 1s - loss: 2.2921 - accuracy: 0.1086 - 1s/epoch - 6ms/step
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.292078733444214, 0.10864197462797165]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can return probabilities for the predictions by attaching a softmax to the trained model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model = tf.keras.Sequential([
+  model,
+  tf.keras.layers.Softmax()
+])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model(x_test[:5])
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tf.Tensor: shape=(5, 10), dtype=float32, numpy=
+array([[0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
+       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
+        0.0771283 , 0.09272404, 0.112649  , 0.09282222, 0.11121381]],
+      dtype=float32)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-a-dataset-part-2-option-2">
+<h2>Load a dataset, part 2 (option 2)<a class="headerlink" href="#load-a-dataset-part-2-option-2" title="Permalink to this heading">#</a></h2>
+<p>Load and prepare the <a class="reference external" href="https://mlhub.earth/data/rti_rwanda_crop_type">Drone Imagery Classification Training Dataset for Crop Types in Rwanda dataset from Radiant Earth</a>. You’ll need a Radiant Earth MLHub API key for this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># configure Radiant Earth MLHub access
+!mlhub configure
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ds = Dataset.fetch(&#39;rti_rwanda_crop_type&#39;)
+for c in ds.collections:
+    print(c.id)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rti_rwanda_crop_type_labels
+rti_rwanda_crop_type_source
+rti_rwanda_crop_type_raw
 </pre></div>
 </div>
 </div>
@@ -652,10 +871,10 @@ train_df = load_df(&#39;rti_rwanda_crop_type_labels&#39;)
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading rti_rwanda_crop_type_labels...
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "22bac9967ab44c29b3dde71615923fd7"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading rti_rwanda_crop_type_source...
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "22bac9967ab44c29b3dde71615923fd7", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading rti_rwanda_crop_type_source...
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "38bb0b2fe2b54a78868f10050d4dd4b0"}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "38bb0b2fe2b54a78868f10050d4dd4b0", "version_major": 2, "version_minor": 0}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
 WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
 WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
 WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
@@ -725,20 +944,29 @@ classes.to_csv(&#39;rti_rwanda_crop_type_classes.csv&#39;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_RE_train_test(dataset, image_array_list, label_integer_list):
+  for i, r in data_train.iterrows():
+    label_path = r.file_path
+    with open(label_path) as f:
+      label_obj = json.load(f)
+    label_str = label_obj[&#39;label&#39;]
+    label_int = classes.loc[classes[&#39;class_names&#39;] == label_str, &#39;class_ids&#39;].squeeze()
+    label_integer_list.append(label_int)
+    image_path = label_path.replace(&#39;labels&#39;, &#39;source&#39;)
+    image_path = image_path.replace(&#39;source.json&#39;, &#39;&#39;)
+    image_obj = np.array(Image.open(f&quot;{image_path}/image.png&quot;))
+    image_array_list.append(image_obj)
+  return image_array_list, label_integer_list
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train_image_arrays = []
 train_label_integers = []
-for i, r in data_train.iterrows():
-  label_path = r.file_path
-  with open(label_path) as f:
-    label_obj = json.load(f)
-  label_str = label_obj[&#39;label&#39;]
-  label_int = classes.loc[classes[&#39;class_names&#39;] == label_str, &#39;class_ids&#39;].squeeze()
-  train_label_integers.append(label_int)
-  image_path = label_path.replace(&#39;labels&#39;, &#39;source&#39;)
-  image_path = image_path.replace(&#39;source.json&#39;, &#39;&#39;)
-  image_obj = np.array(Image.open(f&quot;{image_path}/image.png&quot;))
-  train_image_arrays.append(image_obj)
 
+train_image_arrays, train_label_integers = get_RE_train_test(data_train, train_image_arrays, train_label_integers)
 </pre></div>
 </div>
 </div>
@@ -747,17 +975,8 @@ for i, r in data_train.iterrows():
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>test_image_arrays = []
 test_label_integers = []
-for i, r in data_test.iterrows():
-  label_path = r.file_path
-  with open(label_path) as f:
-    label_obj = json.load(f)
-  label_str = label_obj[&#39;label&#39;]
-  label_int = classes.loc[classes[&#39;class_names&#39;] == label_str, &#39;class_ids&#39;].squeeze()
-  test_label_integers.append(label_int)
-  image_path = label_path.replace(&#39;labels&#39;, &#39;source&#39;)
-  image_path = image_path.replace(&#39;source.json&#39;, &#39;&#39;)
-  image_obj = np.array(Image.open(f&quot;{image_path}/image.png&quot;))
-  test_image_arrays.append(image_obj)
+
+test_image_arrays, test_label_integers = get_RE_train_test(data_test, test_image_arrays, test_label_integers)
 </pre></div>
 </div>
 </div>
@@ -784,182 +1003,44 @@ x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x_test, y_test
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inout_shape = (200, 200, 3)
+num_classes = 6
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Construct a tf.data.Dataset
-#train_dataset = tfds.load(name=&quot;eurosat&quot;, split=tfds.Split.TRAIN)
-all_dataset = dataset
-#train_dataset_df = tfds.as_dataframe(train_dataset)
-#test_dataset_df = train_test_split(train_dataset_df, test_size=0.3, random_state=1)
-test_dataset = all_dataset.take(int(len(all_dataset)*0.3))
-train_dataset = all_dataset.skip(int(len(all_dataset)*0.3))
-
-# Build your input pipeline
-#dataset = dataset.shuffle(1024).batch(32).prefetch(tf.data.experimental.AUTOTUNE)
-train_image_arrays = []
-train_label_integers = []
-test_image_arrays = []
-test_label_integers = []
-for features in train_dataset.take(len(train_dataset)):
-  image, label = features[&quot;image&quot;], features[&quot;label&quot;]
-  #print(type(image), image)
-  #print(type(label), label)
-  train_image_arrays.append(image)
-  train_label_integers.append(label)
-
-for features in test_dataset.take(len(test_dataset)):
-  image, label = features[&quot;image&quot;], features[&quot;label&quot;]
-  #print(type(image), image)
-  #print(type(label), label)
-  test_image_arrays.append(image)
-  test_label_integers.append(label)
-
-#x_train, y_train = train_dataset[&quot;image&quot;], train_dataset[&quot;label&quot;] # seperate the x and y
-#x_test, y_test = test_dataset[&quot;image&quot;], test_dataset[&quot;label&quot;]
-x_train, y_train = np.array(train_image_arrays), np.array(train_label_integers)
-x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set(train_label_integers), set(test_label_integers)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="build-a-machine-learning-model">
-<h2>Build a machine learning model<a class="headerlink" href="#build-a-machine-learning-model" title="Permalink to this heading">#</a></h2>
-<p>Build a <code class="docutils literal notranslate"><span class="pre">tf.keras.Sequential</span></code> model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=(64, 64, 3)), #200, 200, 3)),
+  tf.keras.layers.Flatten(input_shape=input_shape),
   tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
   tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(10)
+  tf.keras.layers.Dense(num_classes)
 ])
-</pre></div>
-</div>
-</div>
-</div>
-<p><a class="reference external" href="https://www.tensorflow.org/guide/keras/sequential_model"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> is useful for stacking layers where each layer has one input <a class="reference external" href="https://www.tensorflow.org/guide/tensor">tensor</a> and one output tensor. Layers are functions with a known mathematical structure that can be reused and have trainable variables. Most TensorFlow models are composed of layers. This model uses the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Flatten"><code class="docutils literal notranslate"><span class="pre">Flatten</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense"><code class="docutils literal notranslate"><span class="pre">Dense</span></code></a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a> layers.</p>
-<p>For each example, the model returns a vector of <a class="reference external" href="https://developers.google.com/machine-learning/glossary#logits">logits</a> or <a class="reference external" href="https://developers.google.com/machine-learning/glossary#log-odds">log-odds</a> scores, one for each class.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>predictions = model(x_train[:1]).numpy()
-predictions
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ -40.767197,  -79.32184 ,  113.31708 ,   33.064262,   60.522034,
-        -104.23628 , -155.82251 ,  -15.079418,   17.857214,   34.78328 ]],
-      dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> function converts these logits to <em>probabilities</em> for each class:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.nn.softmax(predictions).numpy()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.0000000e+00, 0.0000000e+00, 1.0000000e+00, 1.4016681e-35,
-        1.1787013e-23, 0.0000000e+00, 0.0000000e+00, 0.0000000e+00,
-        0.0000000e+00, 7.8199647e-35]], dtype=float32)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note: It is possible to bake the <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> function into the activation function for the last layer of the network. While this can make the model output more directly interpretable, this approach is discouraged as it’s impossible to provide an exact and numerically stable loss calculation for all models when using a softmax output.</p>
-<p>Define a loss function for training using <code class="docutils literal notranslate"><span class="pre">losses.SparseCategoricalCrossentropy</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-</pre></div>
-</div>
-</div>
-</div>
-<p>The loss function takes a vector of ground truth values and a vector of logits and returns a scalar loss for each example. This loss is equal to the negative log probability of the true class: The loss is zero if the model is sure of the correct class.</p>
-<p>This untrained model gives probabilities close to random (1/6 for each class), so the initial loss should be close to <code class="docutils literal notranslate"><span class="pre">-tf.math.log(1/10)</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn(y_train[:1], predictions).numpy()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>95.45986
-</pre></div>
-</div>
-</div>
-</div>
-<p>Before you start training, configure and compile the model using Keras <code class="docutils literal notranslate"><span class="pre">Model.compile</span></code>. Set the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers"><code class="docutils literal notranslate"><span class="pre">optimizer</span></code></a> class to <code class="docutils literal notranslate"><span class="pre">adam</span></code>, set the <code class="docutils literal notranslate"><span class="pre">loss</span></code> to the <code class="docutils literal notranslate"><span class="pre">loss_fn</span></code> function you defined earlier, and specify a metric to be evaluated for the model by setting the <code class="docutils literal notranslate"><span class="pre">metrics</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.compile(optimizer=&#39;adam&#39;,
+
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+
+model.compile(optimizer=&#39;adam&#39;,
               loss=loss_fn,
               metrics=[&#39;accuracy&#39;])
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="train-and-evaluate-your-model">
-<h2>Train and evaluate your model<a class="headerlink" href="#train-and-evaluate-your-model" title="Permalink to this heading">#</a></h2>
-<p>Use the <code class="docutils literal notranslate"><span class="pre">Model.fit</span></code> method to adjust your model parameters and minimize the loss:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.fit(x_train, y_train, epochs=5)
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/5
-591/591 [==============================] - 19s 30ms/step - loss: 26.9865 - accuracy: 0.1108
-Epoch 2/5
-591/591 [==============================] - 16s 27ms/step - loss: 2.2972 - accuracy: 0.1094
-Epoch 3/5
-591/591 [==============================] - 14s 24ms/step - loss: 2.2965 - accuracy: 0.1094
-Epoch 4/5
-591/591 [==============================] - 14s 24ms/step - loss: 2.2964 - accuracy: 0.1093
-Epoch 5/5
-591/591 [==============================] - 15s 26ms/step - loss: 2.2964 - accuracy: 0.1122
-</pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x7f5f4e347430&gt;
-</pre></div>
-</div>
-</div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">Model.evaluate</span></code> method checks the model’s performance, usually on a <a class="reference external" href="https://developers.google.com/machine-learning/glossary#validation-set">validation set</a> or <a class="reference external" href="https://developers.google.com/machine-learning/glossary#test-set">test set</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.evaluate(x_test,  y_test, verbose=2)
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>254/254 - 1s - loss: 2.2921 - accuracy: 0.1086 - 1s/epoch - 6ms/step
-</pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.292078733444214, 0.10864197462797165]
-</pre></div>
-</div>
-</div>
-</div>
-<p>If you want your model to return a probability, you can wrap the trained model, and attach the softmax to it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model = tf.keras.Sequential([
@@ -973,22 +1054,6 @@ Epoch 5/5
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model(x_test[:5])
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tf.Tensor: shape=(5, 10), dtype=float32, numpy=
-array([[0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
-        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
-       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
-        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
-       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
-        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
-       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
-        0.0771283 , 0.09272404, 0.112649  , 0.09282223, 0.11121381],
-       [0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
-        0.0771283 , 0.09272404, 0.112649  , 0.09282222, 0.11121381]],
-      dtype=float32)&gt;
 </pre></div>
 </div>
 </div>
@@ -1064,9 +1129,10 @@ array([[0.10704215, 0.11007525, 0.11094362, 0.09210668, 0.09329496,
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-tensorflow">Set up TensorFlow</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset">Load a dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-machine-learning-model">Build a machine learning model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tf-datasets">Let’s use a dataset from TF Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset-part-2-option-2">Load a dataset, part 2 (option 2)</a></li>
 </ul>
   </nav></div>
 
