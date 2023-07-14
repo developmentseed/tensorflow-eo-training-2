@@ -469,8 +469,8 @@ to load a pretrained SegFormer checkpoint and fine-tune it on a custom dataset.<
 <p>To run this example, we need to install the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> library:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!!</span>pip<span class="w"> </span>install<span class="w"> </span>transformers<span class="w"> </span>-q
-<span class="c1"># install required libraries</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install required libraries</span>
+<span class="o">!!</span>pip<span class="w"> </span>install<span class="w"> </span>transformers<span class="w"> </span>-q
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>rasterio
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>geopandas
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>radiant_mlhub<span class="w"> </span>#<span class="w"> </span><span class="k">for</span><span class="w"> </span>dataset<span class="w"> </span>access,<span class="w"> </span>see:<span class="w"> </span>https://mlhub.earth/
@@ -642,11 +642,10 @@ ref_landcovernet_sa_v1_labels
                 <span class="p">])</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tile_id&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;satellite_platform&#39;</span><span class="p">,</span> <span class="s1">&#39;asset&#39;</span><span class="p">,</span> <span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
 
-<span class="c1">#for c in collections:</span>
-    <span class="c1">#download(c)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">collections</span><span class="p">:</span>
+    <span class="n">download</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
-<span class="n">train_df</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_labels&#39;</span><span class="p">)</span>
-<span class="c1">#test_df = load_df(&#39;ref_landcovernet_sa_v1_labels&#39;)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_labels&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -684,10 +683,7 @@ them compatible with the SegFormer model from Hugging Face Transformers.</p></li
   <span class="n">mask_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">maskpath</span><span class="si">}</span><span class="s2">/labels.tif&quot;</span>
   <span class="n">mask_image</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mask_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
   <span class="n">mask_image</span> <span class="o">=</span> <span class="n">mask_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
-  <span class="c1">#mask_image = np.expand_dims(mask_image, axis=2)</span>
-  <span class="c1">#print(mask_image.shape)</span>
   <span class="n">resized_mask_image</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span><span class="n">mask_image</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">preserve_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">anti_aliasing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
-  <span class="c1">#print(np.unique(resized_mask_image))</span>
   <span class="n">mask_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">resized_mask_image</span><span class="p">)</span>
   <span class="n">mask_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_label_images_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">im_id</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
 </pre></div>
@@ -754,7 +750,6 @@ on the GPU that you’re using for training.</p>
     <span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
     <span class="n">input_image</span> <span class="o">=</span> <span class="p">(</span><span class="n">input_image</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
     <span class="c1">#input_mask -= 1</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;input_mask unique: &quot;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_mask</span><span class="p">,[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
     <span class="k">return</span> <span class="n">input_image</span><span class="p">,</span> <span class="n">input_mask</span>
 
 
@@ -818,13 +813,6 @@ on the GPU that you’re using for training.</p>
     <span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
     <span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
     <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
-input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
-input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
 </pre></div>
 </div>
 </div>
