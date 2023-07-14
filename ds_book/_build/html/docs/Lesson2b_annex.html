@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Deep Learning with TensorFlow: Tutorials for modeling LULC. &#8212; Deep learning with TensorFlow</title>
+    <title>Introduction to TensorFlow and Keras &#8212; Deep learning with TensorFlow</title>
   
   
   
@@ -61,13 +61,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson2b_annex';</script>
     <link rel="shortcut icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to machine learning, neural networks and deep learning" href="Lesson1a_Intro_ML_NN_DL.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -133,7 +130,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -209,6 +206,55 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training/main?urlpath=tree/ds_book/docs/Lesson2b_annex.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/Lesson2b_annex.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -234,7 +280,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/edit/main/ds_book/docs/index.md" target="_blank"
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/edit/main/ds_book/docs/Lesson2b_annex.ipynb" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -251,7 +297,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/issues/new?title=Issue%20on%20page%20%2Fdocs/index.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson2b_annex.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +327,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/docs/index.md" target="_blank"
+      <li><a href="../_sources/docs/Lesson2b_annex.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -291,7 +337,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -350,7 +396,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -361,11 +409,29 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Deep Learning with TensorFlow: <br> Tutorials for modeling LULC.</h1>
+    <h1>Introduction to TensorFlow and Keras</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-tensorflow">What is TensorFlow?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorflows-structure">TensorFlow’s structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-tensorflow-components">What are TensorFlow components?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-so-many-people-like-tensorflow">Why do so many people like TensorFlow?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-keras">What is Keras?</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -375,41 +441,80 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <!-- #region -->
-<section class="tex2jax_ignore mathjax_ignore" id="deep-learning-with-tensorflow-br-tutorials-for-modeling-lulc">
-<h1>Deep Learning with TensorFlow: <br> Tutorials for modeling LULC.<a class="headerlink" href="#deep-learning-with-tensorflow-br-tutorials-for-modeling-lulc" title="Permalink to this heading">#</a></h1>
-<p>Authored by <a class="reference external" href="https://developmentseed.org/"><strong>Development Seed</strong></a> engineers <a class="reference external" href="https://github.com/lillythomas"><strong>Lillianne Thomas</strong></a> and <a class="reference external" href="https://github.com/rbavery"><strong>Ryan Avery</strong></a></p>
-<!-- #endregion -->
-<p>These materials are designed to provide TensorFlow expertise via tutorials and science support, vis a vis suggestions for acquisition and processing of data inputs, training, testing, and evaluation of TensorFlow models as well as different TensorFlow / deep learning techniques demoed in Colab notebooks using real data.</p>
-<p>The content of this workshop assumes general familiarity with geospatial data such as satellite imagery, raster and vector formats, file formats such as <a class="reference external" href="https://earthdata.nasa.gov/esdis/eso/standards-and-references/geotiff">GeoTIFF</a> and <a class="reference external" href="https://geojson.org/">GeoJSON</a>, the <a class="reference external" href="https://www.python.org/">python</a> programming language and <a class="reference external" href="https://research.google.com/colaboratory/">Google Colab</a>. Having knowledge of <a class="reference external" href="https://numpy.org/">numpy</a>, <a class="reference external" href="https://rasterio.readthedocs.io/en/latest/">rasterio</a>, <a class="reference external" href="https://geopandas.org/en/stable/">geopandas</a> and <a class="reference external" href="https://scikit-learn.org/stable/">sci-kit learn</a> is a plus.</p>
-<div class="tip admonition">
-<p class="admonition-title">Links</p>
-<ul class="simple">
-<li><p>Jupyter Book:
-[<a class="reference external" href="https://developmentseed.github.io/tensorflow-eo-training-2/docs/index.html">https://developmentseed.github.io/tensorflow-eo-training-2/docs/index.html</a>)</p></li>
-</ul>
-</div>
-<div class="important admonition">
-<p class="admonition-title">How to run the notebook code</p>
-<p>A major advantage of executable books is that the reader may enjoy running the source code, modifying them and playing around. No downloading, installation or configuration are required. Simply go to</p>
-<p><a class="reference external" href="https://developmentseed.github.io/tensorflow-eo-training/docs/index.html">https://developmentseed.github.io/tensorflow-eo-training-2/docs/index.html</a>,</p>
-<p>and in the left menu select any topic, click the “rocket” icon at the top right of the screen, and choose “Colab.” This will launch the page in a virtual runtime environment hosted by Google. From there, the code can be run using a free GPU.</p>
-<p>For local running, the code for each topic in the form of
-<a class="reference external" href="https://jupyter.org">Jupyter</a> notebooks can be downloaded by clicking the “arrow-down” icon at the top right of the screen.</p>
-</div>
-<div class="important admonition">
-<p class="admonition-title">How to access the data</p>
-<p>These tutorials will make use of open source data hosted on <a class="reference external" href="https://mlhub.earth/">Radiant Earth MLHub</a>. Please register an account with MLHub and obtain your unique API key in advance of starting these tutorials.</p>
-</div>
-<div class="admonition- admonition">
-<p class="admonition-title"><span class="math notranslate nohighlight">\(~\)</span></p>
-<p>Built with <a class="reference external" href="https://beta.jupyterbook.org/intro.html">Jupyter Book
-2.0</a> tool set, as part of the
-<a class="reference external" href="https://ebp.jupyterbook.org/en/latest/">ExecutableBookProject</a>.</p>
-</div>
-<p>ISBN: *(tbd)</p>
-<div class="toctree-wrapper compound">
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensorflow-and-keras">
+<h1>Introduction to TensorFlow and Keras<a class="headerlink" href="#introduction-to-tensorflow-and-keras" title="Permalink to this heading">#</a></h1>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<p>The goal of this notebook is to teach some basics of the TensorFlow framework and the Keras API.</p>
+<section id="what-is-tensorflow">
+<h3>What is TensorFlow?<a class="headerlink" href="#what-is-tensorflow" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://www.tensorflow.org/guide%5D">TensorFlow</a> is an open-source framework developed by Google for building various machine learning and deep learning models. Although originally released in late 2015, the first stable version arrived in 2017. TensorFlow is free and open-source, thanks to the Apache Open Source license.</p>
+<p>The main objective of using TensorFlow is to reduce the complexity of implementing computations on large numerical data sets. In practice, these large computations can manifest as training and inference with machine learning or deep learning models.</p>
+<p>TensorFlow was designed to operate with multiple CPUs or GPUs, as well as a growing number of mobile operating systems. The framework includes wrappers in Python, C++, and Java.</p>
+<section id="how-does-it-work">
+<h4>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading">#</a></h4>
+<p>TensorFlow accepts inputs as a multi-dimensional array called a Tensor, which allows the programmer to create dataflow graphs and structures specifying how data travels through. The framework is designed to support creation of a flowchart of operations to be applied to input Tensors, which travel in one direction and out the other.</p>
+</section>
+<section id="tensorflows-structure">
+<h4>TensorFlow’s structure<a class="headerlink" href="#tensorflows-structure" title="Permalink to this heading">#</a></h4>
+<p>There are three main components to TensorFlow’s structure.</p>
+<ol class="arabic simple">
+<li><p>preprocessing the data</p></li>
+<li><p>building the model</p></li>
+<li><p>training and estimating the model</p></li>
+</ol>
+<p>The name TensorFlow derives from the way in which the framework receives input in the form of a multi-dimensional array, i.e. the tensors. These tensors travel sequentially through the specified flowchart of the operations, entering at one end and culminate as output at the other end.</p>
+</section>
+<section id="what-are-tensorflow-components">
+<h4>What are TensorFlow components?<a class="headerlink" href="#what-are-tensorflow-components" title="Permalink to this heading">#</a></h4>
+<p><strong>Tensor</strong></p>
+<p>Tensors, the basic unit of data in this framework, are involved in every computation of TensorFlow. A tensor is an n-dimensional vector or matrix. In theory, a tensor may represent any form of data. The values belonging to a tensor all share the same data type and often the same shape / dimensionality. A tensor can describe the input data and the output of a calculation.</p>
+<p>In TensorFlow, all operations are carried out within a graph, which in effect is a series of computations that happen in order. Each indivisual operation is referred to as an op node.</p>
+<p><strong>Graphs</strong></p>
+<p>TensorFlow uses a graph framework. Graphs collect and summarize all of the calculations and offer several benefits:</p>
+<ol class="arabic simple">
+<li><p>They are designed to work on CPUs or GPUs, as well as on mobile devices.</p></li>
+<li><p>Graphs are portable which enables the computations to be saved for immediate or later usage. Otherwsie stated, the graph can be frozen and run at a later time.</p></li>
+<li><p>Graph calculations are executed by linking tensors together.</p></li>
+<li><p>For each tensor, there is a node and an edge. The node carries out the mathematical process and produces endpoint outputs. The input/output connections are represented by the edges.</p></li>
+<li><p>All nodes are linked together, so the graph itself is a depiction of the operations and relationships that exist between the nodes.</p></li>
+</ol>
+<figure class="align-default" id="tfgraph-fig">
+<a class="reference internal image-reference" href="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif"><img alt="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" src="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-text">TensorFlow graph example (from <a class="reference external" href="https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4">https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4</a>).</span><a class="headerlink" href="#tfgraph-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="why-do-so-many-people-like-tensorflow">
+<h4>Why do so many people like TensorFlow?<a class="headerlink" href="#why-do-so-many-people-like-tensorflow" title="Permalink to this heading">#</a></h4>
+<p>TensorFlow is intentionally user-friendly, with helpful plugins to visualize model training and a useful software debugging tool. As well, TensorFlow is highly scalable, with easy deployment on both CPUs and GPUs.</p>
+</section>
+</section>
+<section id="what-is-keras">
+<h3>What is Keras?<a class="headerlink" href="#what-is-keras" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://keras.io/about/">Keras</a> is an API built on Python, with human readability at the forefront of its design. With simple and consistent structures and methods extensible across many machine learning and deep learning applications, Keras reduces the cognitive load associated with programming models. Furthermore, the API seeks to minimize the need for programmer interaction by abstracting many complexities into easily callable functions. Lastly, Keras features clear &amp; actionable error messaging, complemented by comprehensive and digestible documentation and developer guides.</p>
+<p>Keras is what some might call a wrapper for TensorFlow. By that, one means to say that Keras simplifies a programmer’s interaction with TensorFlow through refinement of key methods and constructs.</p>
+<p>Importantly, Keras is intended for rapid experimentation.</p>
+<p>Tha main components of Keras include:</p>
+<ol class="arabic simple">
+<li><p>A models API, which enables one to construct a model with varying levels of complexity depending on use case. We will use the <a class="reference external" href="https://keras.io/guides/functional_api/">Functional API</a> subclass.</p></li>
+<li><p>A layers API, which allows one to define the tensor in/tnesor out computation functions.</p></li>
+<li><p>A callback API, which enables one to program specific actions to occur during training, such as log training metrics, visualize interim/internal states and statistics of the model during training, and perform early stopping when the model converges.</p></li>
+<li><p>A data preprocessing API, which offers support for prepping raw data from disk to model ready Tensor format.</p></li>
+<li><p>An optimizer API where all of the state of the art optimizers can be plugged in. Learning rate decay / scheduling can also be implemented a spart of this API.</p></li>
+<li><p>A metrics API which is used for assessing the performance of the model during training. A metric is the target to optimize during training, with specific metrics chosen for specific modeling objectives.</p></li>
+<li><p>A loss API that informs the model quantitatively how much it should try to minimize during training by providing a measure of error. Similar to metrics, specific loss functions are selected for specific modelung objectives.</p></li>
+</ol>
+<p>With the Functional API, our main workflow will follow the diagram below.</p>
+<figure class="align-default" id="keras-fig">
+<a class="reference internal image-reference" href="../_images/Keras_functional_API.jpg"><img alt="../_images/Keras_functional_API.jpg" src="../_images/Keras_functional_API.jpg" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-text">Keras Functional API diagram (from <span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span>).</span><a class="headerlink" href="#keras-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -443,15 +548,6 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="right-next"
-       href="Lesson1a_Intro_ML_NN_DL.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to machine learning, neural networks and deep learning</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
@@ -461,6 +557,30 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-tensorflow">What is TensorFlow?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorflows-structure">TensorFlow’s structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-tensorflow-components">What are TensorFlow components?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-so-many-people-like-tensorflow">Why do so many people like TensorFlow?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-keras">What is Keras?</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
