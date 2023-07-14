@@ -1,0 +1,1276 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Semantic segmentation with SegFormer and Hugging Face Transformers &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/SegFormer';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Appendix" href="appendix.html" />
+    <link rel="prev" title="Dealing with limited data for semantic segmentation" href="Lesson5_dealing_with_limited_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson1b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson4_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantic segmentation with SegFormer and Hugging Face Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training/main?urlpath=tree/ds_book/docs/SegFormer.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/SegFormer.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/edit/main/ds_book/docs/SegFormer.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/issues/new?title=Issue%20on%20page%20%2Fdocs/SegFormer.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/SegFormer.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Semantic segmentation with SegFormer and Hugging Face Transformers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-data">Load the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-process-the-data-for-segformer">Pre-process the data for SegFormer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-the-data">Partition the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-dataloader-for-each-partition">Build the dataloader for each partition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-dataset">Visualize dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-pretrained-segformer-checkpoint">Load a pretrained SegFormer checkpoint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-model">Compile the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-callback-to-monitor-training-progress">Prediction callback to monitor training progress</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">Train model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="semantic-segmentation-with-segformer-and-hugging-face-transformers">
+<h1>Semantic segmentation with SegFormer and Hugging Face Transformers<a class="headerlink" href="#semantic-segmentation-with-segformer-and-hugging-face-transformers" title="Permalink to this heading">#</a></h1>
+<p><strong>Adapted from:</strong> <a class="reference external" href="https://keras.io/examples/vision/segformer/">https://keras.io/examples/vision/segformer/</a><br>
+<strong>Description:</strong> Fine-tuning a SegFormer model variant for semantic segmentation.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>In this example, we show how to fine-tune a SegFormer model variant to do
+semantic segmentation on a custom dataset. Semantic segmentation is the task of
+assigning a category to each and every pixel of an image. SegFormer was proposed in
+<a class="reference external" href="https://arxiv.org/abs/2105.15203">SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers</a>.
+SegFormer uses a hierarchical Transformer architecture (called “Mix Transformer”) as
+its encoder and a lightweight decoder for segmentation. As a result, it yields
+state-of-the-art performance on semantic segmentation while being more efficient than
+existing models. For more details, check out the original paper.</p>
+<p><img alt="segformer-arch" src="https://i.imgur.com/BsrVwYe.png" /></p>
+<p>We leverage
+<a class="reference external" href="https://github.com/huggingface/transformers">Hugging Face Transformers</a>
+to load a pretrained SegFormer checkpoint and fine-tune it on a custom dataset.</p>
+<p><strong>Note:</strong> this example reuses code from the following sources:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org/tutorials/images/segmentation">Official tutorial on segmentation from the TensorFlow team</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/main/en/tasks/semantic_segmentation">Hugging Face Task guide on segmentation</a></p></li>
+</ul>
+<p>To run this example, we need to install the <code class="docutils literal notranslate"><span class="pre">transformers</span></code> library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!!</span>pip<span class="w"> </span>install<span class="w"> </span>transformers<span class="w"> </span>-q
+<span class="c1"># install required libraries</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>rasterio
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>geopandas
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>radiant_mlhub<span class="w"> </span>#<span class="w"> </span><span class="k">for</span><span class="w"> </span>dataset<span class="w"> </span>access,<span class="w"> </span>see:<span class="w"> </span>https://mlhub.earth/
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>tensorflow_io
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>tiffile
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">functools</span><span class="o">,</span> <span class="nn">fnmatch</span><span class="o">,</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">tarfile</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">radiant_mlhub</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">get_session</span><span class="p">,</span> <span class="n">Collection</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="kn">import</span> <span class="nn">tiffile</span> <span class="k">as</span> <span class="nn">tiff</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">backend</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="kn">import</span> <span class="n">resize</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">TFSegformerForSemanticSegmentation</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mount google drive.</span>
+<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/gdrive&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set your root directory and tiled data folders</span>
+<span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_ipython</span><span class="p">()):</span>
+    <span class="c1"># mount google drive</span>
+    <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/gdrive&#39;</span><span class="p">)</span>
+    <span class="n">root_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed-2/&#39;</span>
+    <span class="n">workshop_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed-workshop-2&#39;</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">workshop_dir</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running on Colab&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;./data/tf-eo-devseed-2&quot;</span><span class="p">)</span>
+    <span class="n">workshop_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;./tf-eo-devseed-workshop-2&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Not running on Colab, data needs to be downloaded locally at </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">root_dir</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/gdrive; to attempt to forcibly remount, call drive.mount(&quot;/content/gdrive&quot;, force_remount=True).
+Running on Colab
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> $root_dir
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed-2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-the-data">
+<h2>Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this heading">#</a></h2>
+<p>We use the <a class="reference external" href="https://mlhub.earth/data/ref_landcovernet_sa_v1">LandCoverNet South America</a> dataset for
+this example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># configure Radiant Earth MLHub access</span>
+<span class="o">!</span>mlhub<span class="w"> </span>configure
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ref_landcovernet_sa_v1_source_sentinel_2
+ref_landcovernet_sa_v1_source_sentinel_1
+ref_landcovernet_sa_v1_source_landsat_8
+ref_landcovernet_sa_v1_labels
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collections</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;ref_landcovernet_sa_v1_source_landsat_8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ref_landcovernet_sa_v1_labels&#39;</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">collection_id</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Downloading </span><span class="si">{</span><span class="n">collection_id</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">Collection</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">collection_id</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r:gz&quot;</span><span class="p">)</span>
+    <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">()</span>
+    <span class="n">tar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">resolve_path</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">load_df</span><span class="p">(</span><span class="n">collection_id</span><span class="p">):</span>
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">collection_id</span><span class="si">}</span><span class="s1">/collection.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">item_links</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">link</span><span class="p">[</span><span class="s1">&#39;rel&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;item&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">item_links</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">item_link</span> <span class="ow">in</span> <span class="n">item_links</span><span class="p">:</span>
+        <span class="n">item_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">collection_id</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_link</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">current_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">item_path</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">item_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+        <span class="n">tile_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">asset_key</span><span class="p">,</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+                <span class="n">tile_id</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">asset_key</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">resolve_path</span><span class="p">(</span><span class="n">current_path</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]))</span>
+            <span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">link</span><span class="p">[</span><span class="s1">&#39;rel&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;source&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">link_path</span> <span class="o">=</span> <span class="n">resolve_path</span><span class="p">(</span><span class="n">current_path</span><span class="p">,</span> <span class="n">link</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">])</span>
+            <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">link_path</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">source_item</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">link_path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">datetime</span> <span class="o">=</span> <span class="n">source_item</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span>
+            <span class="n">satellite_platform</span> <span class="o">=</span> <span class="n">source_item</span><span class="p">[</span><span class="s1">&#39;collection&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">asset_key</span><span class="p">,</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">source_item</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+                    <span class="n">tile_id</span><span class="p">,</span>
+                    <span class="n">datetime</span><span class="p">,</span>
+                    <span class="n">satellite_platform</span><span class="p">,</span>
+                    <span class="n">asset_key</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">resolve_path</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">asset</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]))</span>
+                <span class="p">])</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;tile_id&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;satellite_platform&#39;</span><span class="p">,</span> <span class="s1">&#39;asset&#39;</span><span class="p">,</span> <span class="s1">&#39;file_path&#39;</span><span class="p">])</span>
+
+<span class="c1">#for c in collections:</span>
+    <span class="c1">#download(c)</span>
+
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">load_df</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_labels&#39;</span><span class="p">)</span>
+<span class="c1">#test_df = load_df(&#39;ref_landcovernet_sa_v1_labels&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading ref_landcovernet_sa_v1_source_landsat_8...
+Downloading ref_landcovernet_sa_v1_labels...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b4b84a7963dd4a52a2ffca78aac1b209"}</script></div>
+</div>
+<section id="pre-process-the-data-for-segformer">
+<h3>Pre-process the data for SegFormer<a class="headerlink" href="#pre-process-the-data-for-segformer" title="Permalink to this heading">#</a></h3>
+<p>For preparing the datasets for training and evaluation, we:</p>
+<ul class="simple">
+<li><p>Normalize the images with the mean and standard deviation used during pre-training
+SegFormer.</p></li>
+<li><p>Subtract 1 from the segmentation masks so that the pixel values start from 0.</p></li>
+<li><p>Resize the images.</p></li>
+<li><p>Transpose the images such that they are in <code class="docutils literal notranslate"><span class="pre">&quot;channels_first&quot;</span></code> format. This is to make
+them compatible with the SegFormer model from Hugging Face Transformers.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compile_dataset</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span> <span class="n">dataset_split</span><span class="p">):</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B04.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B03.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B02.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span><span class="p">))</span> <span class="o">*</span> <span class="mf">255.999</span><span class="p">)</span> <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+  <span class="n">resized_rgb_image</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">preserve_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">anti_aliasing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+  <span class="n">rgb_im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">resized_rgb_image</span><span class="p">)</span>
+  <span class="n">im_id</span> <span class="o">=</span> <span class="n">impath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">rgb_im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_rgb_images_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">im_id</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
+  <span class="n">maskpath</span> <span class="o">=</span> <span class="n">impath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;source_landsat_8&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">)</span>
+  <span class="n">maskpath</span> <span class="o">=</span> <span class="n">maskpath</span><span class="p">[:</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
+  <span class="n">mask_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">maskpath</span><span class="si">}</span><span class="s2">/labels.tif&quot;</span>
+  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mask_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">mask_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="c1">#mask_image = np.expand_dims(mask_image, axis=2)</span>
+  <span class="c1">#print(mask_image.shape)</span>
+  <span class="n">resized_mask_image</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span><span class="n">mask_image</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">preserve_range</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">anti_aliasing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+  <span class="c1">#print(np.unique(resized_mask_image))</span>
+  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">resized_mask_image</span><span class="p">)</span>
+  <span class="n">mask_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_label_images_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">im_id</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_source_landsat_8/&#39;</span><span class="p">)</span>
+
+<span class="c1"># All subdirectories in the current directory, not recursive.</span>
+<span class="n">subdirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">subdirs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>34229
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="partition-the-data">
+<h3>Partition the data<a class="headerlink" href="#partition-the-data" title="Permalink to this heading">#</a></h3>
+<p>Because we have 34229 data points to work with, let’s just practice on a subset.</p>
+<ul class="simple">
+<li><p>1000 samples for training to start</p></li>
+<li><p>200 for validation</p></li>
+<li><p>1000 for testing</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subdirs</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1000</span><span class="p">]:</span> <span class="c1"># Swap for val and test accordingly, TODO: create funtion</span>
+  <span class="c1">#print(str(s))</span>
+  <span class="n">compile_dataset</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span> <span class="c1"># Swap for val and test accordingly, TODO: create funtion</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="build-the-dataloader-for-each-partition">
+<h3>Build the dataloader for each partition<a class="headerlink" href="#build-the-dataloader-for-each-partition" title="Permalink to this heading">#</a></h3>
+<p>We now use the above utilities to prepare dataset objects including
+<code class="docutils literal notranslate"><span class="pre">prefetch()</span></code> for performance. Change the <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> to match the size of the GPU memory
+on the GPU that you’re using for training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">AUTO</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">])</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">):</span>
+    <span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">convert_image_dtype</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">input_image</span> <span class="o">=</span> <span class="p">(</span><span class="n">input_image</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">std</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">epsilon</span><span class="p">())</span>
+    <span class="c1">#input_mask -= 1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;input_mask unique: &quot;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_mask</span><span class="p">,[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">input_image</span><span class="p">,</span> <span class="n">input_mask</span>
+
+
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">image_file</span><span class="p">,</span> <span class="n">mask_file</span><span class="p">):</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+  <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+  <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">mask_file</span><span class="p">)</span>
+  <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+  <span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">mask</span> <span class="c1">#tf.squeeze(mask)</span>
+  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">mask_image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+  <span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">))</span>
+  <span class="n">input_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span>
+        <span class="n">mask_image</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span>
+        <span class="n">antialias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+  <span class="p">)</span>
+
+
+  <span class="n">input_image</span><span class="p">,</span> <span class="n">input_mask</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">)</span>
+  <span class="n">input_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">reshaped_input_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">input_mask</span><span class="p">,</span> <span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;pixel_values&quot;</span><span class="p">:</span> <span class="n">input_image</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">reshaped_input_mask</span><span class="p">)}</span>
+
+
+<span class="n">train_images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_rgb_images_train//*.*&#39;</span><span class="p">)</span>
+<span class="n">train_labels</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_label_images_train//*.*&#39;</span><span class="p">)</span>
+<span class="n">train_ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">))</span>
+
+<span class="n">val_images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_rgb_images_val//*.*&#39;</span><span class="p">)</span>
+<span class="n">val_labels</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_label_images_val//*.*&#39;</span><span class="p">)</span>
+<span class="n">val_ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">val_images</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">))</span>
+
+<span class="n">test_images</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_rgb_images_test//*.*&#39;</span><span class="p">)</span>
+<span class="n">test_labels</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1_label_images_test//*.*&#39;</span><span class="p">)</span>
+<span class="n">test_ds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">))</span>
+
+<span class="n">train_ds</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">train_ds</span>
+    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="n">val_ds</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">val_ds</span>
+    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="n">test_ds</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">test_ds</span>
+    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">load</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">AUTO</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
+input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
+input_mask unique:  Unique(y=&lt;tf.Tensor &#39;Unique:0&#39; shape=(None,) dtype=uint8&gt;, idx=&lt;tf.Tensor &#39;Unique:1&#39; shape=(262144,) dtype=int32&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can check the shapes of the input images and their segmentation maps:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_ds</span><span class="o">.</span><span class="n">element_spec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pixel_values&#39;: TensorSpec(shape=(None, 3, 512, 512), dtype=tf.float32, name=None), &#39;labels&#39;: TensorSpec(shape=(None, 512, 512), dtype=tf.float32, name=None)}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualize-dataset">
+<h2>Visualize dataset<a class="headerlink" href="#visualize-dataset" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">display_list</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Input Image&quot;</span><span class="p">,</span> <span class="s2">&quot;True Mask&quot;</span><span class="p">,</span> <span class="s2">&quot;Predicted Mask&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">display_list</span><span class="p">)):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">display_list</span><span class="p">),</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">array_to_img</span><span class="p">(</span><span class="n">display_list</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">samples</span> <span class="ow">in</span> <span class="n">train_ds</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">sample_image</span><span class="p">,</span> <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;pixel_values&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">samples</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sample_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample_mask</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">sample_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">sample_image</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">sample_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">sample_mask</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sample_image</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sample_mask</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sample_mask</span><span class="p">,[</span><span class="o">-</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="n">display</span><span class="p">([</span><span class="n">sample_image</span><span class="p">,</span> <span class="n">sample_mask</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([7., 5., 6.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 1, 1, 1], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/680f1efbb7fa5a76c1b2c099bb40a9ab417329b129fe4785a84254764e1a3f36.png" src="../_images/680f1efbb7fa5a76c1b2c099bb40a9ab417329b129fe4785a84254764e1a3f36.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([7., 3.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/65f86547c5f24b1e6b33702f6dfbc4360412e187885f0c286795cf2e270c050a.png" src="../_images/65f86547c5f24b1e6b33702f6dfbc4360412e187885f0c286795cf2e270c050a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([7., 5., 6., 2.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/335c83224046b979f530db145b352cf92021e0d6f6591cdfe35a41adff8787c0.png" src="../_images/335c83224046b979f530db145b352cf92021e0d6f6591cdfe35a41adff8787c0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([7., 2., 6.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/d9e2f829ccb37ca5db1754c461c591dfafdd0bb7d7336d60e7fb1baea8da7cdc.png" src="../_images/d9e2f829ccb37ca5db1754c461c591dfafdd0bb7d7336d60e7fb1baea8da7cdc.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([7., 2., 5., 3.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/72fe0370f6a7d932fe31657f706368ebdc269e8e34064546bc170ad3ae68a71e.png" src="../_images/72fe0370f6a7d932fe31657f706368ebdc269e8e34064546bc170ad3ae68a71e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([5., 7.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/41d4525d29a520646ab2eeb99866bbd009557bb8eeb2b9be7d7bddffad6f4076.png" src="../_images/41d4525d29a520646ab2eeb99866bbd009557bb8eeb2b9be7d7bddffad6f4076.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(5,), dtype=float32, numpy=array([5., 7., 6., 2., 1.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/29b9e407698dc2b08097ccf63484e5e0836715c3bcc074e52d2e64adc665604f.png" src="../_images/29b9e407698dc2b08097ccf63484e5e0836715c3bcc074e52d2e64adc665604f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([5., 7., 1., 6.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/dae29abde2cea8343acb509e8a1eb46d9450ef5043255ff6fffe2829db9f00a9.png" src="../_images/dae29abde2cea8343acb509e8a1eb46d9450ef5043255ff6fffe2829db9f00a9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(5,), dtype=float32, numpy=array([5., 7., 6., 2., 1.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 0, 0, 0], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/7c3f41357d1f4203072a95531dde35764e793e1c072ebefea1013fad6766f476.png" src="../_images/7c3f41357d1f4203072a95531dde35764e793e1c072ebefea1013fad6766f476.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 512, 512) (512, 512)
+(512, 512, 3) (512, 512, 1) Unique(y=&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([7., 6., 5.], dtype=float32)&gt;, idx=&lt;tf.Tensor: shape=(262144,), dtype=int32, numpy=array([0, 0, 0, ..., 2, 2, 2], dtype=int32)&gt;)
+</pre></div>
+</div>
+<img alt="../_images/d19634f07023199d9b3f9226c360eb6a5b1de00beeb2c7c62b8b29e441bc82ee.png" src="../_images/d19634f07023199d9b3f9226c360eb6a5b1de00beeb2c7c62b8b29e441bc82ee.png" />
+</div>
+</div>
+</section>
+<section id="load-a-pretrained-segformer-checkpoint">
+<h2>Load a pretrained SegFormer checkpoint<a class="headerlink" href="#load-a-pretrained-segformer-checkpoint" title="Permalink to this heading">#</a></h2>
+<p>We now load a pretrained SegFormer model variant from Hugging Face Transformers. The
+SegFormer model comes in different variants dubbed as <strong>MiT-B0</strong> to <strong>MiT-B5</strong>. You can
+find these checkpoints
+<a class="reference external" href="https://huggingface.co/models?pipeline_tag=image-segmentation&amp;sort=downloads&amp;search=segformer">here</a>.
+We load the smallest variant Mix-B0, which produces a good trade-off
+between inference efficiency and predictive performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_checkpoint</span> <span class="o">=</span> <span class="s2">&quot;nvidia/mit-b0&quot;</span>
+
+<span class="c1"># Classes below derived from https://radiantearth.blob.core.windows.net/mlhub/landcovernet_sa/Documentation.pdf</span>
+
+<span class="n">id2label</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;Background&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;artificial_bare_ground&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;natural_bare_ground&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;permanent_snow_ice&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;woody_vegetation&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;cultivated_vegetation&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;semi_natural_vegetation&quot;</span><span class="p">}</span>
+<span class="n">label2id</span> <span class="o">=</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="nb">id</span> <span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">id2label</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">num_labels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">id2label</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">TFSegformerForSemanticSegmentation</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="n">model_checkpoint</span><span class="p">,</span>
+    <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">,</span>
+    <span class="n">id2label</span><span class="o">=</span><span class="n">id2label</span><span class="p">,</span>
+    <span class="n">label2id</span><span class="o">=</span><span class="n">label2id</span><span class="p">,</span>
+    <span class="n">ignore_mismatched_sizes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Some layers from the model checkpoint at nvidia/mit-b0 were not used when initializing TFSegformerForSemanticSegmentation: [&#39;classifier&#39;]
+- This IS expected if you are initializing TFSegformerForSemanticSegmentation from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing TFSegformerForSemanticSegmentation from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some layers of TFSegformerForSemanticSegmentation were not initialized from the model checkpoint at nvidia/mit-b0 and are newly initialized: [&#39;decode_head&#39;]
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The warning is telling us that we’re throwing away some weights and newly initializing
+some others. Don’t panic! This is absolutely normal. Since we’re using a custom dataset
+which has a different set of semantic class labels than the pre-training dataset,
+<a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/segformer#transformers.TFSegformerForSemanticSegmentation"><code class="docutils literal notranslate"><span class="pre">TFSegformerForSemanticSegmentation</span></code></a>
+is initializing a new decoder head.</p>
+<p>We can now initialize an optimizer and compile the model with it.</p>
+</section>
+<section id="compile-the-model">
+<h2>Compile the model<a class="headerlink" href="#compile-the-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="c1">#0.00006</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that we are not using any loss function for compiling the model. This is because
+the forward pass of the model
+<a class="reference external" href="https://github.com/huggingface/transformers/blob/820c46a707ddd033975bc3b0549eea200e64c7da/src/transformers/models/segformer/modeling_tf_segformer.py#L873">implements</a>
+the loss computation part when we provide labels alongside the input images. After
+computing the loss, the model returned a structured <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> object which is
+then used to guide the training process.</p>
+<p>With the compiled model, we can proceed and call <code class="docutils literal notranslate"><span class="pre">fit()</span></code> on it to begin the fine-tuning
+process!</p>
+</section>
+<section id="prediction-callback-to-monitor-training-progress">
+<h2>Prediction callback to monitor training progress<a class="headerlink" href="#prediction-callback-to-monitor-training-progress" title="Permalink to this heading">#</a></h2>
+<p>It helps us to visualize some sample predictions when the model is being fine-tuned,
+thereby helping us to monitor the progress of the model. This callback is inspired from
+<a class="reference external" href="https://www.tensorflow.org/tutorials/images/segmentation">this tutorial</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">clear_output</span>
+
+
+<span class="k">def</span> <span class="nf">create_mask</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">):</span>
+    <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pred_mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pred_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">show_predictions</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">dataset</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="n">images</span><span class="p">,</span> <span class="n">masks</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;pixel_values&quot;</span><span class="p">],</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+            <span class="n">masks</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">pred_masks</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">images</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>
+            <span class="n">images</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">display</span><span class="p">([</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">masks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">create_mask</span><span class="p">(</span><span class="n">pred_masks</span><span class="p">)])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">sample_image</span><span class="p">,</span>
+                <span class="n">sample_mask</span><span class="p">,</span>
+                <span class="n">create_mask</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">sample_image</span><span class="p">,</span> <span class="mi">0</span><span class="p">))),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DisplayCallback</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">show_predictions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sample Prediction after epoch </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-model">
+<h2>Train model<a class="headerlink" href="#train-model" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Increase the number of epochs if the results are not of expected quality.</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">train_ds</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="n">test_ds</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">DisplayCallback</span><span class="p">(</span><span class="n">val_ds</span><span class="p">)],</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 108ms/step
+</pre></div>
+</div>
+<img alt="../_images/a4cf5f5e731ebcc404bb7d687e77dd96bcd5a0dbcfe3f6fe4b740718c079c9fd.png" src="../_images/a4cf5f5e731ebcc404bb7d687e77dd96bcd5a0dbcfe3f6fe4b740718c079c9fd.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample Prediction after epoch 10
+
+
+250/250 [==============================] - 119s 476ms/step - loss: 1.3257 - val_loss: 1.3368
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this heading">#</a></h2>
+<p>We perform inference on a few samples from the test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">show_predictions</span><span class="p">(</span><span class="n">test_ds</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 217ms/step
+</pre></div>
+</div>
+<img alt="../_images/cb7c0b22d3d1d3aa71a8b7fd5b67a9ddef7acd182a8b71ec34aae5650db6a6e6.png" src="../_images/cb7c0b22d3d1d3aa71a8b7fd5b67a9ddef7acd182a8b71ec34aae5650db6a6e6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 174ms/step
+</pre></div>
+</div>
+<img alt="../_images/dbc7d814f12c84a7978239c577ed83507d0dd577c4e23b13077f9f9458189252.png" src="../_images/dbc7d814f12c84a7978239c577ed83507d0dd577c4e23b13077f9f9458189252.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 305ms/step
+</pre></div>
+</div>
+<img alt="../_images/1d6456c9f4a400a37bd4c3255e7d41f7f1ffca2e160e67dee810c57529316e15.png" src="../_images/1d6456c9f4a400a37bd4c3255e7d41f7f1ffca2e160e67dee810c57529316e15.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 116ms/step
+</pre></div>
+</div>
+<img alt="../_images/8429860c9d067d7500d037380a19ae35d34cd507ef5a5ba882ec36384639da61.png" src="../_images/8429860c9d067d7500d037380a19ae35d34cd507ef5a5ba882ec36384639da61.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 122ms/step
+</pre></div>
+</div>
+<img alt="../_images/5191ac1f8b6304fe92d5c39868f3860cffbac269e7684a1a4cc8444ff34c225b.png" src="../_images/5191ac1f8b6304fe92d5c39868f3860cffbac269e7684a1a4cc8444ff34c225b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 105ms/step
+</pre></div>
+</div>
+<img alt="../_images/7f6480bffb0e1a3e217ef57a378c2be769d8b287e15aeae2ec90185226f31afd.png" src="../_images/7f6480bffb0e1a3e217ef57a378c2be769d8b287e15aeae2ec90185226f31afd.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 108ms/step
+</pre></div>
+</div>
+<img alt="../_images/b19b896754a0ca6af5ec65d73dff24268c1e9c05ae706c88cbb3aab8c9f7241d.png" src="../_images/b19b896754a0ca6af5ec65d73dff24268c1e9c05ae706c88cbb3aab8c9f7241d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 127ms/step
+</pre></div>
+</div>
+<img alt="../_images/ab1e642e73ace6165c457bb3c2bca2494b4c69a0e104713339e6d36a01ed078f.png" src="../_images/ab1e642e73ace6165c457bb3c2bca2494b4c69a0e104713339e6d36a01ed078f.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 123ms/step
+</pre></div>
+</div>
+<img alt="../_images/1b13246502140233fee2aae9ff8206bd8016c69802196c1899246bf5a339fc41.png" src="../_images/1b13246502140233fee2aae9ff8206bd8016c69802196c1899246bf5a339fc41.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 113ms/step
+</pre></div>
+</div>
+<img alt="../_images/ad7affb54c0f18eb935af295436b257a36096f2a32e7f2e7f1abe107fb9e4a35.png" src="../_images/ad7affb54c0f18eb935af295436b257a36096f2a32e7f2e7f1abe107fb9e4a35.png" />
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>In this example, we learned how to fine-tune a SegFormer model variant on a custom
+dataset for semantic segmentation. In the interest of brevity, the example
+was kept short. However, there are a couple of things, you can further try out:</p>
+<ul class="simple">
+<li><p>Incorporate data augmentation to potentially improve the results.</p></li>
+<li><p>Use a larger SegFormer model checkpoint to see how the results are affected.</p></li>
+<li><p>Push the fine-tuned model to the Hugging Face for sharing with the community easily.
+You can do so just by doing <code class="docutils literal notranslate"><span class="pre">model.push_to_hub(&quot;your-username/your-awesome-model&quot;)</span></code>.
+And then you can load the model by doing
+<code class="docutils literal notranslate"><span class="pre">TFSegformerForSemanticSegmentation.from_pretrained(&quot;your-username/your-awesome-model&quot;</span></code>).
+<a class="reference external" href="https://github.com/huggingface/notebooks/blob/main/examples/semantic_segmentation-tf.ipynb">Here</a>
+is an end-to-end example if you’re looking for a reference.</p></li>
+<li><p>If you’d rather push the model checkpoints to the Hub as the model is being
+fine-tuned you can instead use the <code class="docutils literal notranslate"><span class="pre">PushToHubCallback</span></code> Keras callback.
+<a class="reference external" href="https://gist.github.com/sayakpaul/f474ffb01f0cdcc8ba239357965c3bca">Here</a> is an example.
+<a class="reference external" href="https://huggingface.co/sayakpaul/mit-b0-finetuned-pets">Here</a> is an example of a model
+repository that was created using this callback.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson5_dealing_with_limited_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dealing with limited data for semantic segmentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="appendix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-data">Load the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-process-the-data-for-segformer">Pre-process the data for SegFormer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-the-data">Partition the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-dataloader-for-each-partition">Build the dataloader for each partition</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-dataset">Visualize dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-pretrained-segformer-checkpoint">Load a pretrained SegFormer checkpoint</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-model">Compile the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction-callback-to-monitor-training-progress">Prediction callback to monitor training progress</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">Train model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
