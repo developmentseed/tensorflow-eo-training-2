@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction to TensorFlow and Keras &#8212; Deep learning with TensorFlow</title>
+    <title>Introduction to TensorFlow 2.x and Keras &#8212; Deep learning with TensorFlow</title>
   
   
   
@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Process dataset for use with deep learning segmentation network" href="Lesson2b_prep_data_ML_segmentation.html" />
-    <link rel="prev" title="Introduction to machine learning, neural networks and deep learning" href="Lesson1a_Intro_ML_NN_DL.html" />
+    <link rel="prev" title="TensorFlow 2 and Keras quickstart for geospatial computer vision" href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -151,7 +151,11 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to TensorFlow and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to TensorFlow 2.x and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson3_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson4_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
@@ -407,7 +411,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to TensorFlow and Keras</h1>
+    <h1>Introduction to TensorFlow 2.x and Keras</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -439,8 +443,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensorflow-and-keras">
-<h1>Introduction to TensorFlow and Keras<a class="headerlink" href="#introduction-to-tensorflow-and-keras" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensorflow-2-x-and-keras">
+<h1>Introduction to TensorFlow 2.x and Keras<a class="headerlink" href="#introduction-to-tensorflow-2-x-and-keras" title="Permalink to this heading">#</a></h1>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
 <p>The goal of this notebook is to teach some basics of the TensorFlow framework and the Keras API.</p>
@@ -451,7 +455,8 @@ document.write(`
 <p>TensorFlow was designed to operate with multiple CPUs or GPUs, as well as a growing number of mobile operating systems. The framework includes wrappers in Python, C++, and Java.</p>
 <section id="how-does-it-work">
 <h4>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading">#</a></h4>
-<p>TensorFlow accepts inputs as a multi-dimensional array called a Tensor, which allows the programmer to create dataflow graphs and structures specifying how data travels through. The framework is designed to support creation of a flowchart of operations to be applied to input Tensors, which travel in one direction and out the other.</p>
+<p>TensorFlow accepts inputs as a multi-dimensional array called a Tensor, which allows the programmer to create dataflow graphs, sequences and structures specifying how data travels through. The framework was initially designed to support creation of a flowchart of operations to be applied to input Tensors, which travel in one direction and out the other. Importantly, TensorFlow 2.0 introduced eager execution to the framework. Eager execution is based on the immediate evaluation of operations, as opposed to graph mode, in which operations are chained together and outputs are produced only when an input is passed through the whole graph. Thus, eager execution allows intermediate values to be returned from sequential operations. Stated otherwise, with eager execution, the values of tensors are calculated as they occur in your code.</p>
+<p>It does not build graphs, and the operations return actual values instead of computational graphs to run later. With Eager execution, TensorFlow calculates the values of tensors wherever they occur in a program. One benefit of eager execution is simplified debugging, as errors are easy to isolate when breaking down a program into executable components. Secondly, eager execution reduces boilerplate code as functions themselves are immediately callable and don’t have to be instantiated by sessions first. The third benefit worth mentioning is that eager execution is especially useful for rapid research and experimentation, as it allows for easy swapping of components without having to rewrite the entire graph.</p>
 </section>
 <section id="tensorflow-s-structure">
 <h4>TensorFlow’s structure<a class="headerlink" href="#tensorflow-s-structure" title="Permalink to this heading">#</a></h4>
@@ -461,28 +466,14 @@ document.write(`
 <li><p>building the model</p></li>
 <li><p>training and estimating the model</p></li>
 </ol>
-<p>The name Tensorflow derives from the way in which the framework receives input in the form of a multi-dimensional array, i.e. the tensors. These tensors travel sequentially through the specified flowchart of the operations, entering at one end and culminating as output at the other end.</p>
+<p>The name Tensorflow derives from the way in which the framework receives input in the form of a multi-dimensional array, i.e. the tensors. These tensors travel sequentially through the operations, producing intermediate and output tensors.</p>
 </section>
 <section id="what-are-the-key-tensorflow-components">
 <h4>What are the key TensorFlow components?<a class="headerlink" href="#what-are-the-key-tensorflow-components" title="Permalink to this heading">#</a></h4>
 <p><strong>Tensor</strong></p>
 <p>A tensor is an n-dimensional vector or matrix. In theory, a tensor may represent any form of data. The values belonging to a tensor all share the same data type and often the same shape / dimensionality. A tensor can describe the input data and the output of a calculation. The main difference between a tensor and a conventional n-dimensional array is that tensors are immutable.</p>
-<p><strong>Graphs</strong></p>
-<p>TensorFlow uses a graph framework. Graphs collect and summarize all of the calculations and offer several benefits:</p>
-<ol class="arabic simple">
-<li><p>They are designed to work on CPUs or GPUs, as well as on mobile devices.</p></li>
-<li><p>Graphs are portable which enables the computations to be saved for immediate or later usage. Otherwise stated, the graph can be frozen and run at a later time.</p></li>
-<li><p>Graph calculations are executed by linking tensors together.</p></li>
-<li><p>For each tensor, there is a node and an edge. The node carries out the mathematical process and produces endpoint outputs. The input/output connections are represented by the edges.</p></li>
-<li><p>All nodes are linked together, so the graph itself is a depiction of the operations and relationships that exist between the nodes.</p></li>
-</ol>
-<p>In TensorFlow, all operations are carried out within a graph, which in effect is a series of computations that happen in order. Each individual operation is referred to as an op node.</p>
-<figure class="align-default" id="tfgraph-fig">
-<a class="reference internal image-reference" href="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif"><img alt="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" src="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" style="width: 650px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">TensorFlow graph example (from <a class="reference external" href="https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4">https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4</a>).</span><a class="headerlink" href="#tfgraph-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<img src="images/tensor.png" width="650px">
+<p><a class="reference external" href="https://www.simplilearn.com/tutorials/deep-learning-tutorial/tensorflow-2#:~:text=TensorFlow%202.0%20works%20efficiently%20with,TensorBoard%20to%20visualize%20the%20model.">Image source</a></p>
 </section>
 <section id="why-do-so-many-people-like-tensorflow">
 <h4>Why do so many people like TensorFlow?<a class="headerlink" href="#why-do-so-many-people-like-tensorflow" title="Permalink to this heading">#</a></h4>
@@ -507,7 +498,7 @@ document.write(`
 <figure class="align-default" id="keras-fig">
 <a class="reference internal image-reference" href="../_images/Keras_functional_API.jpg"><img alt="../_images/Keras_functional_API.jpg" src="../_images/Keras_functional_API.jpg" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Keras Functional API diagram (from <span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span>).</span><a class="headerlink" href="#keras-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Keras Functional API diagram (from <span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span>).</span><a class="headerlink" href="#keras-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -546,12 +537,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Lesson1a_Intro_ML_NN_DL.html"
+       href="Intro_to_TF2_Keras_TFDS_RadiantEarth.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to machine learning, neural networks and deep learning</p>
+        <p class="prev-next-title">TensorFlow 2 and Keras quickstart for geospatial computer vision</p>
       </div>
     </a>
     <a class="right-next"
