@@ -10,6 +10,8 @@ Authored by [**Development Seed**](https://developmentseed.org/) engineers [**Li
 
 These materials are designed to provide TensorFlow expertise via tutorials and science support, vis a vis suggestions for acquisition and processing of data inputs, training, testing, and evaluation of TensorFlow models as well as different TensorFlow / deep learning techniques demoed in Colab notebooks using real data. 
 
+This is a "part 2" to https://developmentseed.org/tensorflow-eo-training/docs/index.html, with updates focused on the use of TensorFlow 2.x and the`tf.keras` API as well as updated content on state of the art deep learning algorithms and techniques.
+
 The content of this workshop assumes general familiarity with geospatial data such as satellite imagery, raster and vector formats, file formats such as [GeoTIFF](https://earthdata.nasa.gov/esdis/eso/standards-and-references/geotiff) and [GeoJSON](https://geojson.org/), the [python](https://www.python.org/) programming language and [Google Colab](https://research.google.com/colaboratory/). Having knowledge of [numpy](https://numpy.org/), [rasterio](https://rasterio.readthedocs.io/en/latest/), [geopandas](https://geopandas.org/en/stable/) and [sci-kit learn](https://scikit-learn.org/stable/) is a plus. 
 
 
