@@ -4,12 +4,14 @@ Complete file set for [Jupyter Book](https://beta.jupyterbook.org/intro.html)
 
 Autor: Development Seed
 
-Date:  04 October 2021
+Date:  10 July 2023
 
 ISBN: (to come)
 
 
-  Notebook tutorials demonstrating advanced techniques for use of deep learning with TensorFlow and earth observation data.
+  Notebook tutorials demonstrating advanced techniques for use of deep learning with TensorFlow 2.x and earth observation data.
+
+  This is a "part 2" to https://developmentseed.org/tensorflow-eo-training/docs/index.html, with updates focused on the use of TensorFlow 2.x and the`tf.keras` API as well as updated content on state of the art deep learning algorithms and techniques.
 
 
 
