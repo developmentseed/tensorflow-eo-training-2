@@ -1,1 +1,3 @@
 private_instance_gcp.pem
+.terraform.lock.hcl
+.terraform/

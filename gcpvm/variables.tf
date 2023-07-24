@@ -37,7 +37,7 @@ variable "instance-type" {
 variable "project" {
   type        = string
   description = "Project"
-  default     = "your-gcp-project-id"
+  default     = "tf-training-acca"
 }
 
 variable "gpu-count" {
