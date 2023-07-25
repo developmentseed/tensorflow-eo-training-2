@@ -1,3 +1,9 @@
 private_instance_gcp.pem
 .terraform.lock.hcl
-.terraform/
+.terraform
+../ds_book/.DS_Store
+../ds_book/docs/.DS_Store
+terraform.tfstate
+terraform.tfstate.backup
+../.DS_Store
+../.DS_Store
