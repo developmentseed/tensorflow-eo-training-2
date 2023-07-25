@@ -151,11 +151,18 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to machine learning, neural networks and deep learning</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
@@ -421,21 +428,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to machine learning, neural networks and deep learning</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-machine-learning">What is Machine Learning?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-deep-learning">What is Deep Learning?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-neural-networks">What are Neural Networks?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-testing-data">Training and Testing Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-propagation-hyper-parameters-and-learnable-parameters">Forward and backward propagation, hyper-parameters, and learnable parameters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-machine-learning-for-computer-vision">Types of Machine Learning for Computer Vision</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-convolutional-neural-networks">What are Convolutional Neural Networks?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-kernel-filter">What is a kernel/filter?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-stride">What is stride?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-convolution-operation">What is a convolution operation?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-operation-using-3d-filter">Convolution operation using 3D filter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-padding">What is padding?</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-deep-learning">What is Deep Learning?</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-testing-data">Training and Testing Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-propagation-hyper-parameters-and-learnable-parameters">Forward and backward propagation, hyper-parameters, and learnable parameters</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#common-deep-learning-algorithms-for-computer-vision">Common Deep Learning Algorithms for Computer Vision</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-segmentation">Semantic Segmentation</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#u-net-segmentation-architecture">U-Net Segmentation Architecture</a></li>
 </ul>
@@ -443,6 +449,10 @@ document.write(`
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers-and-self-attention">Transformers and Self Attention</a></li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -459,10 +469,10 @@ document.write(`
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Understand the fundamental goals of machine learning and a bit of the field’s history</p></li>
-<li><p>Gain familiarity with the mechanics of a neural network, convolutional neural networks, and the U-Net architecture in particular</p></li>
+<li><p>Gain familiarity with the mechanics of a neural network, convolutional neural networks, the U-Net architecture, and Transformers</p></li>
 <li><p>Discuss considerations for choosing a deep learning architecture for a particular problem</p></li>
 </ul>
-<p>Below is a video recording of the oral lecture associated with this lesson and the following. It was given by Lilly Thomas, ML Engineer at Development Seed.</p>
+<p>Below is a video recording of the oral lecture associated with this lesson. It was given by Lilly Thomas, ML Engineer at Development Seed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
@@ -492,7 +502,7 @@ document.write(`
 <figure class="align-default" id="ai-ml-dl-fig">
 <a class="reference internal image-reference" href="https://human-centered.ai/wordpress/wp-content/uploads/2017/11/Deep-Learning-subset-of-Machine-Learning-subset-of-Artificial-Intelligence.jpg"><img alt="https://human-centered.ai/wordpress/wp-content/uploads/2017/11/Deep-Learning-subset-of-Machine-Learning-subset-of-Artificial-Intelligence.jpg" src="https://human-centered.ai/wordpress/wp-content/uploads/2017/11/Deep-Learning-subset-of-Machine-Learning-subset-of-Artificial-Intelligence.jpg" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text"><a class="reference external" href="https://www.frwebs.top/products.aspx?cname=difference+between+ml+dl+and+ai&amp;cid=7">AI, ML, DL</a>.</span><a class="headerlink" href="#ai-ml-dl-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Figure from <a class="reference external" href="https://human-centered.ai">https://human-centered.ai</a></span><a class="headerlink" href="#ai-ml-dl-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Compared to traditional programming, ML offers:</p>
@@ -502,16 +512,24 @@ document.write(`
 <li><p>reduction of human error,</p></li>
 <li><p>scalable decision making</p></li>
 </ol>
-<p>ML requires good quality data, and a lot of it, to recognize key patterns and features.</p>
-<p>Humans still have a role in this process, by way of supplying the model with data and choosing algorithms and parameters.</p>
-<p>There are several subcategories of machine learning:</p>
+<p>Humans still have many roles in this process:</p>
+<ol class="arabic simple">
+<li><p>curating high quality datasets for the machine learning model(s)</p></li>
+<li><p>developing or choosing between algorithms and parameters for model development</p></li>
+<li><p>evaluating, comparing, and selecting the best model</p></li>
+</ol>
+<p>There are several subcategories of machine learning, but for monitoring services in remote sensing, we are typically concerned with two types:</p>
 <ol class="arabic simple">
 <li><p><strong>Supervised machine learning</strong> involves training a model with labeled data sets that explicitly give examples of predictive features and their target attribute(s).</p></li>
 <li><p><strong>Unsupervised machine learning</strong> involves tasking a model to search for patterns in data without the guidance of labels.</p></li>
 </ol>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>There are also some problems where machine learning is uniquely equipped to learn insights and make decisions when a human might not, such as drawing relationships from combined spectral indices in a complex terrain.</p>
+</section>
+<section id="what-is-deep-learning">
+<h3>What is Deep Learning?<a class="headerlink" href="#what-is-deep-learning" title="Permalink to this heading">#</a></h3>
+<p>Deep learning is defined by neural networks with depth, i.e. many layers and connections. Deep stacking of many layers with multiple processing units called “neurons” allows deep learning models to learn complex, non-linear features. The deepest layers of a network once trained can infer highly abstract concepts, such as what differentiates a farm from a forest in satellite imagery.</p>
+<div class="admonition-cost-of-deep-learning admonition">
+<p class="admonition-title"><strong>Cost of deep learning</strong></p>
+<p>Deep learning requires a lot of data to learn and usually a significant amount of computing power. Developing datasets and training deep learning models can be expensive depending on the scope of the problem.</p>
 </div>
 </section>
 <section id="what-are-neural-networks">
@@ -531,68 +549,6 @@ document.write(`
 </figcaption>
 </figure>
 <p>In network architectures, neurons are grouped in layers, with synapses traversing the interstitial space between neurons in one layer and the next.</p>
-<section id="what-are-convolutional-neural-networks">
-<h4>What are Convolutional Neural Networks?<a class="headerlink" href="#what-are-convolutional-neural-networks" title="Permalink to this heading">#</a></h4>
-<p>A Convolutional Neural Network (ConvNet/CNN) is a form of deep learning inspired by the organization of the human visual cortex, in which individual neurons respond to stimuli within a constrained region of the visual field known as the receptive field. Several receptive fields overlap to account for the entire visual area.</p>
-<p>In artificial CNNs, an input matrix such as an image is given importance per various aspects and objects in the image through a moving, convoling receptive field. Very little pre-processing is required for CNNs relative to other classification methods as the need for upfront feature-engineering is removed. Rather, CNNs learn the correct filters and consequent features on their own, provided enough training time and examples.</p>
-<figure class="align-default" id="convolution-fig">
-<a class="reference internal image-reference" href="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif"><img alt="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif" src="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif" style="width: 450px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Convolution of a kernal over an input matrix from <a class="reference external" href="https://towardsdatascience.com/intuitively-understanding-convolutions-for-deep-learning-1f6f42faee1">https://towardsdatascience.com/intuitively-understanding-convolutions-for-deep-learning-1f6f42faee1</a>.</span><a class="headerlink" href="#convolution-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="what-is-a-kernel-filter">
-<h4>What is a kernel/filter?<a class="headerlink" href="#what-is-a-kernel-filter" title="Permalink to this heading">#</a></h4>
-<p>A kernel is matrix smaller than the input. It acts as a receptive field that moves over the input matrix from left to right and top to bottom and filters for features in the image.</p>
-</section>
-<section id="what-is-stride">
-<h4>What is stride?<a class="headerlink" href="#what-is-stride" title="Permalink to this heading">#</a></h4>
-<p>Stride refers to the number of pixels that the kernel shifts at each step in its navigation of the input matrix.</p>
-</section>
-<section id="what-is-a-convolution-operation">
-<h4>What is a convolution operation?<a class="headerlink" href="#what-is-a-convolution-operation" title="Permalink to this heading">#</a></h4>
-<p>The convolution operation is the combination of two functions to produce a third function as a result. In effect, it is a merging of two sets of information, the kernel and the input matrix.</p>
-<figure class="align-default" id="convolution-arithmetic-fig">
-<a class="reference internal image-reference" href="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif"><img alt="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif" src="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif" style="width: 450px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Convolution of a kernal over an input matrix from <a class="reference external" href="https://theano-pymc.readthedocs.io/en/latest/tutorial/conv_arithmetic.html">https://theano-pymc.readthedocs.io/en/latest/tutorial/conv_arithmetic.html</a>.</span><a class="headerlink" href="#convolution-arithmetic-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="convolution-operation-using-3d-filter">
-<h4>Convolution operation using 3D filter<a class="headerlink" href="#convolution-operation-using-3d-filter" title="Permalink to this heading">#</a></h4>
-<p>An input image is often represented as a 3D matrix with a dimension for width (pixels), height (pixels), and depth (channels). In the case of an optical image with red, green and blue channels, the kernel/filter matrix is shaped with the same channel depth as the input and the weighted sum of dot products is computed across all 3 dimensions.</p>
-</section>
-<section id="what-is-padding">
-<h4>What is padding?<a class="headerlink" href="#what-is-padding" title="Permalink to this heading">#</a></h4>
-<p>After a convolution operation, the feature map is by default smaller than the original input matrix.</p>
-<figure class="align-default" id="multi-layer-cnn-fig">
-<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png"><img alt="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png" src="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png" style="width: 450px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text"><a class="reference external" href="https://www.researchgate.net/figure/The-LeNet-5-Architecture-a-convolutional-neural-network_fig4_321586653">Progressive downsizing of feature maps in a multi-layer CNN</a>.</span><a class="headerlink" href="#multi-layer-cnn-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-<p>To maintain the same spatial dimensions between input matrix and output feature map, we may pad the input matrix with a border of zeroes or ones. There are two types of padding:</p>
-<ol class="arabic simple">
-<li><p>Same padding: a border of zeroes or ones is added to match the input/output dimensions</p></li>
-<li><p>Valid padding: no border is added and the output dimensions are not matched to the input</p></li>
-</ol>
-<figure class="align-default" id="padding-fig">
-<a class="reference internal image-reference" href="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png"><img alt="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png" src="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png" style="width: 450px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text"><a class="reference external" href="https://ayeshmanthaperera.medium.com/what-is-padding-in-cnns-71b21fb0dd7">Padding an input matrix with zeroes</a>.</span><a class="headerlink" href="#padding-fig" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<section id="what-is-deep-learning">
-<h3>What is Deep Learning?<a class="headerlink" href="#what-is-deep-learning" title="Permalink to this heading">#</a></h3>
-<p>Deep learning is defined by neural networks with depth, i.e. many layers and connections. The reason for why deep learning is so highly performant lies in the degree of abstraction made possible by feature extraction across so many layers in which each neuron, or processing unit, is interacting with input from neurons in previous layers and making decisions accordingly. The deepest layers of a network once trained can be capable inferring highly abstract concepts, such as what differentiates a school from a house in satellite imagery.</p>
-<div class="admonition-cost-of-deep-learning admonition">
-<p class="admonition-title"><strong>Cost of deep learning</strong></p>
-<p>Deep learning requires a lot of data to learn from and usually a significant amount of computing power, so it can be expensive depending on the scope of the problem.</p>
-</div>
 <section id="training-and-testing-data">
 <h4>Training and Testing Data<a class="headerlink" href="#training-and-testing-data" title="Permalink to this heading">#</a></h4>
 <p>The dataset (e.g. all images and their labels) are split into training, validation and testing sets. A common ratio is 70:20:10 percent, train:validation:test.  If randomly split, it is important to check that all class labels exist in all sets and are well represented.</p>
@@ -608,7 +564,7 @@ We need separate test data to evaluate the performance of the model because the 
 <figure class="align-default" id="forward-backprop-fig">
 <a class="reference internal image-reference" href="https://thumbs.gfycat.com/BitesizedWeeBlacklemur-max-1mb.gif"><img alt="https://thumbs.gfycat.com/BitesizedWeeBlacklemur-max-1mb.gif" src="https://thumbs.gfycat.com/BitesizedWeeBlacklemur-max-1mb.gif" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text"><a class="reference external" href="https://gfycat.com/gifs/search/backpropagation">Forward and back propagation</a>.</span><a class="headerlink" href="#forward-backprop-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text"><a class="reference external" href="https://gfycat.com/gifs/search/backpropagation">Forward and back propagation</a>.</span><a class="headerlink" href="#forward-backprop-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <strong>activation function</strong> decides whether or not the output from one neuron is useful or not based on a threshold value, and therefore, whether it will be carried from one layer to the next.</p>
@@ -618,7 +574,7 @@ We need separate test data to evaluate the performance of the model because the 
 <figure class="align-default" id="activation-fig">
 <a class="reference internal image-reference" href="https://cdn-images-1.medium.com/max/651/1*UA30b0mJUPYoPvN8yJr2iQ.jpeg"><img alt="https://cdn-images-1.medium.com/max/651/1*UA30b0mJUPYoPvN8yJr2iQ.jpeg" src="https://cdn-images-1.medium.com/max/651/1*UA30b0mJUPYoPvN8yJr2iQ.jpeg" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text"><a class="reference external" href="https://laptrinhx.com/statistics-is-freaking-hard-wtf-is-activation-function-207913705/">Weights, bias, activation</a>.</span><a class="headerlink" href="#activation-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text"><a class="reference external" href="https://laptrinhx.com/statistics-is-freaking-hard-wtf-is-activation-function-207913705/">Weights, bias, activation</a>.</span><a class="headerlink" href="#activation-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>During training, the weights and biases are learned and updated using the training and validation dataset to fit the data and reduce error of prediction values relative to target values.</p>
@@ -635,14 +591,14 @@ We need separate test data to evaluate the performance of the model because the 
 <figure class="align-default" id="loss-curve-fig">
 <a class="reference internal image-reference" href="https://d1zx6djv3kb1v7.cloudfront.net/wp-content/media/2019/09/Neural-network-32-i2tutorials.png"><img alt="https://d1zx6djv3kb1v7.cloudfront.net/wp-content/media/2019/09/Neural-network-32-i2tutorials.png" src="https://d1zx6djv3kb1v7.cloudfront.net/wp-content/media/2019/09/Neural-network-32-i2tutorials.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text"><a class="reference external" href="https://www.i2tutorials.com/what-are-local-minima-and-global-minima-in-gradient-descent/">Local vs. global minimum (the optimal point to reach)</a>.</span><a class="headerlink" href="#loss-curve-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text"><a class="reference external" href="https://www.i2tutorials.com/what-are-local-minima-and-global-minima-in-gradient-descent/">Local vs. global minimum (the optimal point to reach)</a>.</span><a class="headerlink" href="#loss-curve-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <strong>batch size</strong> determines the portion of our training dataset that can be fed to the model during each cycle. Stated otherwise, batch size controls the number of training samples to work through before the model’s internal parameters are updated.</p>
 <figure class="align-default" id="batch-epoch-fig">
 <a class="reference internal image-reference" href="https://www.baeldung.com/wp-content/uploads/sites/4/2020/12/epoch-batch-size.png"><img alt="https://www.baeldung.com/wp-content/uploads/sites/4/2020/12/epoch-batch-size.png" src="https://www.baeldung.com/wp-content/uploads/sites/4/2020/12/epoch-batch-size.png" style="width: 250px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text"><a class="reference external" href="https://www.baeldung.com/cs/epoch-neural-networks">Modulating batch size detetmines how many iterations are within one epoch</a>.</span><a class="headerlink" href="#batch-epoch-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text"><a class="reference external" href="https://www.baeldung.com/cs/epoch-neural-networks">Modulating batch size detetmines how many iterations are within one epoch</a>.</span><a class="headerlink" href="#batch-epoch-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>An <strong>epoch</strong> is defined as the point when all training samples, aka the entire dataset, has passed through the neural network once. The number of epochs controls how many times the entire dataset is cycled through and analyzed by the neural network. Related, but not necessarily as a parameter is an <strong>iteration</strong>, which is the pass of one batch through the network. If the batch size is smaller than the size of the whole dataset, then there are multiple iterations in one epoch.</p>
@@ -651,14 +607,14 @@ We need separate test data to evaluate the performance of the model because the 
 <figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="https://miro.medium.com/max/810/1*UUHvSixG7rX2EfNFTtqBDA.gif"><img alt="https://miro.medium.com/max/810/1*UUHvSixG7rX2EfNFTtqBDA.gif" src="https://miro.medium.com/max/810/1*UUHvSixG7rX2EfNFTtqBDA.gif" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text"><a class="reference external" href="https://towardsdatascience.com/machine-learning-fundamentals-via-linear-regression-41a5d11f5220">Loss curve</a>.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text"><a class="reference external" href="https://towardsdatascience.com/machine-learning-fundamentals-via-linear-regression-41a5d11f5220">Loss curve</a>.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The <strong>accuracy metric</strong> measures the performance of a model. For example, a pixel to pixel comparison for agreement on class.</p>
 <p>Note: the <strong>activation function</strong> is also a hyper-parameter.</p>
 </section>
-<section id="common-deep-learning-algorithms-for-computer-vision">
-<h4>Common Deep Learning Algorithms for Computer Vision<a class="headerlink" href="#common-deep-learning-algorithms-for-computer-vision" title="Permalink to this heading">#</a></h4>
+<section id="types-of-machine-learning-for-computer-vision">
+<h4>Types of Machine Learning for Computer Vision<a class="headerlink" href="#types-of-machine-learning-for-computer-vision" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Image classification: classifying whole images, e.g. image with clouds, image without clouds</p></li>
 <li><p>Object detection: identifying locations of objects in an image and classifying them, e.g. identify bounding boxes of cars and planes in satellite imagery</p></li>
@@ -666,6 +622,61 @@ We need separate test data to evaluate the performance of the model because the 
 <li><p>Instance segmentation: classifying individual pixels in an image in terms of both class and individual membership, e.g. detecting unique agricultural field polygons and classifying them</p></li>
 <li><p>Generative Adversarial:  a type of image generation where synthetic images are created from real ones, e.g. creating synthetic landscapes from real landscape images</p></li>
 </ul>
+<p>For all computer vision tasks above, CNNs have played a large role in the advancement of the field. Let’s dive into what CNNs are and how they learn.</p>
+</section>
+<section id="what-are-convolutional-neural-networks">
+<h4>What are Convolutional Neural Networks?<a class="headerlink" href="#what-are-convolutional-neural-networks" title="Permalink to this heading">#</a></h4>
+<p>A Convolutional Neural Network (ConvNet/CNN) is a deep learning architecture inspired by the organization of the human visual cortex, in which individual neurons respond to stimuli within a constrained region of the visual field known as the receptive field. Several receptive fields overlap to account for the entire visual area.</p>
+<p>In artificial CNNs, an input matrix such as an image is given importance per various aspects and objects in the image through a moving, convolving receptive field. Very little pre-processing is required for CNNs relative to other classification methods as the need for upfront feature-engineering is removed. Rather, CNNs learn features on their own, provided enough training time and informative examples.</p>
+<figure class="align-default" id="convolution-fig">
+<a class="reference internal image-reference" href="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif"><img alt="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif" src="https://miro.medium.com/max/1400/1*Fw-ehcNBR9byHtho-Rxbtw.gif" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Convolution of a kernal over an input matrix from <a class="reference external" href="https://towardsdatascience.com/intuitively-understanding-convolutions-for-deep-learning-1f6f42faee1">https://towardsdatascience.com/intuitively-understanding-convolutions-for-deep-learning-1f6f42faee1</a>.</span><a class="headerlink" href="#convolution-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="what-is-a-kernel-filter">
+<h4>What is a kernel/filter?<a class="headerlink" href="#what-is-a-kernel-filter" title="Permalink to this heading">#</a></h4>
+<p>A kernel is a matrix smaller than the input. It acts as a receptive field that moves over the input matrix from left to right and top to bottom and filters for features in the image. Depending on the contents of the kernel, it may activate when passed over different edges or shapes.</p>
+</section>
+<section id="what-is-stride">
+<h4>What is stride?<a class="headerlink" href="#what-is-stride" title="Permalink to this heading">#</a></h4>
+<p>Stride refers to the number of pixels that the kernel shifts at each step in its navigation of the input matrix.</p>
+</section>
+<section id="what-is-a-convolution-operation">
+<h4>What is a convolution operation?<a class="headerlink" href="#what-is-a-convolution-operation" title="Permalink to this heading">#</a></h4>
+<p>The convolution operation is the combination of two functions to produce a third function as a result. It merges two sets of information, the kernel and the input matrix.</p>
+<figure class="align-default" id="convolution-arithmetic-fig">
+<a class="reference internal image-reference" href="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif"><img alt="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif" src="https://theano-pymc.readthedocs.io/en/latest/_images/numerical_no_padding_no_strides.gif" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Convolution of a kernel over an input matrix from <a class="reference external" href="https://theano-pymc.readthedocs.io/en/latest/tutorial/conv_arithmetic.html">https://theano-pymc.readthedocs.io/en/latest/tutorial/conv_arithmetic.html</a>.</span><a class="headerlink" href="#convolution-arithmetic-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="convolution-operation-using-3d-filter">
+<h4>Convolution operation using 3D filter<a class="headerlink" href="#convolution-operation-using-3d-filter" title="Permalink to this heading">#</a></h4>
+<p>An input image is often represented as a 3D matrix with a dimension for width (pixels), height (pixels), and depth (channels). In the case of an optical image with red, green and blue channels, the kernel/filter matrix is shaped with the same channel depth as the input and the weighted sum of dot products is computed across all 3 dimensions.</p>
+</section>
+<section id="what-is-padding">
+<h4>What is padding?<a class="headerlink" href="#what-is-padding" title="Permalink to this heading">#</a></h4>
+<p>After a convolution operation, the feature map is by default smaller than the original input matrix.</p>
+<figure class="align-default" id="multi-layer-cnn-fig">
+<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png"><img alt="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png" src="https://www.researchgate.net/profile/Sheraz-Khan-14/publication/321586653/figure/fig4/AS:568546847014912&#64;1512563539828/The-LeNet-5-Architecture-a-convolutional-neural-network.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text"><a class="reference external" href="https://www.researchgate.net/figure/The-LeNet-5-Architecture-a-convolutional-neural-network_fig4_321586653">Progressive downsizing of feature maps in a multi-layer CNN</a>.</span><a class="headerlink" href="#multi-layer-cnn-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To maintain the same spatial dimensions between input matrix and output feature map, we may pad the input matrix with a border of zeroes or ones. There are two types of padding:</p>
+<ol class="arabic simple">
+<li><p>Same padding: a border of zeroes or ones is added to match the input/output dimensions</p></li>
+<li><p>Valid padding: no border is added and the output dimensions are not matched to the input</p></li>
+</ol>
+<figure class="align-default" id="padding-fig">
+<a class="reference internal image-reference" href="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png"><img alt="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png" src="https://miro.medium.com/max/666/1*noYcUAa_P8nRilg3Lt_nuA.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text"><a class="reference external" href="https://ayeshmanthaperera.medium.com/what-is-padding-in-cnns-71b21fb0dd7">Padding an input matrix with zeroes</a>.</span><a class="headerlink" href="#padding-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="semantic-segmentation">
 <h4>Semantic Segmentation<a class="headerlink" href="#semantic-segmentation" title="Permalink to this heading">#</a></h4>
@@ -711,6 +722,15 @@ We need separate test data to evaluate the performance of the model because the 
 </section>
 </section>
 </section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="transformers-and-self-attention">
+<h1>Transformers and Self Attention<a class="headerlink" href="#transformers-and-self-attention" title="Permalink to this heading">#</a></h1>
+<p>The Transformer model was introduced in the paper “Attention is all you Need”. It motivates the Transformer and self attention for a few reasons:</p>
+<ul class="simple">
+<li><p>For modeling with sequences, like pixel time series, or lengths of text, RNNs are hard to parallelize and difficult to train.</p></li>
+<li><p>CNN based methods increase the number of computations needed to relate two input positions. So it is harder for a CNN based sequence model to capture long term memory effects</p></li>
+<li><p>In contrast, multi-head self attention and the transformer architecture are easier to train, easy to parallelize, and input values can be related to each other in constant time no matter how far apart they are.</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -780,21 +800,20 @@ We need separate test data to evaluate the performance of the model because the 
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to machine learning, neural networks and deep learning</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-machine-learning">What is Machine Learning?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-deep-learning">What is Deep Learning?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-neural-networks">What are Neural Networks?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-testing-data">Training and Testing Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-propagation-hyper-parameters-and-learnable-parameters">Forward and backward propagation, hyper-parameters, and learnable parameters</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-machine-learning-for-computer-vision">Types of Machine Learning for Computer Vision</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-convolutional-neural-networks">What are Convolutional Neural Networks?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-kernel-filter">What is a kernel/filter?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-stride">What is stride?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-convolution-operation">What is a convolution operation?</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolution-operation-using-3d-filter">Convolution operation using 3D filter</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-padding">What is padding?</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-deep-learning">What is Deep Learning?</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-testing-data">Training and Testing Data</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-propagation-hyper-parameters-and-learnable-parameters">Forward and backward propagation, hyper-parameters, and learnable parameters</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#common-deep-learning-algorithms-for-computer-vision">Common Deep Learning Algorithms for Computer Vision</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-segmentation">Semantic Segmentation</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#u-net-segmentation-architecture">U-Net Segmentation Architecture</a></li>
 </ul>
@@ -802,6 +821,10 @@ We need separate test data to evaluate the performance of the model because the 
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers-and-self-attention">Transformers and Self Attention</a></li>
+</ul>
+
   </nav></div>
 
 </div></div>

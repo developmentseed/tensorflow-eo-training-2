@@ -5,6 +5,8 @@ chapters:
 - file: docs/Lesson2a_Intro_to_Google_Colab
 - file: docs/Lesson2b_Intro_TensorFlow_Keras
 - file: docs/Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth
+- file: docs/Lesson3_Intro_tensors_functions_datasets
+- file: docs/Lesson4b_Integrations_with_Google_Cloud_Platform
 - file: docs/Lesson5a_prep_data_ML_segmentation
 - file: docs/Lesson5b_deeplearning_crop_segmentation
 - file: docs/Lesson6a_evaluation
