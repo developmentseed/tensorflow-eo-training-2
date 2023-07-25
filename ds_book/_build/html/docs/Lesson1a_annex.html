@@ -149,11 +149,18 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
@@ -461,17 +468,17 @@ document.write(`
 <section id="what-is-machine-learning">
 <h3>What is Machine Learning?<a class="headerlink" href="#what-is-machine-learning" title="Permalink to this heading">#</a></h3>
 <p>Machine learning (ML) is a subset of artificial intelligence (AI), which in broad terms, is defined as the ability of a machine to simulate intelligent human behavior.</p>
-<p>The intention of AI and by relation, ML, is to enable machines to learn patterns and subsequently automate certain tasks using sequestered knowledge. These tasks, which are otherwise nominally performed by humans, typically emote complex characteristics that a human similarly learns through pattern recognition.</p>
-<p>Machine learning was coined in the 1950s by AI pioneer Arthur Samuel as the “field of study that gives computers the ability to learn without explicitly being programmed.”</p>
-<p>To illustrate the importance of ML, we may compare traditional programming and ML. Whereas the former requires humans to create the program with detailed instructions for the computer to follow, ML allows the computer to program itself and learn the instructions through self-guided interaction and analysis. This difference confers benefits in many ways, namely:</p>
+<p>The intention of AI and by relation, ML, is to enable machines to learn patterns and automate certain tasks with learned knowledge. Machine learning was coined in the 1950s by AI pioneer Arthur Samuel as the “field of study that gives computers the ability to learn without explicitly being programmed.”</p>
+<p>To illustrate the importance of ML, we can compare traditional programming and ML. Whereas the former requires humans to create the program with detailed instructions for the computer to follow, ML allows the computer to program itself and learn the instructions through self-guided interaction and analysis. This difference confers benefits in many ways, including:</p>
 <ol class="arabic simple">
-<li><p>time savings on behalf of the human programmer,</p></li>
-<li><p>time savings on behalf of a human manual interpreter,</p></li>
-<li><p>overhead involved in describing step-wise instructions for a complex task such as, for example, how to recognize natural oil seeps versus anthropogenically-derived oil splills in satellite imagery</p></li>
+<li><p>Less time is needed to run model predictions than to develop a logical system to process data in the same way,</p></li>
+<li><p>Less time is needed to run model predictions than for a human image interpreter to create labeled data,</p></li>
+<li><p>For a given dataset, a model will return the same result, whereas human interpretations will vary.</p></li>
 </ol>
-<p>At its core, machine learning is founded on the consumption of data, and ideally lots of it. ML learns from data provided to it, and generally speaking, the more data the smarter the model. The model trains itself to recognize patterns and features in the data, which then enables it to make predictions about related subject matter.</p>
-<p>Humans still have a role in this process. The appropriate ML algorithm has to be selected and supplied with useful information. Furthermore, human programmers can bootstrap an ML model and help reduce its learning curve by tuning certain parameters.</p>
-<p>There are several subcategories of machine learning:</p>
+<p>At its core, machine learning is founded on the consumption of data, and lots of it. Generally speaking, more data results in a smarter model. The model trains itself to recognize patterns and features in the data, which then enables it to make predictions about related subject matter.</p>
+<p>Humans still have a role in this process. Much of this role entails curating a high quality dataset. In the case of supervised machine learning, this requires samples that have informative signals and labels that accurately reflect the phenomena of interest. Humans also need to select the appropriate ML algorithm and supply it with useful information. Furthermore, human programmers can help an ML model train more efficiently by tuning certain parameters.</p>
+<p>There are several subcategories of machine learning. The following chart compares how data flows through different kinds of ML models.</p>
+<p><img alt="" src="../_images/ml_types.png" /></p>
 <ol class="arabic simple">
 <li><p><strong>Supervised machine learning</strong> involves training a model with labeled data sets that explicitly give examples of predictive features and their target attribute(s). Most geospatial ML applications are of this type, such as the task of supplying ground truth labels of deforestation events with corresponding satellite imagery to a model during training so that it can predict deforestation events in satellite imagery absent of labels.</p></li>
 <li><p><strong>Unsupervised machine learning</strong> involves tasking a model to search for patterns in data without the guidance of labels. This is often used to explore data and find patterns that human programmers aren’t explicitly looking for, or when ground truth labels don’t exist. As another geospatial example, unsupervised ML might be used to classify land cover without expert knowledge of a specific terrain and its land use categories. For classification, one would manually assign labels to clusters after an unsupervised algorithm is run to find clusters in a dataset.</p></li>
