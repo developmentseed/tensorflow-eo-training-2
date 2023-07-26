@@ -1010,28 +1010,18 @@ print(x_stretch * y_stretch)  # Again, operator overloading
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Tensors can be strings, too here is a scalar string.
-scalar_string_tensor = tf.constant(&quot;Gray wolf&quot;)
+scalar_string_tensor = tf.constant(&quot;Lima Peru&quot;)
 print(scalar_string_tensor)
 </pre></div>
 </div>
 </div>
 </div>
-<p>And an example vector of strings:</p>
-<table>
-<tr>
-  <th>A vector of strings, shape: <code>[3,]</code></th>
-</tr>
-<tr>
-  <td>
-<img src="https://github.com/tensorflow/docs/blob/master/site/en/guide/images/tensor/strings.png?raw=1" alt="The string length is not one of the tensor's axes.">
-  </td>
-</tr>
-</table><div class="cell docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># If you have three string tensors of different lengths, this is OK.
-tensor_of_strings = tf.constant([&quot;Gray wolf&quot;,
-                                 &quot;Quick brown fox&quot;,
-                                 &quot;Lazy dog&quot;])
+tensor_of_strings = tf.constant([&quot;Lima Peru&quot;,
+                                 &quot;NASA SERVIR&quot;,
+                                 &quot;Development Seed&quot;])
 # Note that the shape is (3,). The string length is not included.
 print(tensor_of_strings)
 </pre></div>
@@ -1058,16 +1048,7 @@ print(tf.strings.split(tensor_of_strings))
 </div>
 </div>
 </div>
-<table>
-<tr>
-  <th>Three strings split, shape: <code>[3, None]</code></th>
-</tr>
-<tr>
-  <td>
-<img src="https://github.com/tensorflow/docs/blob/master/site/en/guide/images/tensor/string-split.png?raw=1" alt="Splitting multiple strings returns a tf.RaggedTensor">
-  </td>
-</tr>
-</table><p>And we also have <code class="docutils literal notranslate"><span class="pre">tf.string.to_number</span></code>:</p>
+<p>And we also have <code class="docutils literal notranslate"><span class="pre">tf.string.to_number</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>text = tf.constant(&quot;1 10 100&quot;)
