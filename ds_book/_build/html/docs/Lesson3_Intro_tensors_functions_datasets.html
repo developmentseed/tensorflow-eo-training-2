@@ -159,6 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
 
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
 
 
@@ -452,6 +453,7 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 </ul>
 
             </nav>
@@ -466,6 +468,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensors-tensorflow-functions-and-tensorflow-datasets">
 <h1>Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets<a class="headerlink" href="#introduction-to-tensors-tensorflow-functions-and-tensorflow-datasets" title="Permalink to this heading">#</a></h1>
+<p>In this tutorial, we will learn about some key aspects of TensorFlow. We will start by discussing tensors, then we will talk about <code class="docutils literal notranslate"><span class="pre">tf.function</span></code>s and when to use them. Lastly we will discuss <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> methods and how to create tensor-formatted datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import tensorflow as tf
@@ -1037,13 +1040,6 @@ print(tensor_of_strings)
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">b</span></code> prefix in the above printout indicates that the <code class="docutils literal notranslate"><span class="pre">tf.string</span></code> dtype is a byte-string, not a unicode string. For more on how to use unicode text in TensorFlow see the <a class="reference external" href="https://www.tensorflow.org/tutorials/load_data/unicode">Unicode Tutorial</a>.</p>
 <p>Also worth noting, unicode characters in TensorFlow are utf-8 encoded.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.constant(&quot;🥳👍&quot;)
-</pre></div>
-</div>
-</div>
-</div>
 <p><code class="docutils literal notranslate"><span class="pre">tf.strings</span></code> contains some basic string operations, including <code class="docutils literal notranslate"><span class="pre">tf.strings.split</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1112,7 +1108,7 @@ print(tf.sparse.to_dense(sparse_tensor))
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="functions">
 <h1>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h1>
-<p>In TensorFlow 2, <span class="xref myst">eager execution</span> mode is on by default. This mode emables intuitive use, rapid experimentation and flexibility. However, this mode faces limits with performance and deployability.</p>
+<p>In TensorFlow 2, <span class="xref myst">eager execution</span> mode is on by default. This mode enables intuitive use, rapid experimentation and flexibility. However, this mode faces limits with performance and deployability.</p>
 <p><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is used to make graphs out of programs. The critical case for it is when we need to build Python-independent dataflow graphs from Python code, with goal of creating performant and portable models. In fact, compiling in <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is required to use the <code class="docutils literal notranslate"><span class="pre">SavedModel</span></code> class.</p>
 <p>We will discuss some of the main uses for <code class="docutils literal notranslate"><span class="pre">tf.function</span></code>.</p>
 <p>Before that, it’s worth knowing how and when <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is recommended:</p>
@@ -1221,6 +1217,59 @@ good_consume_next(iterator)
 </section>
 </section>
 </section>
+<section class="tex2jax_ignore mathjax_ignore" id="data">
+<h1>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">API</a> represents methods to create tensor-formatted datasets out of many different types of data. It’s also used in the making of data pipelines.</p>
+<p>Usage of the API follows the below pattern:</p>
+<ul class="simple">
+<li><p>Create a dataset from your input data.</p></li>
+<li><p>Iterate over the dataset, applying any dataset transformations to the data.</p></li>
+</ul>
+<p>Note that iteration occurs through streaming, so it dones’t matter if a full dataset can’t fit into memory.</p>
+<p>The simplest example of creating a dataset is from a python list:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dataset = tf.data.Dataset.from_tensor_slices([1, 2, 3])
+for element in dataset:
+  print(element)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Transformations:
+With a dataset, you can use transformations to prepare the data. In machine learning, sometimes we want to augment our data with image flips and rotations for example. Those could be done in the pipeline too.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dataset = tf.data.Dataset.from_tensor_slices([1, 2, 3])
+dataset = dataset.map(lambda x: x*2)
+list(dataset.as_numpy_iterator())
+</pre></div>
+</div>
+</div>
+</div>
+<p>Common Terms:</p>
+<ul class="simple">
+<li><p><strong>Element</strong>: A single result from calling next() on a dataset iterator. Elements are sometimes nested structures containing multiple components.</p></li>
+<li><p><strong>Component</strong>: The single part in a nested structure of an element.</p></li>
+</ul>
+<p>Supported types:</p>
+<p>As nested structures, elements can contain tuples, named tuples, and dictionaries. This is different behavior than that of Python lists. Instead, Python lists require conversion to tensors and then may be treated as components. Element components can express as any type represented in <code class="docutils literal notranslate"><span class="pre">tf.TypeSpec</span></code>, which includes <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.data.Datase</span></code>t, <code class="docutils literal notranslate"><span class="pre">tf.sparse.SparseTensor</span></code>, and <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a = 1 # Integer element
+b = 2.0 # Float element
+c = (1, 2) # Tuple element with 2 components
+d = {&quot;a&quot;: (2, 2), &quot;b&quot;: 3} # Dict element with 3 components
+Point = collections.namedtuple(&quot;Point&quot;, [&quot;x&quot;, &quot;y&quot;])
+e = Point(1, 2) # Named tuple
+f = tf.data.Dataset.range(10) # Dataset element
+</pre></div>
+</div>
+</div>
+</div>
+<p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection and more on the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators (datat pipes) in a follow up lesson.</p>
+<p>This notebook was adapted from <a class="reference external" href="https://www.tensorflow.org/guide/tensor">Introduction to Tensors</a>, <a class="reference external" href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/guide/function.ipynb#scrollTo=HQrG5_kOiKl_">TensorFlow Functions</a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset API</a>.</p>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1313,6 +1362,7 @@ good_consume_next(iterator)
 </li>
 </ul>
 </li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
 </ul>
 
   </nav></div>
