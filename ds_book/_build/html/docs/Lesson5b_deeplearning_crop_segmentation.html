@@ -151,11 +151,20 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
 
 
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
@@ -1270,7 +1279,7 @@ The code below loads foreground examples randomly.</p>
 <figure class="align-default" id="unet-mobilenetv2-arch-arch-fig">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1"><img alt="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1" src="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">U-shaped MobileNetV2 (adapted U-Net) architecture diagram (from <a class="reference external" href="https://www.researchgate.net/publication/339266308_Surface-Defect_Segmentation_using_U-shaped_Inverted_Residuals">Sarakon et al., 2019</a>).</span><a class="headerlink" href="#unet-mobilenetv2-arch-arch-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">U-shaped MobileNetV2 (adapted U-Net) architecture diagram (from <a class="reference external" href="https://www.researchgate.net/publication/339266308_Surface-Defect_Segmentation_using_U-shaped_Inverted_Residuals">Sarakon et al., 2019</a>).</span><a class="headerlink" href="#unet-mobilenetv2-arch-arch-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The reason to output nine channels is because there are nine possible labels for each pixel. Think of this as multi-classification where each pixel is being classified into nine classes.</p>
