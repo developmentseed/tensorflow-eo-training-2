@@ -431,6 +431,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-axis-indexing">Single-axis indexing</a></li>
@@ -483,6 +484,7 @@ import numpy as np
 <p>A tensor is a multi-dimensional array with a consistent type (known as a <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).  All supported <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> cna be seen with <code class="docutils literal notranslate"><span class="pre">tf.dtypes.DType</span></code>.</p>
 <p>Tensors are similar to <a class="reference external" href="https://numpy.org/devdocs/user/quickstart.html">NumPy</a>  <code class="docutils literal notranslate"><span class="pre">np.arrays</span></code>.</p>
 <p>Tensors are immutable, just like Python numbers and strings. The contents of a tensor can never be updated; only new ones can be created.</p>
+<p>Note that we will use <code class="docutils literal notranslate"><span class="pre">tf.constant</span></code> regularly, and sometimes you’ll see <code class="docutils literal notranslate"><span class="pre">tf.variable</span></code> for similarly looking assignments. The difference between the two in TensorFlow usage is that, the value assigned to a constant cannot be changed in the future; it is static and the initialization is with a value, not an operation. Whereas for variable, the initialization can be a value or an operation, both of which can change. Can you guess where in the machine learning life cycle we would want to use variables instead of constants?</p>
 <p>A “scalar” is a “rank-0” tensor. It contains a single value and no “axes”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -645,6 +647,31 @@ print(tf.nn.softmax(c))
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.reduce_max(np.array([1,2,3])) # NumPy array
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
+<p>As previously mentioned, normal <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>s are immutable. However, some objects will change ovr time, like the trainable weights in a machine learning model. We want to store these values so in order to do so, we need a tensor that can change. Enter the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var = tf.Variable([0.0, 0.0, 0.0]) # example rank 1 variable
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign([1, 2, 3]) # change / re-assign the contents of the variable
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign_add([1, 1, 1]) # change the contents of the variable using an operation
 </pre></div>
 </div>
 </div>
@@ -1097,6 +1124,16 @@ print(tf.sparse.to_dense(sparse_tensor))
 <li><p>Debugging is best done in eager mode, then functions from that should be decorated with <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code>.</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> to avoid on Python side effects like object mutation or list appends.</p></li>
 </ul>
+<p>Some notes on Keras w.r.t. <code class="docutils literal notranslate"><span class="pre">tf.function</span></code>:</p>
+<p>For machine learning, if you don’t need low-level control of your model training, use the Keras API.</p>
+<ul class="simple">
+<li><p>The Keras API accepts NumPy arrays, Python generators and, tf.data.Datasets.</p></li>
+<li><p>It abstracts away the implementation of regularization, activation, and loss calculation, all of which are easily included.</p></li>
+<li><p>The Keras API supports <code class="docutils literal notranslate"><span class="pre">tf.distribute</span></code> to increase the compute efficiency regardless of the hardware configuration.</p></li>
+<li><p>It supports arbitrary/custom losses and metrics.</p></li>
+<li><p>The Keras API supports callbacks such as <code class="docutils literal notranslate"><span class="pre">tf.keras.callbacks.TensorBoard</span></code> for enhanced logging and visualization, and also custom callbacks.</p></li>
+<li><p>It is easy to use and performant, as it automatically uses TensorFlow graphs under the hood.</p></li>
+</ul>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
 <p>A <code class="docutils literal notranslate"><span class="pre">Function</span></code> in TensorFlow, (which can be created by adding the <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> decorator) behaves like a core TensorFlow operation. It can be executed eagerly.</p>
@@ -1150,10 +1187,9 @@ print(&quot;Note how there&#39;s not much difference in performance for convolut
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@tf.function(input_signature=(tf.TensorSpec(shape=[None], dtype=tf.int32),))
 def g(x):
-  print(&#39;Tracing with&#39;, x)
+  print(x)
   return x
 
-# No retrace!
 print(g(tf.constant([1, 2, 3])))
 print(g(tf.constant([1, 2, 3, 4, 5])))
 </pre></div>
@@ -1248,7 +1284,27 @@ f = tf.data.Dataset.range(10) # Dataset element
 </div>
 </div>
 </div>
-<p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection and more on the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators (datat pipes) in a follow up lesson.</p>
+<p>We can directly read images and labels from <code class="docutils literal notranslate"><span class="pre">np.array</span></code> format into <code class="docutils literal notranslate"><span class="pre">tf.data.dataset</span></code>. In the below example, we are creating synthetic 3 channel images and single channel labels with uniform spatial dimensions and subsequently reading them into a dataset using the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices</span></code> method. This works if you can fit the NumPy arrays in memory for the images and labels, but if not you’ll need to use a data pipe (example in later tutorial).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>image1, image2, image3 = np.zeros((3, 10,10)), np.zeros((3, 10,10)), np.zeros((3, 10,10))
+label1, label2, label3 = np.ones((10,10)), np.ones((10,10)), np.ones((10,10))
+
+images = [image1, image2, image3]
+labels = [label1, label2, label3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dataset = tf.data.Dataset.from_tensor_slices((images, labels))
+dataset
+</pre></div>
+</div>
+</div>
+</div>
+<p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection and more on the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators (data pipes) in a follow up lesson.</p>
 <p>This notebook was adapted from <a class="reference external" href="https://www.tensorflow.org/guide/tensor">Introduction to Tensors</a>, <a class="reference external" href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/guide/function.ipynb#scrollTo=HQrG5_kOiKl_">TensorFlow Functions</a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset API</a>.</p>
 </section>
 
@@ -1321,6 +1377,7 @@ f = tf.data.Dataset.range(10) # Dataset element
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-axis-indexing">Single-axis indexing</a></li>
