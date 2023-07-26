@@ -159,7 +159,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
 
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
 
 
 
@@ -504,7 +506,7 @@ document.write(`
 <figure class="align-default" id="sundarbans-fig">
 <a class="reference internal image-reference" href="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png"><img alt="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png" src="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">A flooded forest in Sundarbans National Park, India [<a class="reference external" href="https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929">https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929</a>).</span><a class="headerlink" href="#sundarbans-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">A flooded forest in Sundarbans National Park, India [<a class="reference external" href="https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929">https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929</a>).</span><a class="headerlink" href="#sundarbans-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The example above, a mangrove in Sundarban National Park, India, illustrates many of these difficulties. While rivers have relatively clear cut boundaries, flooded zones in the center of the image are more complex, with many dfferent land cover types mixed together in a close setting. When looking at the image on the left, some considerations for setting up an annotation would be:</p>
@@ -542,7 +544,7 @@ document.write(`
 <figure class="align-default" id="lulc-labeling">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1"><img alt="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1" src="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Our Data Team labeling segments in a complex scene using JOSM, the Java Open Street Map Editor.</span><a class="headerlink" href="#lulc-labeling" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Our Data Team labeling segments in a complex scene using JOSM, the Java Open Street Map Editor.</span><a class="headerlink" href="#lulc-labeling" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>LULC classes are often directly adjacent to each other. Therefore, it can be very helpful to annotate in a platform that supports snapping edges to existing annotations and editing both in tandem, as the gif demonstrates. The background class does not need to be annotated manually.</p>
@@ -561,7 +563,7 @@ document.write(`
 <figure class="align-default" id="marine-debris-detection-with-planet-labs">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1"><img alt="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1" src="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">An annotated Planet Labs image containing marine plastic pollution.</span><a class="headerlink" href="#marine-debris-detection-with-planet-labs" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">An annotated Planet Labs image containing marine plastic pollution.</span><a class="headerlink" href="#marine-debris-detection-with-planet-labs" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In this case, Lilly’s AOI was the entire ocean. a simple random sample of the whole ocean, or even all coastlines or major currents, would result in an overhelming amount of the background class. Instead annotation areas were targeted based on geolocated reports of marine debris. An approach DevSeed uses in a lot of projects is to try to develop as many represnetative sampels of the main class of interest as possible, and additionally develop representative samples of hard negatives (which look like the class of interest). We then control the amount of “easy negatives” that are introduced in the training set so that we minimize class imbalance.</p>

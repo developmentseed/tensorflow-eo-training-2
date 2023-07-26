@@ -164,6 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
@@ -430,9 +431,13 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-tensor-shapes">Interpreting tensor shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-tensors-often-used">Types of tensors often used</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-axis-indexing">Single-axis indexing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-axis-indexing">Multi-axis indexing</a></li>
@@ -454,7 +459,10 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-pipelines">Data pipelines</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -481,10 +489,20 @@ import numpy as np
 <section id="basics-of-tensors">
 <h2>Basics of tensors<a class="headerlink" href="#basics-of-tensors" title="Permalink to this heading">#</a></h2>
 <p>Let’s create some basic tensors.</p>
-<p>A tensor is a multi-dimensional array with a consistent type (known as a <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).  All supported <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> cna be seen with <code class="docutils literal notranslate"><span class="pre">tf.dtypes.DType</span></code>.</p>
+<p>A tensor is a multi-dimensional array with a consistent type (known as a <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).  All supported <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> can be seen with <code class="docutils literal notranslate"><span class="pre">tf.dtypes.DType</span></code>.</p>
 <p>Tensors are similar to <a class="reference external" href="https://numpy.org/devdocs/user/quickstart.html">NumPy</a>  <code class="docutils literal notranslate"><span class="pre">np.arrays</span></code>.</p>
 <p>Tensors are immutable, just like Python numbers and strings. The contents of a tensor can never be updated; only new ones can be created.</p>
-<p>Note that we will use <code class="docutils literal notranslate"><span class="pre">tf.constant</span></code> regularly, and sometimes you’ll see <code class="docutils literal notranslate"><span class="pre">tf.variable</span></code> for similarly looking assignments. The difference between the two in TensorFlow usage is that, the value assigned to a constant cannot be changed in the future; it is static and the initialization is with a value, not an operation. Whereas for variable, the initialization can be a value or an operation, both of which can change. Can you guess where in the machine learning life cycle we would want to use variables instead of constants?</p>
+<p>Note that we will use <code class="docutils literal notranslate"><span class="pre">tf.constant</span></code> regularly, and sometimes you’ll see <code class="docutils literal notranslate"><span class="pre">tf.variable</span></code> for similarly looking assignments. The difference between the two in TensorFlow usage is that, the value assigned to a constant cannot be changed in the future; it is static and the initialization is with a value, not an operation. Whereas for variable, the initialization can be a value or an operation, both of which can change. In the context of machine learning, we would want to assign the loss value as a variable as it changes with each epoch, whereas we would want to assign fixed hyper-parameters like batch size as a constant. Training samples (images for example) are also converted to tensors as constants as they don’t change.</p>
+<p>Can you guess where else in the machine learning life cycle we would want to use variables instead of constants and vice versa?</p>
+<section id="significance-of-tensor-shapes">
+<h3>Significance of Tensor shapes<a class="headerlink" href="#significance-of-tensor-shapes" title="Permalink to this heading">#</a></h3>
+<p>A tensor has a shape.  Some key terms to know:</p>
+<ul class="simple">
+<li><p><strong>Shape</strong>: Describes the number of axes and length (number of elements) in each axis of a tensor.</p></li>
+<li><p><strong>Rank</strong>: Determined by the number of axes in a tensor.</p></li>
+<li><p><strong>Axis</strong> or <strong>Dimension</strong>: A dimension of a tensor.</p></li>
+<li><p><strong>Size</strong>: The total number of elements in a tensor. This can be expressed as the product of the shape vector’s elements, e.g. a tensor shape of (256, 256, 3) will have a size of 196608.</p></li>
+</ul>
 <p>A “scalar” is a “rank-0” tensor. It contains a single value and no “axes”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,7 +513,7 @@ print(rank_0_tensor)
 </div>
 </div>
 </div>
-<p>A “vector” is a “rank-1” tensor and contains something like a list of values. A vector is characterized by having one axis.</p>
+<p>A “vector” is a “rank-1” tensor and contains something like a list of values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Let&#39;s make this a float tensor.
@@ -505,7 +523,7 @@ print(rank_1_tensor)
 </div>
 </div>
 </div>
-<p>A “matrix” is a “rank-2” tensor and it has two axes. This is what a single channel image turns out to be in tensor format.</p>
+<p>A “matrix” is a “rank-2” tensor and it has at least two axes. This is what a single channel image turns out to be in tensor format.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># If you want to be specific, you can set the dtype (see below) at creation time
@@ -569,127 +587,13 @@ print(rank_3_tensor)
    <img src="https://github.com/tensorflow/docs/blob/master/site/en/guide/images/tensor/3-axis_block.png?raw=1"/>
   </td>
 </tr>
-</table><p>NumPy arrays can be created from tensors using either the <code class="docutils literal notranslate"><span class="pre">np.array</span></code> or <code class="docutils literal notranslate"><span class="pre">tensor.numpy</span></code> methods:</p>
+</table></section>
+<section id="interpreting-tensor-shapes">
+<h3>Interpreting tensor shapes<a class="headerlink" href="#interpreting-tensor-shapes" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tf.TensorShape</span></code> objects describe some key properties of tensor shapes which help us understand the dimensionality of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>np.array(rank_2_tensor)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rank_2_tensor.numpy()
-</pre></div>
-</div>
-</div>
-</div>
-<p>Most tensors we encounter in computer vision contain floats and integers, but tensors can also represent other types, such as:</p>
-<ul class="simple">
-<li><p>complex numbers</p></li>
-<li><p>strings</p></li>
-</ul>
-<p>TensorFlow requires a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> to be “rectangular,” which means that every element along an axis is the same size. There are exceptions to this (ragged and sparse tensors, but those are more rare and mostly out of scope for now).</p>
-<p>We can calculate basic mathematical operations on tensors, such as addition, element-wise multiplication, and matrix multiplication.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a = tf.constant([[1, 2],
-                 [3, 4]])
-b = tf.constant([[1, 1],
-                 [1, 1]]) # Could have also said `tf.ones([2,2], dtype=tf.int32)`
-
-print(tf.add(a, b), &quot;\n&quot;) # element-wise addition
-print(tf.multiply(a, b), &quot;\n&quot;) # element-wise multiplication
-print(tf.matmul(a, b), &quot;\n&quot;) # matrix multiplication
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(a + b, &quot;\n&quot;) # element-wise addition
-print(a * b, &quot;\n&quot;) # element-wise multiplication
-print(a @ b, &quot;\n&quot;) # matrix multiplication
-</pre></div>
-</div>
-</div>
-</div>
-<p>Tensors are used in many types of operations (or “Ops”), such as common machine learning operations like <code class="docutils literal notranslate"><span class="pre">tf.math.argmax</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c = tf.constant([[4.0, 5.0], [10.0, 1.0]])
-
-# Find the largest value
-print(tf.reduce_max(c))
-# Find the index of the largest value
-print(tf.math.argmax(c))
-# Compute the softmax
-print(tf.nn.softmax(c))
-</pre></div>
-</div>
-</div>
-</div>
-<p>Generally, where tensors are expected, TensorFlow functions additionally accept anything that can be converted to a <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> using <code class="docutils literal notranslate"><span class="pre">tf.convert_to_tensor</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.convert_to_tensor([1,2,3]) # List
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.reduce_max([1,2,3]) # List
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.reduce_max(np.array([1,2,3])) # NumPy array
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="variables">
-<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h2>
-<p>As previously mentioned, normal <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>s are immutable. However, some objects will change ovr time, like the trainable weights in a machine learning model. We want to store these values so in order to do so, we need a tensor that can change. Enter the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var = tf.Variable([0.0, 0.0, 0.0]) # example rank 1 variable
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign([1, 2, 3]) # change / re-assign the contents of the variable
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign_add([1, 1, 1]) # change the contents of the variable using an operation
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="significance-of-tensor-shapes">
-<h2>Significance of Tensor shapes<a class="headerlink" href="#significance-of-tensor-shapes" title="Permalink to this heading">#</a></h2>
-<p>A tensor has a shape.  Some key terms to know:</p>
-<ul class="simple">
-<li><p><strong>Shape</strong>: Describes the number of axes and length (number of elements) in each axis of a tensor.</p></li>
-<li><p><strong>Rank</strong>: Determined by the number of axes in a tensor.  If you recall, scalars are rank 0, vectors rank 1, matrices rank 2.</p></li>
-<li><p><strong>Axis</strong> or <strong>Dimension</strong>: A dimension of a tensor.</p></li>
-<li><p><strong>Size</strong>: The total number of elements in a tensor. This can be expressed as the product of the shape vector’s elements, e.g. a tensor shape of (256, 256, 3) will have a size of 196608.</p></li>
-</ul>
-<p><code class="docutils literal notranslate"><span class="pre">tf.TensorShape</span></code> objects describe these key properties and more.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rank_4_tensor = tf.zeros([3, 2, 4, 5])
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rank_4_tensor = tf.zeros([3, 2, 4, 5]) # A fairly complex shape as an example
 </pre></div>
 </div>
 </div>
@@ -730,6 +634,117 @@ print(&quot;Total number of elements (3*2*4*5): &quot;, tf.size(rank_4_tensor).n
   </td>
 </tr>
 </table></section>
+<section id="types-of-tensors-often-used">
+<h3>Types of tensors often used<a class="headerlink" href="#types-of-tensors-often-used" title="Permalink to this heading">#</a></h3>
+<p>Most tensors we encounter in computer vision contain floats and integers, but tensors can also represent other types, such as:</p>
+<ul class="simple">
+<li><p>complex numbers</p></li>
+<li><p>strings</p></li>
+</ul>
+<p>TensorFlow requires a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> to be “rectangular,” which means that every element along an axis is the same size. There are exceptions to this (ragged and sparse tensors, but those are more rare).</p>
+<p>We can calculate basic mathematical operations on tensors, such as addition, element-wise multiplication, and matrix multiplication.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>a = tf.constant([[1, 2],
+                 [3, 4]])
+b = tf.constant([[1, 1],
+                 [1, 1]]) # Could have also said `tf.ones([2,2], dtype=tf.int32)`
+
+print(tf.add(a, b), &quot;\n&quot;) # element-wise addition
+print(tf.multiply(a, b), &quot;\n&quot;) # element-wise multiplication
+print(tf.matmul(a, b), &quot;\n&quot;) # matrix multiplication
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(a + b, &quot;\n&quot;) # element-wise addition
+print(a * b, &quot;\n&quot;) # element-wise multiplication
+print(a @ b, &quot;\n&quot;) # matrix multiplication
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tensors are used in many types of operations (or “Ops”), such as common machine learning operations like <code class="docutils literal notranslate"><span class="pre">tf.math.argmax</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>c = tf.constant([[4.0, 5.0], [10.0, 1.0]])
+
+# Find the largest value
+print(tf.reduce_max(c))
+# Find the index of the largest value
+print(tf.math.argmax(c))
+# Compute the softmax
+print(tf.nn.softmax(c))
+</pre></div>
+</div>
+</div>
+</div>
+<p>NumPy arrays can be created from tensors using either the <code class="docutils literal notranslate"><span class="pre">np.array</span></code> or <code class="docutils literal notranslate"><span class="pre">tensor.numpy</span></code> methods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rank_2_tensor.numpy()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>np.array(rank_2_tensor)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Generally, where tensors are expected, TensorFlow functions additionally accept anything that can be converted to a <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> using <code class="docutils literal notranslate"><span class="pre">tf.convert_to_tensor</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.convert_to_tensor([1,2,3]) # List
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.reduce_max([1,2,3]) # List
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.reduce_max(np.array([1,2,3])) # NumPy array
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<p>As previously mentioned, normal <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>s are immutable. However, some objects will change over time, like the trainable weights in a machine learning model. We want to store these values, so in order to do that, we need a tensor that can change. Enter the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var = tf.Variable([0.0, 0.0, 0.0]) # example rank 1 variable
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign([1, 2, 3]) # change / re-assign the contents of the variable
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var.assign_add([1, 1, 1]) # change the contents of the variable using an operation
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 <section id="indexing">
 <h2>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
 <section id="single-axis-indexing">
@@ -1236,7 +1251,7 @@ good_consume_next(iterator)
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="data">
 <h1>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">API</a> represents methods to create tensor-formatted datasets out of many different types of data. It’s also used in the making of data pipelines.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">API</a> represents methods to create tensor-formatted datasets out of many different types of data.</p>
 <p>Usage of the API follows the below pattern:</p>
 <ul class="simple">
 <li><p>Create a dataset from your input data.</p></li>
@@ -1304,8 +1319,19 @@ dataset
 </div>
 </div>
 </div>
-<p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection and more on the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators (data pipes) in a follow up lesson.</p>
+<section id="data-pipelines">
+<h2>Data pipelines<a class="headerlink" href="#data-pipelines" title="Permalink to this heading">#</a></h2>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators to construct data pipelines. A data pipeline is used to map a set of processing steps on a large amount of data. With such pipelines, we can stream data iteratively to the same reusable code for processing and have it contribute to the same dataset (e.g. training or validation). As an example, an image data pipeline might involve reading image files from a file system, applying random perturbations or other augmentations to each image, and then randomly shuffling and appending images to a batch for training. In essence, data pipelines built with the <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> API enable large amounts of data to be read, with support for different data formats, and complex transformations. We will explore a data pipeline in a subsequent lesson, but if you’re curious about data pipelines, you can read more via this <a class="reference external" href="https://www.tensorflow.org/guide/data">guide</a>.</p>
+<figure class="align-default" id="datapipe-fig">
+<a class="reference internal image-reference" href="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png"><img alt="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png" src="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Figure from <a class="reference external" href="https://www.kaggle.com/code/jalammar/intro-to-data-input-pipelines-with-tf-data">Intro to Data Input Pipelines with tf.data
+</a></span><a class="headerlink" href="#datapipe-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection also in a subsequent lesson.</p>
 <p>This notebook was adapted from <a class="reference external" href="https://www.tensorflow.org/guide/tensor">Introduction to Tensors</a>, <a class="reference external" href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/guide/function.ipynb#scrollTo=HQrG5_kOiKl_">TensorFlow Functions</a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset API</a>.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1376,9 +1402,13 @@ dataset
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-tensors">Basics of tensors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#significance-of-tensor-shapes">Significance of Tensor shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-tensor-shapes">Interpreting tensor shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-tensors-often-used">Types of tensors often used</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#single-axis-indexing">Single-axis indexing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-axis-indexing">Multi-axis indexing</a></li>
@@ -1400,7 +1430,10 @@ dataset
 </li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-pipelines">Data pipelines</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
