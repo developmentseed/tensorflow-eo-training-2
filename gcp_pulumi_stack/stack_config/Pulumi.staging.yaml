@@ -1,0 +1,17 @@
+encryptionsalt: xxxx
+config:
+  aws:region: us-central-1
+  project-cloud:dryrun_historical: "" # Make empty "" to turn on historical runs
+  project-cloud:dryrun_relevancy: "" # Make empty "" to turn on recurring runs
+  project-cloud:apikey:
+    secure: xxxx
+  project-cloud:data: https://storage.googleapis.com/projectml/aux_datasets/data_locations_01_cogeo.tiff
+  db:db-instance: db-f1-micro
+  db:db-password:
+    secure: xxxx
+  gcp:project: project-id
+  gcp:region: us-west1
+  gcp:zone: us-west1-b
+  scihub:password:
+    secure: xxxx
+  scihub:username: xxxx
