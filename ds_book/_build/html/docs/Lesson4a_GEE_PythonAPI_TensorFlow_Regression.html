@@ -499,11 +499,7 @@ ee.Initialize()
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import tensorflow as tf
 #print(tf.__version__)
-from tensorflow.keras import layers
-from tensorflow.keras import losses
-from tensorflow.keras import models
-from tensorflow.keras import metrics
-from tensorflow.keras import optimizers
+from tensorflow.keras import layers, losses, models, metrics, optimizers
 
 import folium, glob, json, tifffile
 from PIL import Image
@@ -889,7 +885,7 @@ validation = get_val_dataset()
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="model">
 <h1>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h1>
-<p>For our model, we will use a Keras implementation of the U-Net model.  This network implementation accepts 256x256 pixel image patches as input and outputs probabilities for each pixel (a continuous output).</p>
+<p>For our model, we will use a Keras implementation of the U-Net model, and provide the network with 256x256 pixel image patches as input. The output will be probabilities for each pixel (a continuous output).</p>
 <p>As this is a regression problem, we apply mean squared error as our loss function. As well, we implement a saturating activation function to address any artifacts that are produced from squashing the range of values to [0,1] (something we need to do to make a sensible measurement of impervious surface fraction per pixel).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1003,7 +999,7 @@ m.summary()
     image = image.select(BANDS),
     description = out_image_base,
     folder = FOLDER,
-    fileNamePrefix = f&quot;{out_image_base}&quot;, #f&quot;{SUBFOLDER}/{out_image_base}&quot;,
+    fileNamePrefix = f&quot;{out_image_base}&quot;,
     region = region.getInfo()[&#39;coordinates&#39;],
     scale = 30,
     fileFormat = &#39;TFRecord&#39;,
@@ -1035,7 +1031,7 @@ m.summary()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def doPrediction(out_image_base, user_folder, kernel_buffer, region):
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def doPrediction(out_image_base, kernel_buffer):
   &quot;&quot;&quot;Perform inference on exported imagery, upload to Earth Engine.
   &quot;&quot;&quot;
 
@@ -1161,7 +1157,6 @@ m.summary()
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Output assets
-user_folder = &#39;&#39; # INSERT YOUR FOLDER HERE.
 
 # Base file name to use for TFRecord files and assets.
 lima_image_base = &#39;FCNN_demo_lima_384_&#39;
@@ -1188,7 +1183,7 @@ doExport(lima_image_base, lima_kernel_buffer, lima_region)
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Run the prediction.
-patches = doPrediction(lima_image_base, user_folder, lima_kernel_buffer, lima_region)
+patches = doPrediction(lima_image_base, lima_kernel_buffer)
 </pre></div>
 </div>
 </div>
