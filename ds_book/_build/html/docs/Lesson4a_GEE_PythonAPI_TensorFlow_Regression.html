@@ -469,7 +469,7 @@ document.write(`
 <p>This tutorial demonstrates how to train a model to predict continuous output (regression) from geospatial data. To do this, we will use the impervious surface area dataset from <a class="reference external" href="https://www.mrlc.gov/data">NLCD</a> and a Landsat 8 composite. Both datasets will be acquired from earth engine. Using the Keras sequential API, we will show how to train a <a class="reference external" href="https://arxiv.org/abs/1505.04597">U-net</a> model to predict impervious surface area percentage for each pixel in an image. This tutorial is an adaptation of this <a class="reference external" href="https://developers.google.com/earth-engine/guides/tf_examples#regression-with-an-fcnn">example</a>.</p>
 <p>This tutorial covers:</p>
 <ol class="arabic simple">
-<li><p>Generating and exporting training/testing patches from Earth Engine.</p></li>
+<li><p>Generating and exporting training/testing patches from Google Earth Engine (henceforth referred to as Earth Engine or EE).</p></li>
 <li><p>Using an iterator to supply batches furing training and testing.</p></li>
 <li><p>Training the regression model and saving it.</p></li>
 <li><p>Generating predictions with the trained model and plotting them.</p></li>
@@ -730,6 +730,7 @@ trainingPolys.size().getInfo(), valPolys.size().getInfo()
 <section class="tex2jax_ignore mathjax_ignore" id="sampling">
 <h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">#</a></h1>
 <p>Now we will use those geometries to extract samples from the stacked image array. Within each geometry we take a 256x256 neighborhood of pixels around several points, shard them to prevent memory error and then collect them into a single tfrecord. This is done for the training and validation data separately.</p>
+<p>Note: for brevity’s sake in this tutorial, we are only sampling from 2 training geometries and 1 validation geometry. You can revise <code class="docutils literal notranslate"><span class="pre">range(2):</span> <span class="pre">#range(trainingPolys.size().getInfo())</span></code> and the corresponding line for the validation set if you wish to use all geometries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span> # Convert the feature collections to lists for iteration.
