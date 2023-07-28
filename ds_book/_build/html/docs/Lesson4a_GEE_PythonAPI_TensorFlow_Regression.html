@@ -1,0 +1,1351 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Regression using TensorFlow with Google Earth Engine Python API &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="What are cloud providers? Why might I need them for ML and Earth observation data?" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html" />
+    <link rel="prev" title="Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets" href="Lesson3_Intro_tensors_functions_datasets.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training/main?urlpath=tree/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/edit/main/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Regression using TensorFlow with Google Earth Engine Python API</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Regression using TensorFlow with Google Earth Engine Python API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-and-authentication">Imports and authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-global-parameters">Set global parameters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#imagery">Imagery</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-data">Validation data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-output">Display the output</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="regression-using-tensorflow-with-google-earth-engine-python-api">
+<h1>Regression using TensorFlow with Google Earth Engine Python API<a class="headerlink" href="#regression-using-tensorflow-with-google-earth-engine-python-api" title="Permalink to this heading">#</a></h1>
+<p>This tutorial deomnstrates how to train a model to predict continuous output (regression) from geospatial data. To do this, we will use the impervious surface area dataset from <a class="reference external" href="https://www.mrlc.gov/data">NLCD</a> and a Landsat 8 composite. Both datasets will be acquired from earth engine. Using the Keras sequential API, we will show how to train a <a class="reference external" href="https://arxiv.org/abs/1505.04597">U-net</a> model to predict impervious surface area percentage for each pixel in an image.</p>
+<p>This tutorial covers:</p>
+<ol class="arabic simple">
+<li><p>Generating and exporting training/testing patches from Earth Engine.</p></li>
+<li><p>Using an iterator to supply batches furing training and testing.</p></li>
+<li><p>Training the regression model and saving it.</p></li>
+<li><p>Generating predictions with the trained model and plotting them.</p></li>
+</ol>
+<section id="imports-and-authentication">
+<h2>Imports and authentication<a class="headerlink" href="#imports-and-authentication" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Cloud authentication.
+from google.colab import auth
+auth.authenticate_user()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Import, authenticate and initialize the Earth Engine library.
+import ee
+ee.Authenticate()
+ee.Initialize()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import tensorflow as tf
+#print(tf.__version__)
+from tensorflow.keras import layers
+from tensorflow.keras import losses
+from tensorflow.keras import models
+from tensorflow.keras import metrics
+from tensorflow.keras import optimizers
+
+import folium, glob, json, tifffile
+from PIL import Image
+import numpy as np
+from random import randrange
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import imshow
+from pprint import pprint
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from google.colab import drive
+import os
+# set your root directory and tiled data folders
+if &#39;google.colab&#39; in str(get_ipython()):
+    # mount google drive
+    drive.mount(&#39;/content/gdrive&#39;)
+    root_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-2/&#39;
+    workshop_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-workshop-2&#39;
+    dirs = [root_dir, workshop_dir]
+    for d in dirs:
+        if not os.path.exists(d):
+            os.makedirs(d)
+    print(&#39;Running on Colab&#39;)
+else:
+    root_dir = os.path.abspath(&quot;./data/tf-eo-devseed-2&quot;)
+    workshop_dir = os.path.abspath(&#39;./tf-eo-devseed-workshop-2&#39;)
+    print(f&#39;Not running on Colab, data needs to be downloaded locally at {os.path.abspath(root_dir)}&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%cd $root_dir
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-global-parameters">
+<h2>Set global parameters<a class="headerlink" href="#set-global-parameters" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Specify names locations for outputs in Cloud Storage.
+FOLDER = &#39;fcnn-demo&#39;
+PREDICTIONS = &#39;predictions&#39;
+TEST_PATCHES = &#39;test_patches&#39;
+TRAINING_BASE = &#39;training_patches&#39;
+VAL_BASE = &#39;val_patches&#39;
+
+# Specify inputs (Landsat bands) to the model and the response variable.
+opticalBands = [&#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;, &#39;B6&#39;, &#39;B7&#39;]
+thermalBands = [&#39;B10&#39;, &#39;B11&#39;]
+BANDS = opticalBands + thermalBands
+RESPONSE = &#39;impervious&#39;
+FEATURES = BANDS + [RESPONSE]
+
+# Specify the size and shape of patches expected by the model.
+KERNEL_SIZE = 256
+KERNEL_SHAPE = [KERNEL_SIZE, KERNEL_SIZE]
+COLUMNS = [
+  tf.io.FixedLenFeature(shape=KERNEL_SHAPE, dtype=tf.float32) for k in FEATURES
+]
+FEATURES_DICT = dict(zip(FEATURES, COLUMNS))
+
+# Sizes of the training and evaluation datasets.
+TRAIN_SIZE = 16000
+VAL_SIZE = 8000
+
+# Specify model training parameters.
+BATCH_SIZE = 16
+EPOCHS = 10
+BUFFER_SIZE = 2000
+OPTIMIZER = &#39;SGD&#39;
+LOSS = &#39;MeanSquaredError&#39;
+METRICS = [&#39;RootMeanSquaredError&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>dirs = [f&quot;{FOLDER}&quot;, f&quot;{FOLDER}/{PREDICTIONS}&quot;,  f&quot;{FOLDER}/{TEST_PATCHES}&quot;]
+for d in dirs:
+  if not os.path.exists(d):
+    os.makedirs(d)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!ls fcnn-demo
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imagery">
+<h1>Imagery<a class="headerlink" href="#imagery" title="Permalink to this heading">#</a></h1>
+<p>Collect and process the input imagery (cloud masking, compositing).  Display the composite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Use Landsat 8 surface reflectance data.
+l8sr = ee.ImageCollection(&#39;LANDSAT/LC08/C01/T1_SR&#39;)
+
+# Cloud masking function.
+def maskL8sr(image):
+  cloudShadowBitMask = ee.Number(2).pow(3).int()
+  cloudsBitMask = ee.Number(2).pow(5).int()
+  qa = image.select(&#39;pixel_qa&#39;)
+  mask1 = qa.bitwiseAnd(cloudShadowBitMask).eq(0).And(
+    qa.bitwiseAnd(cloudsBitMask).eq(0))
+  mask2 = image.mask().reduce(&#39;min&#39;)
+  mask3 = image.select(opticalBands).gt(0).And(
+          image.select(opticalBands).lt(10000)).reduce(&#39;min&#39;)
+  mask = mask1.And(mask2).And(mask3)
+  return image.select(opticalBands).divide(10000).addBands(
+          image.select(thermalBands).divide(10).clamp(273.15, 373.15)
+            .subtract(273.15).divide(100)).updateMask(mask)
+
+# The image input data is a cloud-masked median composite.
+image = l8sr.filterDate(&#39;2015-01-01&#39;, &#39;2017-12-31&#39;).map(maskL8sr).median()
+
+# Use folium to visualize the imagery.
+mapid = image.getMapId({&#39;bands&#39;: [&#39;B4&#39;, &#39;B3&#39;, &#39;B2&#39;], &#39;min&#39;: 0, &#39;max&#39;: 0.3})
+map = folium.Map(location=[38., -122.5])
+folium.TileLayer(
+    tiles=mapid[&#39;tile_fetcher&#39;].url_format,
+    attr=&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;,
+    overlay=True,
+    name=&#39;median composite&#39;,
+  ).add_to(map)
+
+mapid = image.getMapId({&#39;bands&#39;: [&#39;B10&#39;], &#39;min&#39;: 0, &#39;max&#39;: 0.5})
+folium.TileLayer(
+    tiles=mapid[&#39;tile_fetcher&#39;].url_format,
+    attr=&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;,
+    overlay=True,
+    name=&#39;thermal&#39;,
+  ).add_to(map)
+map.add_child(folium.LayerControl())
+map
+</pre></div>
+</div>
+</div>
+</div>
+<p>Collect the labels (impervious surface area (in fraction of a pixel)) and display.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>nlcd = ee.Image(&#39;USGS/NLCD/NLCD2016&#39;).select(&#39;impervious&#39;)
+nlcd = nlcd.divide(100).float()
+
+mapid = nlcd.getMapId({&#39;min&#39;: 0, &#39;max&#39;: 1})
+map = folium.Map(location=[38., -122.5])
+folium.TileLayer(
+    tiles=mapid[&#39;tile_fetcher&#39;].url_format,
+    attr=&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;,
+    overlay=True,
+    name=&#39;nlcd impervious&#39;,
+  ).add_to(map)
+map.add_child(folium.LayerControl())
+map
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will combine the Landsat composite and NLCD impervious surface raster into a single stacked image array. From that, we will break the image down into patches with width and height of 256 pixels.</p>
+<p>To convert the EE multi-band image collection to an image array, we use <a class="reference external" href="https://developers.google.com/earth-engine/api_docs#eeimageneighborhoodtoarray"><code class="docutils literal notranslate"><span class="pre">neighborhoodToArray()</span></code></a>, then proceed to sample the image at selective areas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>featureStack = ee.Image.cat([
+  image.select(BANDS),
+  nlcd.select(RESPONSE)
+]).float()
+
+list = ee.List.repeat(1, KERNEL_SIZE)
+lists = ee.List.repeat(list, KERNEL_SIZE)
+kernel = ee.Kernel.fixed(KERNEL_SIZE, KERNEL_SIZE, lists)
+
+arrays = featureStack.neighborhoodToArray(kernel)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use some pre-made geometries to sample the stack in strategic locations.  Specifically, these are hand-made polygons in which to take the 256x256 samples.  Display the sampling polygons on a map, red for training polygons, blue for evaluation.</p>
+<p>We will strategiclly sample the imagery using some diverse, representative geometries. The red geometries plotted below are for training, while the blue are for validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>trainingPolys = ee.FeatureCollection(&#39;projects/google/DemoTrainingGeometries&#39;)
+valPolys = ee.FeatureCollection(&#39;projects/google/DemoEvalGeometries&#39;)
+
+polyImage = ee.Image(0).byte().paint(trainingPolys, 1).paint(valPolys, 2)
+polyImage = polyImage.updateMask(polyImage)
+
+mapid = polyImage.getMapId({&#39;min&#39;: 1, &#39;max&#39;: 2, &#39;palette&#39;: [&#39;red&#39;, &#39;blue&#39;]})
+map = folium.Map(location=[38., -100.], zoom_start=5)
+folium.TileLayer(
+    tiles=mapid[&#39;tile_fetcher&#39;].url_format,
+    attr=&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;,
+    overlay=True,
+    name=&#39;training polygons&#39;,
+  ).add_to(map)
+map.add_child(folium.LayerControl())
+map
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># How many polygons do we have in total?
+trainingPolys.size().getInfo(), valPolys.size().getInfo()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sampling">
+<h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">#</a></h1>
+<p>Now we will use those geometries to extract samples from the stacked image array. Within each geometry we take a 256x256 neighborhood of pixels around several points, shard them to prevent memory error and then collect them into a single tfrecord. This is done for the training and validation data separately.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> # Convert the feature collections to lists for iteration.
+trainingPolysList = trainingPolys.toList(trainingPolys.size())
+valPolysList = valPolys.toList(valPolys.size())
+
+# These numbers determined experimentally.
+n = 200 # Number of shards in each polygon.
+N = 2000 # Total sample size in each polygon.
+
+# Export all the training data (in many pieces), with one task
+# per geometry.
+for g in range(2): #range(trainingPolys.size().getInfo()):
+  geomSample = ee.FeatureCollection([])
+  for i in range(n):
+    sample = arrays.sample(
+      region = ee.Feature(trainingPolysList.get(g)).geometry(),
+      scale = 30,
+      numPixels = N / n, # Size of the shard.
+      seed = i,
+      tileScale = 8
+    )
+    geomSample = geomSample.merge(sample)
+    #print(geomSample)
+
+  desc = TRAINING_BASE + &#39;_g&#39; + str(g)
+  task = ee.batch.Export.table.toDrive(
+    collection = geomSample,
+    description = desc,
+    folder = FOLDER,
+    fileNamePrefix = desc,
+    fileFormat = &#39;TFRecord&#39;,
+    selectors = BANDS + [RESPONSE]
+  )
+  print(FOLDER, desc)
+  task.start()
+
+# Export all the evaluation data.
+for g in range(1): #range(valPolys.size().getInfo()):
+  geomSample = ee.FeatureCollection([])
+  for i in range(n):
+    sample = arrays.sample(
+      region = ee.Feature(valPolysList.get(g)).geometry(),
+      scale = 30,
+      numPixels = N / n,
+      seed = i,
+      tileScale = 8
+    )
+    geomSample = geomSample.merge(sample)
+
+  desc = VAL_BASE + &#39;_g&#39; + str(g)
+  task = ee.batch.Export.table.toDrive(
+    collection = geomSample,
+    description = desc,
+    folder = FOLDER,
+    fileNamePrefix = desc,
+    fileFormat = &#39;TFRecord&#39;,
+    selectors = BANDS + [RESPONSE]
+  )
+  print(FOLDER, desc)
+  task.start()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="training-data">
+<h1>Training data<a class="headerlink" href="#training-data" title="Permalink to this heading">#</a></h1>
+<p>Now that we have exported a TFRecord from Earth Engine, let’s load it into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.  Unfortunately, there isn’t a path to load the data directly from Earth Engine into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def parse_tfrecord(example_proto):
+  &quot;&quot;&quot;The parsing function.
+  Read a serialized example into the structure defined by FEATURES_DICT.
+  Args:
+    example_proto: a serialized Example.
+  Returns:
+    A dictionary of tensors, keyed by feature name.
+  &quot;&quot;&quot;
+  return tf.io.parse_single_example(example_proto, FEATURES_DICT)
+
+
+def to_tuple(inputs):
+  &quot;&quot;&quot;Function to convert a dictionary of tensors to a tuple of (inputs, outputs).
+  Turn the tensors returned by parse_tfrecord into a stack in HWC shape.
+  Args:
+    inputs: A dictionary of tensors, keyed by feature name.
+  Returns:
+    A tuple of (inputs, outputs).
+  &quot;&quot;&quot;
+  inputsList = [inputs.get(key) for key in FEATURES]
+  stacked = tf.stack(inputsList, axis=0)
+  # Convert from CHW to HWC
+  stacked = tf.transpose(stacked, [1, 2, 0])
+  return stacked[:,:,:len(BANDS)], stacked[:,:,len(BANDS):]
+
+
+def get_dataset(pattern):
+  &quot;&quot;&quot;Function to read, parse and format to tuple a set of input tfrecord files.
+  Get all the files matching the pattern, parse and convert to tuple.
+  Args:
+    pattern: A file pattern to match in a Cloud Storage bucket.
+  Returns:
+    A tf.data.Dataset
+  &quot;&quot;&quot;
+  glob = tf.io.gfile.glob(pattern)
+  dataset = tf.data.TFRecordDataset(glob, compression_type=&#39;GZIP&#39;)
+  dataset = dataset.map(parse_tfrecord, num_parallel_calls=5)
+  dataset = dataset.map(to_tuple, num_parallel_calls=5)
+  return dataset
+</pre></div>
+</div>
+</div>
+</div>
+<p>Parse the training dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_training_dataset():
+	&quot;&quot;&quot;Get the preprocessed training dataset
+  Returns:
+    A tf.data.Dataset of training data.
+  &quot;&quot;&quot;
+	globb = FOLDER + &#39;/&#39; + TRAINING_BASE + &#39;*&#39;
+	dataset = get_dataset(globb)
+	dataset = dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE).repeat()
+	return dataset
+
+training = get_training_dataset()
+
+#print(iter(training.take(1)).next())
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="validation-data">
+<h1>Validation data<a class="headerlink" href="#validation-data" title="Permalink to this heading">#</a></h1>
+<p>Parse the validation dataset.  Note that the validation dataset has a batch size of 1 which is different from the training dataset. Another distinction is that the validation dataset is not shuffled.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_val_dataset():
+	&quot;&quot;&quot;Get the preprocessed validation dataset
+  Returns:
+    A tf.data.Dataset of validation data.
+  &quot;&quot;&quot;
+	globb = FOLDER + &#39;/&#39; VAL_BASE + &#39;*&#39;
+	dataset = get_dataset(globb)
+	dataset = dataset.batch(1).repeat()
+	return dataset
+
+validation = get_val_dataset()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model">
+<h1>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h1>
+<p>For our model, we will use a Keras implementation of the U-Net model.  This network implementation accepts 256x256 pixel image patches as input and outputs probabilities for each pixel (a continuous output).</p>
+<p>As this is a regression problem, we apply mean squared error as our loss function. As well, we implement a saturating activation function to address any artifacts that are produced from squashing the range of values to [0,1] (something we need to do to make a sensible measurement of impervious surface fraction per pixel).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def conv_block(input_tensor, num_filters):
+	encoder = layers.Conv2D(num_filters, (3, 3), padding=&#39;same&#39;)(input_tensor)
+	encoder = layers.BatchNormalization()(encoder)
+	encoder = layers.Activation(&#39;relu&#39;)(encoder)
+	encoder = layers.Conv2D(num_filters, (3, 3), padding=&#39;same&#39;)(encoder)
+	encoder = layers.BatchNormalization()(encoder)
+	encoder = layers.Activation(&#39;relu&#39;)(encoder)
+	return encoder
+
+def encoder_block(input_tensor, num_filters):
+	encoder = conv_block(input_tensor, num_filters)
+	encoder_pool = layers.MaxPooling2D((2, 2), strides=(2, 2))(encoder)
+	return encoder_pool, encoder
+
+def decoder_block(input_tensor, concat_tensor, num_filters):
+	decoder = layers.Conv2DTranspose(num_filters, (2, 2), strides=(2, 2), padding=&#39;same&#39;)(input_tensor)
+	decoder = layers.concatenate([concat_tensor, decoder], axis=-1)
+	decoder = layers.BatchNormalization()(decoder)
+	decoder = layers.Activation(&#39;relu&#39;)(decoder)
+	decoder = layers.Conv2D(num_filters, (3, 3), padding=&#39;same&#39;)(decoder)
+	decoder = layers.BatchNormalization()(decoder)
+	decoder = layers.Activation(&#39;relu&#39;)(decoder)
+	decoder = layers.Conv2D(num_filters, (3, 3), padding=&#39;same&#39;)(decoder)
+	decoder = layers.BatchNormalization()(decoder)
+	decoder = layers.Activation(&#39;relu&#39;)(decoder)
+	return decoder
+
+def get_model():
+	inputs = layers.Input(shape=[None, None, len(BANDS)]) # 256
+	encoder0_pool, encoder0 = encoder_block(inputs, 32) # 128
+	encoder1_pool, encoder1 = encoder_block(encoder0_pool, 64) # 64
+	encoder2_pool, encoder2 = encoder_block(encoder1_pool, 128) # 32
+	encoder3_pool, encoder3 = encoder_block(encoder2_pool, 256) # 16
+	encoder4_pool, encoder4 = encoder_block(encoder3_pool, 512) # 8
+	center = conv_block(encoder4_pool, 1024) # center
+	decoder4 = decoder_block(center, encoder4, 512) # 16
+	decoder3 = decoder_block(decoder4, encoder3, 256) # 32
+	decoder2 = decoder_block(decoder3, encoder2, 128) # 64
+	decoder1 = decoder_block(decoder2, encoder1, 64) # 128
+	decoder0 = decoder_block(decoder1, encoder0, 32) # 256
+	outputs = layers.Conv2D(1, (1, 1), activation=&#39;sigmoid&#39;)(decoder0)
+
+	model = models.Model(inputs=[inputs], outputs=[outputs])
+
+	model.compile(
+		optimizer=optimizers.get(OPTIMIZER),
+		loss=losses.get(LOSS),
+		metrics=[metrics.get(metric) for metric in METRICS])
+
+	return model
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="training-the-model">
+<h1>Training the model<a class="headerlink" href="#training-the-model" title="Permalink to this heading">#</a></h1>
+<p>Now we train the compiled network by calling <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.  We will train for a minimal 10 epochs, which works for a demo.  However, the model may improve with more iteration, which can be experimented with <a class="reference external" href="https://cloud.google.com/ml-engine/docs/tensorflow/using-hyperparameter-tuning">hyperparamter tuning</a> and implementation specifically of early stopping mechanisms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>m = get_model()
+
+m.fit(
+    x=training,
+    epochs=EPOCHS,
+    steps_per_epoch=int(TRAIN_SIZE / BATCH_SIZE),
+    validation_data=validation,
+    validation_steps=VAL_SIZE)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s save the trained model to file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>save_model_path = os.path.join(f&quot;{FOLDER}/model_out_batch_{BATCH_SIZE}_ep{EPOCHS}/&quot;)
+if (not os.path.isdir(save_model_path)):
+  os.mkdir(save_model_path)
+m.save(save_model_path)
+</pre></div>
+</div>
+</div>
+</div>
+<p>After saving the trained model, you may want to run predictions later. Let’s try loading our saved model to show how it can be reused without having to retrain the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Load a trained model.
+MODEL_DIR = f&quot;{FOLDER}/model_out_batch_{BATCH_SIZE}_ep{EPOCHS}/&quot;
+m = tf.keras.models.load_model(MODEL_DIR)
+m.summary()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="prediction">
+<h1>Prediction<a class="headerlink" href="#prediction" title="Permalink to this heading">#</a></h1>
+<p>Now, let’s make predictions for a new area to see how the model generalizes to new data. Bear in mind, the model was trained on data in the US because that is where the labels were available, but let’s see the trained model applies to a region of Lima, Peru.</p>
+<p>Again, we will use a defined geometry to process and export imagery from Earth Engine in TFRecord format. Then we’ll use our trained model to predict impervious surface area percentages on the new imagery and writ the predictions to both a TFRecord file and image patches (true color and prediction).</p>
+<p>We separate the image export from the predict function because the export only needs to happen once, but perhaps you’ll experiment with the model setup and run new predictions several times.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def doExport(out_image_base, kernel_buffer, region):
+  &quot;&quot;&quot;Run the image export task.  Block until complete.
+  &quot;&quot;&quot;
+
+  task = ee.batch.Export.image.toDrive(
+    image = image.select(BANDS),
+    description = out_image_base,
+    folder = FOLDER,
+    fileNamePrefix = f&quot;{out_image_base}&quot;, #f&quot;{SUBFOLDER}/{out_image_base}&quot;,
+    region = region.getInfo()[&#39;coordinates&#39;],
+    scale = 30,
+    fileFormat = &#39;TFRecord&#39;,
+    maxPixels = 1e10,
+    formatOptions = {
+      &#39;patchDimensions&#39;: KERNEL_SHAPE,
+      &#39;kernelSize&#39;: kernel_buffer,
+      &#39;compressed&#39;: True,
+      &#39;maxFileSize&#39;: 104857600
+    }
+  )
+
+  task.start()
+
+  # Block until the task completes.
+  print(&#39;Running image export to Cloud Storage...&#39;)
+  import time
+  while task.active():
+    time.sleep(30)
+
+  # Error condition
+  if task.status()[&#39;state&#39;] != &#39;COMPLETED&#39;:
+    print(&#39;Error with image export.&#39;)
+  else:
+    print(&#39;Image export completed.&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def doPrediction(out_image_base, user_folder, kernel_buffer, region):
+  &quot;&quot;&quot;Perform inference on exported imagery, upload to Earth Engine.
+  &quot;&quot;&quot;
+
+  print(&#39;Looking for TFRecord files...&#39;)
+
+  # Get a list of all the files in the output bucket.
+  filesList = glob.glob(f&quot;{FOLDER}/*&quot;)
+
+  # Get only the files generated by the image export.
+  exportFilesList = [s for s in filesList if out_image_base in s]
+  print(&quot;exportFilesList: &quot;, exportFilesList)
+
+  # Get the list of image files and the JSON mixer file.
+  imageFilesList = []
+  jsonFile = None
+  for f in exportFilesList:
+    if f.endswith(&#39;.tfrecord.gz&#39;):
+      imageFilesList.append(f)
+    elif f.endswith(&#39;.json&#39;):
+      jsonFile = f
+  #jsonFile = f&quot;{out_json_base}-mixer.json&quot;
+  # Make sure the files are in the right order.
+  imageFilesList.sort()
+  pprint(imageFilesList)
+  print(&quot;jsonFile: &quot;, jsonFile)
+
+  # Load the contents of the mixer file to a JSON object.
+  jsonText = !cat {jsonFile}
+  # Get a single string w/ newlines from the IPython.utils.text.SList
+  mixer = json.loads(jsonText.nlstr)
+  pprint(mixer)
+  patches = mixer[&#39;totalPatches&#39;]
+
+  # Get set up for prediction.
+  x_buffer = int(kernel_buffer[0] / 2)
+  y_buffer = int(kernel_buffer[1] / 2)
+
+  buffered_shape = [
+      KERNEL_SHAPE[0] + kernel_buffer[0],
+      KERNEL_SHAPE[1] + kernel_buffer[1]]
+
+  imageColumns = [
+    tf.io.FixedLenFeature(shape=buffered_shape, dtype=tf.float32)
+      for k in BANDS
+  ]
+
+  print(BANDS)
+
+  imageFeaturesDict = dict(zip(BANDS, imageColumns))
+
+  def parse_image(example_proto):
+    print(tf.io.parse_single_example(example_proto, imageFeaturesDict))
+    return tf.io.parse_single_example(example_proto, imageFeaturesDict)
+
+  def toTupleImage(inputs):
+    inputsList = [inputs.get(key) for key in BANDS]
+    stacked = tf.stack(inputsList, axis=0)
+    stacked = tf.transpose(stacked, [1, 2, 0])
+    return stacked
+
+   # Create a dataset from the TFRecord file(s) in Cloud Storage.
+  imageDataset = tf.data.TFRecordDataset(imageFilesList, compression_type=&#39;GZIP&#39;)
+  imageDataset = imageDataset.map(parse_image, num_parallel_calls=5)
+  imageDataset = imageDataset.map(toTupleImage).batch(1)
+  #print(&quot;imageDataset: &quot;, imageDataset)
+
+  imageDataset1 = imageDataset.batch(1)
+
+  for i, image in zip(range(patches), imageDataset1):  # only take first element of dataset
+    t_image_array = np.array(image)
+    t_image_array = t_image_array.squeeze()
+    t_image_array = t_image_array[
+        x_buffer:x_buffer+KERNEL_SIZE, y_buffer:y_buffer+KERNEL_SIZE]
+    t_image_array_blue = t_image_array[:,:,1]
+    t_image_array_green = t_image_array[:,:,2]
+    t_image_array_red = t_image_array[:,:,3]
+    t_image_array = np.dstack([t_image_array_red, t_image_array_green, t_image_array_blue])
+    t_image_array *= 255
+    t_image_array = t_image_array.astype(np.uint8)
+    tifffile.imsave(f&quot;{FOLDER}/{TEST_PATCHES}/patch_test_{i}.tif&quot;, t_image_array)
+
+
+  # Perform inference.
+  print(&#39;Running predictions...&#39;)
+  predictions = m.predict(imageDataset, steps=patches, verbose=1)
+
+  for i, prediction in zip(range(len(predictions)), predictions):
+    predictionPatch = prediction[
+        x_buffer:x_buffer+KERNEL_SIZE, y_buffer:y_buffer+KERNEL_SIZE]
+    p_image_array = np.array(predictionPatch)
+    tifffile.imsave(f&quot;{FOLDER}/{PREDICTIONS}/patch_pred_{i}.tif&quot;, p_image_array)
+
+  print(&#39;Writing predictions...&#39;)
+  out_image_file = f&quot;{FOLDER}/{out_image_base}.TFRecord&quot;
+  writer = tf.io.TFRecordWriter(out_image_file)
+  patches = 0
+  for predictionPatch in predictions:
+    #print(&#39;Writing patch &#39; + str(patches) + &#39;...&#39;)
+    predictionPatch = predictionPatch[
+        x_buffer:x_buffer+KERNEL_SIZE, y_buffer:y_buffer+KERNEL_SIZE]
+
+    # Create an example.
+    example = tf.train.Example(
+      features=tf.train.Features(
+        feature={
+          &#39;impervious&#39;: tf.train.Feature(
+              float_list=tf.train.FloatList(
+                  value=predictionPatch.flatten()))
+        }
+      )
+    )
+    # Write the example.
+    writer.write(example.SerializeToString())
+    patches += 1
+  print(out_image_file)
+  writer.close()
+  return patches
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s supply our area of interest to make predictions for. We also provide some string parameters for file naming and finally, the shape for the image outputs. On that, the model can accept larger dimensions than 256x256 (which it was trained on) provided that they are uniform in width and height (note that we didn’t specify an input shape in the first layer of the network) but at some point as the dimensions increase a memory ceiling will be encountered (<a class="reference external" href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf">reference</a>). So, proceed with caution on that. We will try one technique here to address the common issue of edge artifacts. Specifically, we will buffer our images during prediction using a 128x128 kernel, which pads the image with an additional 64 pixels on both width and height, and then clip the prediction down to the original central region of 256x256 pixels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Output assets
+user_folder = &#39;&#39; # INSERT YOUR FOLDER HERE.
+
+# Base file name to use for TFRecord files and assets.
+lima_image_base = &#39;FCNN_demo_lima_384_&#39;
+# Half this will extend on the sides of each patch.
+lima_kernel_buffer = [128, 128]
+# Lima [-77.133581 -12.164808 -76.876993 -11.93859]
+lima_region = ee.Geometry.Polygon(
+        [[[-77.133581, -11.93859],
+          [-77.133581, -12.164808],
+          [-76.876993, -12.164808],
+          [-76.876993, -11.93859]]], None, False)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Run the export.
+doExport(lima_image_base, lima_kernel_buffer, lima_region)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Run the prediction.
+patches = doPrediction(lima_image_base, user_folder, lima_kernel_buffer, lima_region)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="display-the-output">
+<h1>Display the output<a class="headerlink" href="#display-the-output" title="Permalink to this heading">#</a></h1>
+<p>Let’s take a look at randomly indexed samples from our prediction output. We also will check the minimum and maximum values (impervious surface area percentages) in the prediction image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fig, (ax0, ax1) = plt.subplots(1, 2, sharey=True, sharex=True, figsize=(12, 6))
+
+index_random = randrange(patches)
+print(index_random)
+
+ax0.imshow(np.array(Image.open(f&quot;{FOLDER}/{TEST_PATCHES}/patch_test_{index_random}.tif&quot;)))
+ax0.set_xlabel(f&#39;RGB&#39;).set_fontsize(9)
+ax1.imshow(np.array(Image.open(f&quot;{FOLDER}/{PREDICTIONS}/patch_pred_{index_random}.tif&quot;)))
+ax1.set_xlabel(f&#39;Predicted impervious surface area percentage&#39;).set_fontsize(9)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>image_test = np.array(Image.open(f&quot;{FOLDER}/{PREDICTIONS}/patch_pred_{index_random}.tif&quot;))
+image_test.min(), image_test.max()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson3_Intro_tensors_functions_datasets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson4b_Integrations_with_Google_Cloud_Platform.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">What are cloud providers? Why might I need them for ML and Earth observation data?</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Regression using TensorFlow with Google Earth Engine Python API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-and-authentication">Imports and authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-global-parameters">Set global parameters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#imagery">Imagery</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-data">Validation data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-output">Display the output</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
