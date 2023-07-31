@@ -440,7 +440,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-geosaptial-data-we-wish-to-fine-tune-with">Load the geosaptial data we wish to fine-tune with</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-geosaptial-data-for-fine-tuning">Load the geosaptial data for fine-tuning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-process-the-data-for-segformer">Pre-process the data for SegFormer</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-the-data">Partition the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-dataloader-for-each-partition">Build the dataloader for each partition</a></li>
@@ -470,14 +470,14 @@ document.write(`
 <strong>Description:</strong> Fine-tuning a SegFormer model variant for semantic segmentation of geosptial data.</p>
 <p>This tutorial demonstrates how to fine-tune a semantic segmentation architecture leveraging vision transformers on geospatial data to perform
 a land cover semantic segmentation task. Specifically, we will leverage a SegFormer model variant.</p>
-<p>SegFormer is based on what is known as a “Mix Transformer” hierarchical architecture for the encoder, and a lightweight MLP and upsampler for its decoder. This design has led to state-of-the-art performance and efficiency for semantic segmentation.</p>
+<p>SegFormer is based on what is known as a “Mix Transformer” hierarchical architecture for the encoder, and a lightweight MLP and upsampler for its decoder. This design has led to state-of-the-art performance and efficiency for semantic segmentation (in terms of <a class="reference external" href="https://paperswithcode.com/sota/semantic-segmentation-on-ade20k">performance vs. model efficiency on the ADE20K benchmark dataset as of 2021</a>). Newer architectures have since out-performed SegFormer on this benchmark dataset, however SegFormer’s ease of use with Hugging Face Transformers makes it a good candidate to implement in this tutorial.</p>
 <p>More details on the SegFormer architecture can be found in its initial publication:
 <a class="reference external" href="https://arxiv.org/abs/2105.15203">SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers</a>.</p>
 <p><img alt="segformer-arch" src="https://i.imgur.com/BsrVwYe.png" /></p>
 <p>We will obtain a pre-trained SegFormer model from
 <a class="reference external" href="https://github.com/huggingface/transformers">Hugging Face Transformers</a>
-and fine-tune it using publicly available geosaptial data and labels from <a class="reference external" href="https://mlhub.earth/">Radiant Earth MLHub</a>.</p>
-<p><strong>Note:</strong> this turorial adapts some code from the following:</p>
+and fine-tune it using publicly available geospatial data and labels from <a class="reference external" href="https://mlhub.earth/">Radiant Earth MLHub</a>.</p>
+<p><strong>Note:</strong> this tutorial adapts some code from the following:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.tensorflow.org/tutorials/images/segmentation">Official tutorial on segmentation from the TensorFlow team</a></p></li>
 <li><p><a class="reference external" href="https://huggingface.co/docs/transformers/main/en/tasks/semantic_segmentation">Hugging Face Task guide on segmentation</a></p></li>
@@ -551,10 +551,10 @@ and fine-tune it using publicly available geosaptial data and labels from <a cla
 </div>
 </div>
 </div>
-<section id="load-the-geosaptial-data-we-wish-to-fine-tune-with">
-<h2>Load the geosaptial data we wish to fine-tune with<a class="headerlink" href="#load-the-geosaptial-data-we-wish-to-fine-tune-with" title="Permalink to this heading">#</a></h2>
-<p>We use the <a class="reference external" href="https://mlhub.earth/data/ref_landcovernet_sa_v1">LandCoverNet South America</a> dataset for
-this example, which includes Sentinel-1, Sentinel-2 and Landsat 8 rasters to be used with the land cover labels. However, this is a tremendous amount of data so we will create and use, for demonstration purposes, a subset of true color (red, green, blue)  Landsat 8 rasters. Outside of this demonstration, it is encouraged that the other input datasets are experimented with to assess model improvements.</p>
+<section id="load-the-geosaptial-data-for-fine-tuning">
+<h2>Load the geosaptial data for fine-tuning<a class="headerlink" href="#load-the-geosaptial-data-for-fine-tuning" title="Permalink to this heading">#</a></h2>
+<p>We’ll use the <a class="reference external" href="https://mlhub.earth/data/ref_landcovernet_sa_v1">LandCoverNet South America</a> dataset for
+this example, which includes Sentinel-1, Sentinel-2 and Landsat 8 rasters and land cover labels. This is a tremendous amount of data so we will create and use, for demonstration purposes, a subset of true color (red, green, blue) Landsat 8 rasters. Outside of this demonstration, we encourage experimenting with the other raster datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># configure Radiant Earth MLHub access</span>
@@ -661,6 +661,7 @@ ref_landcovernet_sa_v1_labels
 <li><p>Resize the image tiles from 256x256 to 512x512 for use with the SegFormer model variant.</p></li>
 <li><p>Normalize the images with the mean and standard deviation used during pre-training SegFormer.</p></li>
 <li><p>Obtain the image labels with integer class values.</p></li>
+<li><p>Save the preprocess results to a local directory</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -690,35 +691,6 @@ ref_landcovernet_sa_v1_labels
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>34229
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function for running some of the preprocessing steps</span>
-<span class="k">def</span> <span class="nf">compile_dataset</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span> <span class="n">dataset_split</span><span class="p">):</span>
-  <span class="c1"># Create partition directories</span>
-  <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_rgb_images_png_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_label_images_png_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-      <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-  <span class="c1"># Generate true color (red, green, blue) images from the Landsat 8 input data.</span>
-  <span class="n">r</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B04.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">g</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B03.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">b</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">impath</span><span class="si">}</span><span class="s2">/B02.tif&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span><span class="p">))</span> <span class="o">*</span> <span class="mf">255.999</span><span class="p">)</span> <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
-  <span class="n">rgb_im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span> 
-  <span class="n">im_id</span> <span class="o">=</span> <span class="n">impath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-  <span class="n">rgb_im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_rgb_images_png_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">im_id</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
-  <span class="n">maskpath</span> <span class="o">=</span> <span class="n">impath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;source_landsat_8&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">)</span>
-  <span class="n">maskpath</span> <span class="o">=</span> <span class="n">maskpath</span><span class="p">[:</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span>
-  <span class="n">mask_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">maskpath</span><span class="si">}</span><span class="s2">/labels.tif&quot;</span>
-  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mask_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-  <span class="c1"># Obtain the image labels with integer class values.</span>
-  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">mask_image</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
-  <span class="n">mask_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">mask_image</span><span class="p">)</span>
-  <span class="n">mask_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ref_landcovernet_sa_v1_label_images_png_</span><span class="si">{</span><span class="n">dataset_split</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">im_id</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;PNG&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1163,7 +1135,7 @@ An example is <a class="reference external" href="https://gist.github.com/sayakp
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-geosaptial-data-we-wish-to-fine-tune-with">Load the geosaptial data we wish to fine-tune with</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-geosaptial-data-for-fine-tuning">Load the geosaptial data for fine-tuning</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-process-the-data-for-segformer">Pre-process the data for SegFormer</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partition-the-data">Partition the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-dataloader-for-each-partition">Build the dataloader for each partition</a></li>
