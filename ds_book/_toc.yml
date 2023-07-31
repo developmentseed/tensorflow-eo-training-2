@@ -10,6 +10,7 @@ chapters:
 - file: docs/Lesson4b_Integrations_with_Google_Cloud_Platform
 - file: docs/Lesson5a_prep_data_ML_segmentation
 - file: docs/Lesson5b_deeplearning_crop_segmentation
+- file: docs/Lesson5c_segmentation_ViT
 - file: docs/Lesson6a_evaluation
 - file: docs/Lesson6b_dealing_with_limited_data
 - file: docs/appendix
