@@ -178,8 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_crop_segmentation.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
-
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
@@ -472,15 +471,11 @@ document.write(`
 </div></blockquote>
 <section id="setup-notebook">
 <h2>Setup Notebook<a class="headerlink" href="#setup-notebook" title="Permalink to this heading">#</a></h2>
-<div class="admonition-version-control admonition">
-<p class="admonition-title"><strong>Version control</strong></p>
-<p>Colab updates without warning to users, which can cause notebooks to break. Therefore, we are pinning library versions.</p>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install required libraries</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">rasterio</span><span class="o">==</span><span class="m">1</span>.2.10
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">geopandas</span><span class="o">==</span><span class="m">0</span>.10.2
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">rasterio</span><span class="o">==</span><span class="m">1</span>.3.8
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">geopandas</span><span class="o">==</span><span class="m">0</span>.13.2
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>radiant_mlhub<span class="w"> </span>#<span class="w"> </span><span class="k">for</span><span class="w"> </span>dataset<span class="w"> </span>access,<span class="w"> </span>see:<span class="w"> </span>https://mlhub.earth/
 </pre></div>
 </div>
@@ -489,11 +484,9 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import required libraries</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">functools</span><span class="o">,</span> <span class="nn">fnmatch</span><span class="o">,</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">tarfile</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">tarfile</span><span class="o">,</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">urllib.request</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">fractions</span> <span class="kn">import</span> <span class="n">Fraction</span>  
@@ -509,20 +502,14 @@ document.write(`
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="kn">import</span> <span class="nn">rasterio</span>
-<span class="kn">from</span> <span class="nn">rasterio.merge</span> <span class="kn">import</span> <span class="n">merge</span>
-<span class="kn">from</span> <span class="nn">rasterio.plot</span> <span class="kn">import</span> <span class="n">show</span>
-<span class="kn">from</span> <span class="nn">rasterio</span> <span class="kn">import</span> <span class="n">features</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">windows</span>
+<span class="kn">from</span> <span class="nn">rasterio</span> <span class="kn">import</span> <span class="n">features</span><span class="p">,</span> <span class="n">windows</span>
 
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">clear_output</span>
-
 <span class="kn">import</span> <span class="nn">cv2</span>
 
-<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span> <span class="k">as</span> <span class="n">timer</span>
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">from</span> <span class="nn">radiant_mlhub</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">get_session</span><span class="p">,</span> <span class="n">Collection</span>
+<span class="kn">from</span> <span class="nn">radiant_mlhub</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">Collection</span>
 </pre></div>
 </div>
 </div>

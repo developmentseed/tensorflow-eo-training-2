@@ -585,18 +585,27 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install required libraries</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">rasterio</span><span class="o">==</span><span class="m">1</span>.2.10
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">geopandas</span><span class="o">==</span><span class="m">0</span>.10.2
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>git+https://github.com/tensorflow/examples.git
 <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>-U<span class="w"> </span>tfds-nightly
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>focal-loss
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>tensorflow-addons<span class="o">==</span><span class="m">0</span>.8.3
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>focal-loss<span class="o">==</span><span class="m">0</span>.0.7
 <span class="c1">#!pip install -q matplotlib==3.5 # UNCOMMENT if running on LOCAL</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-learn<span class="o">==</span><span class="m">1</span>.0.1
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-image<span class="o">==</span><span class="m">0</span>.18.3
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>tf-explain<span class="o">==</span><span class="m">0</span>.3.1
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>segmentation_models
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>albumentations
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-learn<span class="o">==</span><span class="m">1</span>.2.2
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-image<span class="o">==</span><span class="m">0</span>.19.3
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>-q<span class="w"> </span>segmentation-models<span class="o">==</span><span class="m">1</span>.0.1
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">tensorflow</span><span class="o">==</span><span class="m">2</span>.2.1
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">keras</span><span class="o">==</span><span class="m">2</span>.5
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">albumentations</span><span class="o">==</span><span class="m">1</span>.2.1
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">5.0/5.0 MB</span> <span class=" -Color -Color-Red">21.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">612.1/612.1 kB</span> <span class=" -Color -Color-Red">7.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">50.7/50.7 kB</span> <span class=" -Color -Color-Red">2.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h<span class=" -Color -Color-Red">ERROR: Could not find a version that satisfies the requirement tensorflow==2.2.1 (from versions: 2.8.0rc0, 2.8.0rc1, 2.8.0, 2.8.1, 2.8.2, 2.8.3, 2.8.4, 2.9.0rc0, 2.9.0rc1, 2.9.0rc2, 2.9.0, 2.9.1, 2.9.2, 2.9.3, 2.10.0rc0, 2.10.0rc1, 2.10.0rc2, 2.10.0rc3, 2.10.0, 2.10.1, 2.11.0rc0, 2.11.0rc1, 2.11.0rc2, 2.11.0, 2.11.1, 2.12.0rc0, 2.12.0rc1, 2.12.0, 2.12.1, 2.13.0rc0, 2.13.0rc1, 2.13.0rc2, 2.13.0)</span>
+<span class=" -Color -Color-Red">ERROR: No matching distribution found for tensorflow==2.2.1</span>
+<span class=" -Color -Color-Red">ERROR: Could not find a version that satisfies the requirement keras==2.5 (from versions: 0.2.0, 0.3.0, 0.3.1, 0.3.2, 0.3.3, 1.0.0, 1.0.1, 1.0.2, 1.0.3, 1.0.4, 1.0.5, 1.0.6, 1.0.7, 1.0.8, 1.1.0, 1.1.1, 1.1.2, 1.2.0, 1.2.1, 1.2.2, 2.0.0, 2.0.1, 2.0.2, 2.0.3, 2.0.4, 2.0.5, 2.0.6, 2.0.7, 2.0.8, 2.0.9, 2.1.0, 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.2.0, 2.2.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5, 2.3.0, 2.3.1, 2.4.0, 2.4.1, 2.4.2, 2.4.3, 2.5.0rc0, 2.6.0rc0, 2.6.0rc1, 2.6.0rc2, 2.6.0rc3, 2.6.0, 2.7.0rc0, 2.7.0rc2, 2.7.0, 2.8.0rc0, 2.8.0rc1, 2.8.0, 2.9.0rc0, 2.9.0rc1, 2.9.0rc2, 2.9.0, 2.10.0rc0, 2.10.0rc1, 2.10.0, 2.11.0rc0, 2.11.0rc1, 2.11.0rc2, 2.11.0rc3, 2.11.0, 2.12.0rc0, 2.12.0rc1, 2.12.0, 2.13.1rc0, 2.13.1rc1, 2.13.1)</span>
+<span class=" -Color -Color-Red">ERROR: No matching distribution found for keras==2.5</span>
+
 </pre></div>
 </div>
 </div>
@@ -604,9 +613,11 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import required libraries</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">functools</span><span class="o">,</span> <span class="nn">fnmatch</span><span class="o">,</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">shutil</span>
-<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">functools</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SM_FRAMEWORK&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;tf.keras&quot;</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="n">tfds</span><span class="o">.</span><span class="n">disable_progress_bar</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -614,38 +625,13 @@ document.write(`
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.grid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-
-<span class="kn">import</span> <span class="nn">rasterio</span>
-<span class="kn">from</span> <span class="nn">rasterio</span> <span class="kn">import</span> <span class="n">features</span><span class="p">,</span> <span class="n">mask</span>
-
-<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>  
-<span class="kn">import</span> <span class="nn">tensorflow_addons</span> <span class="k">as</span> <span class="nn">tfa</span>
-<span class="kn">from</span> <span class="nn">keras.utils.vis_utils</span> <span class="kn">import</span> <span class="n">plot_model</span>
-
-<span class="kn">from</span> <span class="nn">tensorflow_examples.models.pix2pix</span> <span class="kn">import</span> <span class="n">pix2pix</span>
-<span class="kn">from</span> <span class="nn">focal_loss</span> <span class="kn">import</span> <span class="n">SparseCategoricalFocalLoss</span>
-<span class="kn">from</span> <span class="nn">tf_explain.callbacks.activations_visualization</span> <span class="kn">import</span> <span class="n">ActivationsVisualizationCallback</span>
-
-<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
-<span class="n">tfds</span><span class="o">.</span><span class="n">disable_progress_bar</span><span class="p">()</span>
-
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">clear_output</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">skimage.io</span> <span class="k">as</span> <span class="nn">skio</span>
 
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">clear_output</span>
+
 <span class="kn">import</span> <span class="nn">segmentation_models</span> <span class="k">as</span> <span class="nn">sm</span>
-<span class="kn">from</span> <span class="nn">segmentation_models.losses</span> <span class="kn">import</span> <span class="n">bce_jaccard_loss</span>
+<span class="kn">from</span> <span class="nn">focal_loss</span> <span class="kn">import</span> <span class="n">SparseCategoricalFocalLoss</span>
 
 <span class="kn">from</span> <span class="nn">albumentations</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Compose</span><span class="p">,</span> <span class="n">Blur</span><span class="p">,</span> <span class="n">HorizontalFlip</span><span class="p">,</span> <span class="n">VerticalFlip</span><span class="p">,</span>
@@ -657,7 +643,7 @@ document.write(`
     <span class="c1"># mount google drive</span>
     <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
     <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/gdrive&#39;</span><span class="p">)</span>
-    <span class="n">root_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed/&#39;</span> 
+    <span class="n">root_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed/&#39;</span>
     <span class="n">workshop_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed-workshop&#39;</span>
     <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">workshop_dir</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
@@ -674,11 +660,23 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Segmentation Models: using `tf.keras` framework.
+Mounted at /content/gdrive
+Running on Colab
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># go to root directory</span>
-<span class="o">%</span><span class="k">cd</span> $root_dir 
+<span class="o">%</span><span class="k">cd</span> $root_dir
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed
 </pre></div>
 </div>
 </div>
@@ -696,6 +694,11 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found GPU at: /device:GPU:0
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="check-out-the-labels">
@@ -709,7 +712,7 @@ document.write(`
         <span class="p">}</span>
 
 <span class="n">classes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -783,7 +786,7 @@ document.write(`
     <span class="k">return</span> <span class="n">aug_img</span>
 
 <span class="c1"># Function to augment the images and labels</span>
-<span class="k">def</span> <span class="nf">_augment</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">label_img</span><span class="p">,</span> <span class="n">img_size</span><span class="p">):</span> 
+<span class="k">def</span> <span class="nf">_augment</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">label_img</span><span class="p">,</span> <span class="n">img_size</span><span class="p">):</span>
   <span class="n">label_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">label_img</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">])</span>
   <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">])</span>
   <span class="n">aug_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">numpy_function</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">aug_fn</span><span class="p">,</span> <span class="n">inp</span><span class="o">=</span><span class="p">[</span><span class="n">img</span><span class="p">,</span> <span class="n">img_size</span><span class="p">],</span> <span class="n">Tout</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -796,10 +799,10 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load your data</span>
-<span class="c1"># Function for reading the tiles into TensorFlow tensors </span>
+<span class="c1"># Function for reading the tiles into TensorFlow tensors</span>
 <span class="c1"># See TensorFlow documentation for explanation of tensor: https://www.tensorflow.org/guide/tensor</span>
 <span class="k">def</span> <span class="nf">_process_pathnames</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">label_path</span><span class="p">):</span>
-  <span class="c1"># We map this function onto each pathname pair  </span>
+  <span class="c1"># We map this function onto each pathname pair</span>
   <span class="n">img_str</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
   <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">img_str</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
@@ -808,18 +811,18 @@ document.write(`
   <span class="c1"># These are png images so they return as (num_frames, h, w, c)</span>
   <span class="n">label_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_png</span><span class="p">(</span><span class="n">label_img_str</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
   <span class="c1"># The label image should have any values between 0 and 8, indicating pixel wise</span>
-  <span class="c1"># foreground class or background (0). We take the first channel only. </span>
+  <span class="c1"># foreground class or background (0). We take the first channel only.</span>
   <span class="n">label_img</span> <span class="o">=</span> <span class="n">label_img</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
   <span class="n">label_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">label_img</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">label_img</span>
 
 
-<span class="c1"># Main function to tie all of the above four dataset processing functions together </span>
-<span class="k">def</span> <span class="nf">get_baseline_dataset</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> 
+<span class="c1"># Main function to tie all of the above four dataset processing functions together</span>
+<span class="k">def</span> <span class="nf">get_baseline_dataset</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span>
                          <span class="n">labels</span><span class="p">,</span>
-                         <span class="n">threads</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+                         <span class="n">threads</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                          <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-                         <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>           
+                         <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
   <span class="n">num_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
   <span class="c1"># Create a dataset from the filenames and labels</span>
   <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">filenames</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
@@ -829,7 +832,7 @@ document.write(`
   <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">_augment</span><span class="p">,</span> <span class="n">img_size</span><span class="o">=</span><span class="mi">224</span><span class="p">),</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">threads</span><span class="p">)</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">threads</span><span class="p">)</span>
   <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
     <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">num_x</span><span class="p">)</span>
-  <span class="c1"># It&#39;s necessary to repeat our data for all epochs </span>
+  <span class="c1"># It&#39;s necessary to repeat our data for all epochs</span>
   <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
   <span class="k">return</span> <span class="n">dataset</span>
@@ -844,8 +847,14 @@ document.write(`
                                 <span class="n">y_train_filenames</span><span class="p">,</span>
                                 <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 <span class="n">val_ds</span> <span class="o">=</span> <span class="n">get_baseline_dataset</span><span class="p">(</span><span class="n">x_val_filenames</span><span class="p">,</span>
-                              <span class="n">y_val_filenames</span><span class="p">,</span> 
+                              <span class="n">y_val_filenames</span><span class="p">,</span>
                               <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;_BatchDataset element_spec=(TensorSpec(shape=&lt;unknown&gt;, dtype=tf.float32, name=None), TensorSpec(shape=(None, 224, 224, 1), dtype=tf.float32, name=None))&gt;
+&lt;_BatchDataset element_spec=(TensorSpec(shape=&lt;unknown&gt;, dtype=tf.float32, name=None), TensorSpec(shape=(None, 224, 224, 1), dtype=tf.float32, name=None))&gt;
 </pre></div>
 </div>
 </div>
@@ -857,7 +866,7 @@ document.write(`
     <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span> <span class="c1"># extract 1 batch from the dataset</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    
+
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">xticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[])</span>
@@ -873,6 +882,12 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">view_image</span><span class="p">(</span><span class="n">train_ds</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(8, 224, 224, 3)
+</pre></div>
+</div>
+<img alt="../_images/62c1684d06a0607fd68730fc2937b80c1dbec352a33856ea9000cc655cd77e44.png" src="../_images/62c1684d06a0607fd68730fc2937b80c1dbec352a33856ea9000cc655cd77e44.png" />
 </div>
 </div>
 <p>Now that we have a variety of augmentations that will be applied to each image in each batch, let’s train a model using our augmentations and pretraining.</p>
@@ -961,6 +976,18 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 30ms/step
+</pre></div>
+</div>
+<img alt="../_images/958d3cce378d1c8461ba2abd0dd44ca85b66e5832242d98c6ef81ea80ea3d15a.png" src="../_images/958d3cce378d1c8461ba2abd0dd44ca85b66e5832242d98c6ef81ea80ea3d15a.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample Prediction after epoch 4
+
+
+99/99 [==============================] - 15s 147ms/step - loss: 1.8476 - accuracy: 0.1405 - iou_score: 0.1068 - val_loss: 1.8824 - val_accuracy: 0.1223 - val_iou_score: 0.1480
+</pre></div>
+</div>
+</div>
 </div>
 <p>And we can view the model’s loss plot and compare to Lesson 3. Was there an improvement?</p>
 <div class="cell docutils container">
@@ -981,6 +1008,9 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/db1970ed39e32d9bf3cabc403780e70576d1259aa7ea7d637fb228d7af220c81.png" src="../_images/db1970ed39e32d9bf3cabc403780e70576d1259aa7ea7d637fb228d7af220c81.png" />
 </div>
 </div>
 </section>
