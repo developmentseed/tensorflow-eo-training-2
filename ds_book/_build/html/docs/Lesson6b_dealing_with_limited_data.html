@@ -526,16 +526,16 @@ and <strong>accuracy</strong>. We’ll also generate confusion matrices during e
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># install required libraries
-!pip install -q rasterio
-!pip install -q geopandas
+!pip install -q rasterio==1.3.8
+!pip install -q geopandas==0.13.2
 !pip install -q git+https://github.com/tensorflow/examples.git
 !pip install -q -U tfds-nightly
-!pip install -q focal-loss
+!pip install -q focal-loss==0.0.7
 #!pip install -q matplotlib==3.5 # UNCOMMENT if running on LOCAL
-!pip install -q scikit-learn
-!pip install -q scikit-image
-!pip install -q tf-explain
-!pip install -q segmentation_models # we&#39;ll use this for pretraining later and for the IOU segmentation performance metric
+!pip install -q scikit-learn==1.2.2
+!pip install -q scikit-image==0.19.3
+!pip install -q tf-explain==0.3.1
+!pip install -q segmentation_models==1.0.1 # we&#39;ll use this for pretraining later and for the IOU segmentation performance metric
 !pip install -q tensorflow==2.2.1
 !pip install -q keras==2.5
 </pre></div>
