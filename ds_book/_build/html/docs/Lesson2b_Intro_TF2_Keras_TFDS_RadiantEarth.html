@@ -180,6 +180,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
 
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing Deep Learning Architectures for Different Computer Vision Tasks on Satellite Imagery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
@@ -441,10 +442,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-tensorflow">Set up TensorFlow</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tf-datasets">Let’s use a dataset from TF Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tensorflow-datasets">Let’s use a dataset from TensorFlow Datasets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset-part-2-option-2">Load a dataset, part 2 (option 2)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth</a></li>
 </ul>
             </nav>
         </div>
@@ -467,9 +468,24 @@ document.write(`
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!python3 --version
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python 3.10.12
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># install required libraries
 !pip install -q rasterio==1.3.8
 !pip install -q geopandas==0.13.2
+#!pip install -q tensorflow-data-validation==1.3.0 # Only works with Python versions 3.9 or earlier
+!export TFX_DEPENDENCY_SELECTOR=NIGHTLY
+!pip install -q --extra-index-url https://pypi-nightly.tensorflow.org/simple tensorflow-data-validation
 !pip install -q radiant_mlhub # for dataset access, see: https://mlhub.earth/
 </pre></div>
 </div>
@@ -490,6 +506,7 @@ import numpy as np
 from google.colab import drive
 import tensorflow_datasets as tfds
 from tensorflow.keras.utils import plot_model
+import tensorflow_data_validation
 import matplotlib.pyplot as plt
 </pre></div>
 </div>
@@ -506,7 +523,7 @@ print(&quot;TensorFlow version:&quot;, tf.__version__)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorFlow version: 2.12.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorFlow version: 2.13.0
 </pre></div>
 </div>
 </div>
@@ -548,8 +565,9 @@ else:
 </div>
 </div>
 </section>
-<section id="let-s-use-a-dataset-from-tf-datasets">
-<h2>Let’s use a dataset from TF Datasets<a class="headerlink" href="#let-s-use-a-dataset-from-tf-datasets" title="Permalink to this heading">#</a></h2>
+<section id="let-s-use-a-dataset-from-tensorflow-datasets">
+<h2>Let’s use a dataset from TensorFlow Datasets<a class="headerlink" href="#let-s-use-a-dataset-from-tensorflow-datasets" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets</a>, accessible via the importable API <code class="docutils literal notranslate"><span class="pre">tfds</span></code>, is convenient compared to working with raw geotiffs from file, as the associated pre-packaged datasets are accompanied by TensorFlow’s ecosystem of methods for attribution and exploration. The standardized packaging of these datasets also makes it easier to parallelize pre-processing operations which in turn makes it easier to create simple and efficient data pipelines.</p>
 <p>We will use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
 <p>The classes in this dataset are: <code class="docutils literal notranslate"><span class="pre">['Industrial',</span> <span class="pre">'Pasture',</span> <span class="pre">'River',</span> <span class="pre">'Forest',</span> <span class="pre">'AnnualCrop',</span> <span class="pre">'PermanentCrop',</span> <span class="pre">'Highway',</span> <span class="pre">'HerbaceousVegetation',</span> <span class="pre">'Residential',</span> <span class="pre">'SeaLake']</span></code></p>
 <p>The dataset will be partitioned into training, validation and testing splits with a 70:20:10 ratio, respectively.</p>
@@ -625,8 +643,27 @@ num_classes = 10
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6c452ff42b609d0a27fe30a8205c965777e7b063990a8551724ca3098def1f98.png" src="../_images/6c452ff42b609d0a27fe30a8205c965777e7b063990a8551724ca3098def1f98.png" />
+<img alt="../_images/2ad5d4c002f5a64474c7ef15908595b9e0692cf04414ad2e9a7215e4d6fafbde.png" src="../_images/2ad5d4c002f5a64474c7ef15908595b9e0692cf04414ad2e9a7215e4d6fafbde.png" />
 </div>
+</div>
+<p>We can also inspect some statistics on the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tfds.show_statistics(ds_info)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe id='facets-iframe' width="100%" height="500px"></iframe>
+        <script>
+        facets_iframe = document.getElementById('facets-iframe');
+        facets_html = '<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.3.3/webcomponents-lite.js"><\/script><link rel="import" href="https://raw.githubusercontent.com/PAIR-code/facets/master/facets-dist/facets-jupyter.html"><facets-overview proto-input="Cl4KDmxoc19zdGF0aXN0aWNzEPjSARoUCghmaWxlbmFtZRADKgYKBAj40gEaGAoFaW1hZ2UaDwoECPjSATkAAAAAAOBvQBoYCgVsYWJlbBoPCgQI+NIBOQAAAAAAACJA"></facets-overview>';
+        facets_iframe.srcdoc = facets_html;
+         facets_iframe.id = "";
+         setTimeout(() => {
+           facets_iframe.setAttribute('height', facets_iframe.contentWindow.document.body.offsetHeight + 'px')
+         }, 1500)
+         </script></div></div>
 </div>
 </section>
 <section id="now-let-s-build-a-very-basic-machine-learning-model">
@@ -856,8 +893,8 @@ probabilities
 </div>
 </div>
 </section>
-<section id="load-a-dataset-part-2-option-2">
-<h2>Load a dataset, part 2 (option 2)<a class="headerlink" href="#load-a-dataset-part-2-option-2" title="Permalink to this heading">#</a></h2>
+<section id="part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">
+<h2>Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth<a class="headerlink" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth" title="Permalink to this heading">#</a></h2>
 <p>Load and prepare the <a class="reference external" href="https://mlhub.earth/data/rti_rwanda_crop_type">Drone Imagery Classification Training Dataset for Crop Types in Rwanda dataset from Radiant Earth</a>. You’ll need a Radiant Earth MLHub API key for this.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -950,26 +987,6 @@ for c in collections:
 
 train_df = load_df(&#39;rti_rwanda_crop_type_labels&#39;)
 #test_df = load_df(&#39;rti_rwanda_crop_type_labels&#39;)
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading rti_rwanda_crop_type_labels...
-</pre></div>
-</div>
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "22bac9967ab44c29b3dde71615923fd7", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading rti_rwanda_crop_type_source...
-</pre></div>
-</div>
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "38bb0b2fe2b54a78868f10050d4dd4b0", "version_major": 2, "version_minor": 0}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
-WARNING:urllib3.connectionpool:Connection pool is full, discarding connection: radiantearth.blob.core.windows.net. Connection pool size: 10
 </pre></div>
 </div>
 </div>
@@ -1215,10 +1232,10 @@ model.compile(optimizer=&#39;adam&#39;,
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-tensorflow">Set up TensorFlow</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tf-datasets">Let’s use a dataset from TF Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tensorflow-datasets">Let’s use a dataset from TensorFlow Datasets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-a-dataset-part-2-option-2">Load a dataset, part 2 (option 2)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth</a></li>
 </ul>
   </nav></div>
 
