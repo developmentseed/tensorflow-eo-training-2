@@ -4,13 +4,14 @@ chapters:
 - file: docs/Lesson1a_Intro_ML_NN_DL
 - file: docs/Lesson2a_Intro_to_Google_Colab
 - file: docs/Lesson2b_Intro_TensorFlow_Keras
-- file: docs/Lesson2b_Intro_to_TF2_Keras_TFDS_RadiantEarth
+- file: docs/Lesson2b_Intro_TF2_Keras_TFDS_RadiantEarth
 - file: docs/Lesson3_Intro_tensors_functions_datasets
 - file: docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression
 - file: docs/Lesson4b_Integrations_with_Google_Cloud_Platform
 - file: docs/Lesson5a_prep_data_ML_segmentation
-- file: docs/Lesson5b_deeplearning_crop_segmentation
+- file: docs/Lesson5b_deeplearning_segmentation_UNet
 - file: docs/Lesson5c_segmentation_ViT
 - file: docs/Lesson6a_evaluation
 - file: docs/Lesson6b_dealing_with_limited_data
+- file: docs/Lesson7a_comparing_architectures
 - file: docs/appendix
