@@ -14,4 +14,5 @@ chapters:
 - file: docs/Lesson6a_evaluation
 - file: docs/Lesson6b_dealing_with_limited_data
 - file: docs/Lesson7a_comparing_architectures
+- file: docs/Lesson7b_comparing_RNN_transformer_architectures
 - file: docs/appendix
