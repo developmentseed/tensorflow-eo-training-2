@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Transfer learning, fine-tuning and hyperparameter optimization &#8212; Deep learning with TensorFlow</title>
+    <title>Transfer learning, fine-tuning and hyperparameter tuning &#8212; Deep learning with TensorFlow</title>
   
   
   
@@ -174,15 +174,15 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Process dataset for use with deep learning segmentation network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing Deep Learning Architectures for Different Computer Vision Tasks on Satellite Imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Objectives</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transfer learning, fine-tuning and hyperparameter optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
@@ -433,7 +433,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Transfer learning, fine-tuning and hyperparameter optimization</h1>
+    <h1>Transfer learning, fine-tuning and hyperparameter tuning</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -443,6 +443,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning-and-fine-tuning">Transfer learning and fine-tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-get-started">Let’s get started</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-pre-processing">Data loading and pre-processing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-dataset-for-performance">Prepare the dataset for performance</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augment-the-data">Augment the data</a></li>
@@ -466,6 +471,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-prediction">Evaluation and prediction</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Hyperparameter Tuning</a></li>
 </ul>
             </nav>
         </div>
@@ -477,21 +483,35 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="transfer-learning-fine-tuning-and-hyperparameter-optimization">
-<h1>Transfer learning, fine-tuning and hyperparameter optimization<a class="headerlink" href="#transfer-learning-fine-tuning-and-hyperparameter-optimization" title="Permalink to this heading">#</a></h1>
-<p>This tutorial will walk through the process of transfer learning from a pre-trained network and a minimal approach to hyperparamater optimization. We’ll discuss what transfer learning and hyperparamater optimization are, when to consider them and demonstrate how to do so practically. This is an adaptation of this <a class="reference external" href="https://www.tensorflow.org/tutorials/images/transfer_learning#data_download">example</a>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="transfer-learning-fine-tuning-and-hyperparameter-tuning">
+<h1>Transfer learning, fine-tuning and hyperparameter tuning<a class="headerlink" href="#transfer-learning-fine-tuning-and-hyperparameter-tuning" title="Permalink to this heading">#</a></h1>
+<p>This tutorial will walk through the process of transfer learning from a pre-trained network and a minimal approach to hyperparamater tuning. We’ll discuss what transfer learning and hyperparamater tuning are, when to consider them and demonstrate how to do so practically. This is an adaptation of this <a class="reference external" href="https://www.tensorflow.org/tutorials/images/transfer_learning#data_download">example</a> and this <a class="reference external" href="https://www.tensorflow.org/tutorials/keras/keras_tuner">one</a>.</p>
+<section id="transfer-learning-and-fine-tuning">
+<h2>Transfer learning and fine-tuning<a class="headerlink" href="#transfer-learning-and-fine-tuning" title="Permalink to this heading">#</a></h2>
 <p>A pre-trained model is the result of a network that has been trained already on a large dataset, usually characterized by a high degree of generalization. These models, which require a long training time using significant computing resources, have most often learned to understand very basic representations of features across domains, such as edges and shapes. Because of their generalizability, they can be helpful in expediting the training process for a custom task because they’ve already grasped the basic features, allowing for any new training to focus on the more particular, higher-order features. This is the intuition behind a process known as transfer learning. In practice, transfer learning can help to reduce the amount of time it takes to train a performant custom model. Sometimes pre-trained models are referred to as “backbone” networks.</p>
 <p>There are two main strategies to transfer learning, which we will discuss and practice in this tutorial:</p>
 <ol class="arabic simple">
 <li><p>Feature Extraction: In this technique, we use a portion of the layers from the the pre-trained network (with all of its learnings) to extract features from the custom data, and then append a new classifier (and perhaps several other layers) on top to learn more higher-order further and then classify for the unique task. This process doesn’t retrain any parts of the pre-trained network. It just uses some layers from it that have been “frozen” to derive some basic/generic features from the custom data. Any new layers are targeting the unique classes and characteristics of the custom data.</p></li>
 <li><p>Fine-Tuning: In this technique, we actually “unfreeze” some of the pre-trained network (usually the last few layers) to adjust the learned parameters using custom data. This process allows for the higher-order features of the new, custom data to be directly blended and jointly learned with the information already gathered by the pre-trained network. In effect, this may help make the whole network more relevant to the custom data and task. This technique is best used for situations in which the new training dataset is relatively large and somewhat similar to the original dataset seen by the pre-trained model.</p></li>
 </ol>
-<p>So, now that we have these two tranfer learning strategies and hyperparameter optimization in mind, let’s get started with a practical example. We will revisit the use case in which we want to classify satellite images from the <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">Eurosat RGB land cover image classification dataset available on TensorFlow Datasets</a>. The goal will be to see how transfer learning and hyperparameter optimization may help us arrive at a performant model quickly.</p>
+</section>
+<section id="hyperparameter-tuning">
+<h2>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading">#</a></h2>
+<p>Hyperparameters are the variables in a machine learning network that determine the topology and regulate the training process. Unlike trainable parameters, these variables do not change during training. There are exceptions to this, such as in the case of learning rate decay. One way to think of hyperparameters is in the sense of gears that you tune to affect the performance of the model. They can be largely broken down into two groups:</p>
+<ol class="arabic simple">
+<li><p>Model hyperparameters: these relate to aspects such as how many hidden layers a network has, how wide the layers are, what the kernel size is.</p></li>
+<li><p>Algorithm hyperparameters: these have more impact on the speed and learning rigor of the model. Examples include the learning rate and the number of epochs.</p></li>
+</ol>
+<p>Most often, when we build and instantiate models we assume best-in-class values for hyperparameters. Usually, this gets a machine learning model the vast majority of the way toward peak performance. However, some pitfalls can arise if learning rates are too large (resulting in failure to converge) or epochs too few. We recommend not always starting a machine learning experiment with hyperparameter tuning and instead, just trying best-in-class values based on prior studies. Hyperparameter tuning can be overkill and expensive because it requires running several iterative experiments, utilizing resources and time, to arrive at what may be negligible differences in configuration and often only a modest increase in performance. That said, sometimes, once a plateau has been reached with the performance of a model that hasn’t been tuned, it can be an interesting study. So, in this tutorial, we’ll explore how to do a minimal hyperparameter tuning using the Keras library.</p>
+<section id="let-s-get-started">
+<h3>Let’s get started<a class="headerlink" href="#let-s-get-started" title="Permalink to this heading">#</a></h3>
+<p>So, now that we have these two tranfer learning strategies and hyperparameter tuning in mind, let’s get started with a practical example. We will revisit the use case in which we want to classify satellite images from the <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">Eurosat RGB land cover image classification dataset available on TensorFlow Datasets</a>. The goal will be to see how transfer learning and hyperparameter optimization may help us arrive at a performant model quickly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># install required libraries
 !pip install -q rasterio==1.3.8
 !pip install -q geopandas==0.13.2
+!pip install -q -U keras-tuner==1.3.5
 </pre></div>
 </div>
 </div>
@@ -513,6 +533,7 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from tensorflow.keras.utils import plot_model
 import matplotlib.pyplot as plt
+import keras_tuner as kt
 </pre></div>
 </div>
 </div>
@@ -538,7 +559,7 @@ else:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Drive already mounted at /content/gdrive; to attempt to forcibly remount, call drive.mount(&quot;/content/gdrive&quot;, force_remount=True).
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mounted at /content/gdrive
 Running on Colab
 </pre></div>
 </div>
@@ -556,6 +577,8 @@ Running on Colab
 </div>
 </div>
 </div>
+</section>
+</section>
 <section id="data-loading-and-pre-processing">
 <h2>Data loading and pre-processing<a class="headerlink" href="#data-loading-and-pre-processing" title="Permalink to this heading">#</a></h2>
 <p>We will again use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
@@ -576,7 +599,11 @@ print(&quot;Number of samples in each split (train, val, test): &quot;, len(trai
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples in each split (train, val, test):  18900 5670 2430
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading and preparing dataset 89.91 MiB (download: 89.91 MiB, generated: Unknown size, total: 89.91 MiB) to /root/tensorflow_datasets/eurosat/rgb/2.0.0...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "18b967e060cb471ab0c783739e0ec3f3"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "34e5e20e97914ccab5eafed37f7b81f1"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "82e63dc7501e42db9e432fe01a7dfe82"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "2f7cb2dd99504330b3eec96e08065c37"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset eurosat downloaded and prepared to /root/tensorflow_datasets/eurosat/rgb/2.0.0. Subsequent calls will reuse this data.
+Number of samples in each split (train, val, test):  18900 5670 2430
 </pre></div>
 </div>
 </div>
@@ -650,7 +677,7 @@ print(train_dataset.element_spec)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b9e8fe9964cc52d2efe47203cc2e98edfe8c784e7fb8a00414a2169a8c0db2a5.png" src="../_images/b9e8fe9964cc52d2efe47203cc2e98edfe8c784e7fb8a00414a2169a8c0db2a5.png" />
+<img alt="../_images/88e5c3cb1ba090b388fe80cfc51511bdd133da39fc92f0591bcf4c07242b8242.png" src="../_images/88e5c3cb1ba090b388fe80cfc51511bdd133da39fc92f0591bcf4c07242b8242.png" />
 </div>
 </div>
 <section id="prepare-the-dataset-for-performance">
@@ -698,7 +725,7 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/76544c19d25b945656ec3fb6beb43702aa32d552dbf02bc2f46b3ce2ad68925b.png" src="../_images/76544c19d25b945656ec3fb6beb43702aa32d552dbf02bc2f46b3ce2ad68925b.png" />
+<img alt="../_images/713c574f53cc47da6dc90d9880a4610b937cd3a62056cd1aeab056ab249c4226.png" src="../_images/713c574f53cc47da6dc90d9880a4610b937cd3a62056cd1aeab056ab249c4226.png" />
 </div>
 </div>
 </section>
@@ -740,6 +767,10 @@ base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:tensorflow:`input_shape` is undefined or non-square, or `rows` is not in [96, 128, 160, 192, 224]. Weights for input shape (224, 224) will be loaded as the default.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_224_no_top.h5
+9406464/9406464 [==============================] - 1s 0us/step
 </pre></div>
 </div>
 </div>
@@ -1265,7 +1296,7 @@ _________________________________________________________________
 =================================================================
  input_2 (InputLayer)        [(None, 64, 64, 3)]       0         
                                                                  
- sequential (Sequential)     multiple                  0         
+ sequential (Sequential)     (None, 64, 64, 3)         0         
                                                                  
  tf.math.truediv (TFOpLambda  (None, 64, 64, 3)        0         
  )                                                               
@@ -1318,7 +1349,7 @@ loss0, accuracy0 = model.evaluate(validation_dataset)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1418/1418 [==============================] - 22s 14ms/step - loss: 2.8733 - accuracy: 0.0952
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1418/1418 [==============================] - 16s 9ms/step - loss: 3.3583 - accuracy: 0.0892
 </pre></div>
 </div>
 </div>
@@ -1331,8 +1362,8 @@ print(&quot;initial accuracy: {:.2f}&quot;.format(accuracy0))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial loss: 2.87
-initial accuracy: 0.10
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial loss: 3.36
+initial accuracy: 0.09
 </pre></div>
 </div>
 </div>
@@ -1347,25 +1378,25 @@ initial accuracy: 0.10
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
-4725/4725 [==============================] - 74s 14ms/step - loss: 1.1513 - accuracy: 0.6145 - val_loss: 0.6628 - val_accuracy: 0.7847
+4725/4725 [==============================] - 102s 20ms/step - loss: 1.1777 - accuracy: 0.6038 - val_loss: 0.6880 - val_accuracy: 0.7755
 Epoch 2/10
-4725/4725 [==============================] - 61s 13ms/step - loss: 0.6991 - accuracy: 0.7739 - val_loss: 0.5474 - val_accuracy: 0.8205
+4725/4725 [==============================] - 70s 15ms/step - loss: 0.7106 - accuracy: 0.7644 - val_loss: 0.5482 - val_accuracy: 0.8233
 Epoch 3/10
-4725/4725 [==============================] - 69s 15ms/step - loss: 0.6034 - accuracy: 0.8005 - val_loss: 0.4916 - val_accuracy: 0.8406
+4725/4725 [==============================] - 60s 13ms/step - loss: 0.6152 - accuracy: 0.7997 - val_loss: 0.5061 - val_accuracy: 0.8332
 Epoch 4/10
-4725/4725 [==============================] - 79s 17ms/step - loss: 0.5631 - accuracy: 0.8160 - val_loss: 0.4659 - val_accuracy: 0.8481
+4725/4725 [==============================] - 57s 12ms/step - loss: 0.5559 - accuracy: 0.8146 - val_loss: 0.4704 - val_accuracy: 0.8471
 Epoch 5/10
-4725/4725 [==============================] - 80s 17ms/step - loss: 0.5366 - accuracy: 0.8241 - val_loss: 0.4368 - val_accuracy: 0.8547
+4725/4725 [==============================] - 59s 12ms/step - loss: 0.5413 - accuracy: 0.8189 - val_loss: 0.4519 - val_accuracy: 0.8520
 Epoch 6/10
-4725/4725 [==============================] - 69s 15ms/step - loss: 0.5233 - accuracy: 0.8285 - val_loss: 0.4215 - val_accuracy: 0.8616
+4725/4725 [==============================] - 57s 12ms/step - loss: 0.5220 - accuracy: 0.8283 - val_loss: 0.4437 - val_accuracy: 0.8492
 Epoch 7/10
-4725/4725 [==============================] - 70s 15ms/step - loss: 0.5209 - accuracy: 0.8296 - val_loss: 0.4303 - val_accuracy: 0.8593
+4725/4725 [==============================] - 61s 13ms/step - loss: 0.5021 - accuracy: 0.8339 - val_loss: 0.4365 - val_accuracy: 0.8552
 Epoch 8/10
-4725/4725 [==============================] - 57s 12ms/step - loss: 0.5015 - accuracy: 0.8343 - val_loss: 0.4197 - val_accuracy: 0.8621
+4725/4725 [==============================] - 58s 12ms/step - loss: 0.5023 - accuracy: 0.8341 - val_loss: 0.4272 - val_accuracy: 0.8598
 Epoch 9/10
-4725/4725 [==============================] - 58s 12ms/step - loss: 0.4948 - accuracy: 0.8368 - val_loss: 0.4007 - val_accuracy: 0.8633
+4725/4725 [==============================] - 73s 15ms/step - loss: 0.4893 - accuracy: 0.8369 - val_loss: 0.4300 - val_accuracy: 0.8561
 Epoch 10/10
-4725/4725 [==============================] - 58s 12ms/step - loss: 0.4838 - accuracy: 0.8401 - val_loss: 0.4088 - val_accuracy: 0.8665
+4725/4725 [==============================] - 62s 13ms/step - loss: 0.4865 - accuracy: 0.8390 - val_loss: 0.4150 - val_accuracy: 0.8660
 </pre></div>
 </div>
 </div>
@@ -1404,12 +1435,12 @@ plt.show()
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/13d5f5eede4a7c47738e47eed78ba18da1a0180406a3fa6b5cd9975cb006ab82.png" src="../_images/13d5f5eede4a7c47738e47eed78ba18da1a0180406a3fa6b5cd9975cb006ab82.png" />
+<img alt="../_images/e9a9f3fa2d568fce3ec5ab68865de98cbef3e62d3aa210724bd9840620137118.png" src="../_images/e9a9f3fa2d568fce3ec5ab68865de98cbef3e62d3aa210724bd9840620137118.png" />
 </div>
 </div>
 <p>Note that the validation metrics are better than the training metrics. This is mainly the case because certain layers such as <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.BatchNormalization</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dropout</span></code> impact accuracy during training. However, they are inactive when calculating validation loss. A second yet much more minor reason for why the training metrics are lower is because
 validation metrics are evaluated at the end of each epoch while training metrics are calculated as an average in each epoch. Therefore, validation metrics represent the concrete end of an epoch not the interim progress.</p>
-<p>Now let’s measure the performance of the model on new data from the test set.</p>
+<p>Now let’s measure the performance of the model on new data from the test set. By the way, Keras’ <code class="docutils literal notranslate"><span class="pre">model.evaluate</span></code> method will report the loss and metric defined in the <code class="docutils literal notranslate"><span class="pre">modile.compile</span></code> step.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss, accuracy = model.evaluate(test_dataset)
@@ -1418,8 +1449,8 @@ print(&#39;Test accuracy :&#39;, accuracy)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 6s 10ms/step - loss: 0.4570 - accuracy: 0.8486
-Test accuracy : 0.8485596776008606
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 6s 9ms/step - loss: 0.4550 - accuracy: 0.8543
+Test accuracy : 0.8543210029602051
 </pre></div>
 </div>
 </div>
@@ -1648,6 +1679,206 @@ print(len(predictions.numpy()), len(label_batch))
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="id2">
+<h2>Hyperparameter Tuning<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>To use the <a class="reference external" href="https://keras.io/api/keras_tuner/">Keras tuner library</a>, we have to format our model in a model builder function. All this takes is enveloping the constituent layers we defined above in a function, ensuring that any arguments such as <code class="docutils literal notranslate"><span class="pre">INPUT_SHAPE</span></code> have been defined outside of the function.</p>
+<p>We will tune the learning rate in the following experiment, with the goal of selecting the optimal value from a list of options including <code class="docutils literal notranslate"><span class="pre">[0.01,</span> <span class="pre">0.001,</span> <span class="pre">or</span> <span class="pre">0.0001]</span></code>.</p>
+<p>The function will return the compiled model using the selection of hyperparameters defined.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def model_builder(hp):
+  inputs = tf.keras.Input(shape=INPUT_SHAPE)
+  x = data_augmentation(inputs)
+  x = preprocess_input(x)
+  x = base_model(x, training=False)
+  x = global_average_layer(x)
+  x = tf.keras.layers.Dropout(0.2)(x)
+  outputs = prediction_layer(x)
+  model = tf.keras.Model(inputs, outputs)
+
+  # Tune the learning rate for the optimizer
+  # Choose an optimal value from 0.01, 0.001, or 0.0001
+  hp_learning_rate = hp.Choice(&#39;learning_rate&#39;, values=[1e-2, 1e-3, 1e-4])
+
+  model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=hp_learning_rate),
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                metrics=[&#39;accuracy&#39;])
+
+  return model
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will instantiate the tuner algorithm, in this case one called <a class="reference external" href="https://arxiv.org/pdf/1603.06560.pdf">Hyperband</a>. Herein, we have to specify the objective to optimize for and the allowable number of epochs to train an experiment for (usually this is to a large value and safeguarded by an early stopping callback which we’ll define next). Note that the <code class="docutils literal notranslate"><span class="pre">project_name</span></code> argument defines a folder that will hold all of the checkpoints and logs from the trials in this experiment. By default, if the search is rerun with this same directory, the search will resume from the state captured in those checkpoints. This can be changed by including <code class="docutils literal notranslate"><span class="pre">overwrite=True</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner = kt.Hyperband(model_builder,
+                     objective=&#39;accuracy&#39;,
+                     max_epochs=4,
+                     project_name=&#39;exp_hp&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will also include a callback function that halts training when convergence has been achieved, despite whether the number of epochs defined is still in excess. This is a useful strategy to improve the resource efficiency of our models and prevent overfitting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stop_early = tf.keras.callbacks.EarlyStopping(monitor=&#39;val_loss&#39;, patience=5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Commence the tuning process. Note that the arguments for <code class="docutils literal notranslate"><span class="pre">tuner.search</span></code> are the same as those for Keras’ <code class="docutils literal notranslate"><span class="pre">model.fit</span></code> method.</p>
+<p>From this, we will find out which value is optimal for the learning rate.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner.search(train_dataset, epochs=20, callbacks=[stop_early])
+
+# Get the optimal hyperparameters
+best_hps=tuner.get_best_hyperparameters(num_trials=1)[0]
+
+print(f&quot;&quot;&quot;
+The hyperparameter search is complete. The optimal learning rate for the optimizer
+is {best_hps.get(&#39;learning_rate&#39;)}.
+&quot;&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Trial 3 Complete [00h 02m 17s]
+accuracy: 0.772857129573822
+
+Best accuracy So Far: 0.772857129573822
+Total elapsed time: 00h 02m 17s
+
+The hyperparameter search is complete. The optimal learning rate for the optimizer
+is 0.01.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we know the best hyperparameters from our tuning experiments, let’s determine how many epochs we should train the model for.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Build the model with the optimal hyperparameters and train it on the data for 20 epochs
+model = tuner.hypermodel.build(best_hps)
+history = model.fit(train_dataset, epochs=20)
+
+acc_per_epoch = history.history[&#39;accuracy&#39;]
+best_epoch = acc_per_epoch.index(max(acc_per_epoch)) + 1
+print(&#39;Best epoch: %d&#39; % (best_epoch,))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/20
+4725/4725 [==============================] - 51s 10ms/step - loss: 4.2385 - accuracy: 0.7769
+Epoch 2/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.2537 - accuracy: 0.7785
+Epoch 3/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.2641 - accuracy: 0.7830
+Epoch 4/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.4286 - accuracy: 0.7828
+Epoch 5/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.4094 - accuracy: 0.7791
+Epoch 6/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.2909 - accuracy: 0.7907
+Epoch 7/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.5182 - accuracy: 0.7828
+Epoch 8/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.4074 - accuracy: 0.7897
+Epoch 9/20
+4725/4725 [==============================] - 50s 11ms/step - loss: 4.4298 - accuracy: 0.7881
+Epoch 10/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.4271 - accuracy: 0.7860
+Epoch 11/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.4929 - accuracy: 0.7875
+Epoch 12/20
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.4564 - accuracy: 0.7859
+Epoch 13/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.5414 - accuracy: 0.7865
+Epoch 14/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.4373 - accuracy: 0.7919
+Epoch 15/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.3875 - accuracy: 0.7885
+Epoch 16/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6144 - accuracy: 0.7854
+Epoch 17/20
+4725/4725 [==============================] - 47s 10ms/step - loss: 4.6284 - accuracy: 0.7888
+Epoch 18/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.5275 - accuracy: 0.7901
+Epoch 19/20
+4725/4725 [==============================] - 50s 10ms/step - loss: 4.5028 - accuracy: 0.7918
+Epoch 20/20
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6419 - accuracy: 0.7872
+Best epoch: 14
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we know the optimal learning rate, and the corresponding optimal number of epochs to train for to arrive at peak model performance. At this point, we will use these two tuned hyperparameters to train the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>hypermodel = tuner.hypermodel.build(best_hps)
+
+# Retrain the model
+hypermodel.fit(train_dataset, epochs=best_epoch)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/14
+4725/4725 [==============================] - 52s 10ms/step - loss: 4.6786 - accuracy: 0.7919
+Epoch 2/14
+4725/4725 [==============================] - 47s 10ms/step - loss: 4.5736 - accuracy: 0.7875
+Epoch 3/14
+4725/4725 [==============================] - 47s 10ms/step - loss: 4.3930 - accuracy: 0.7904
+Epoch 4/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6037 - accuracy: 0.7876
+Epoch 5/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.5838 - accuracy: 0.7893
+Epoch 6/14
+4725/4725 [==============================] - 47s 10ms/step - loss: 4.4811 - accuracy: 0.7949
+Epoch 7/14
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.6096 - accuracy: 0.7898
+Epoch 8/14
+4725/4725 [==============================] - 50s 11ms/step - loss: 4.5847 - accuracy: 0.7875
+Epoch 9/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6300 - accuracy: 0.7916
+Epoch 10/14
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.4771 - accuracy: 0.7877
+Epoch 11/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6489 - accuracy: 0.7903
+Epoch 12/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6273 - accuracy: 0.7882
+Epoch 13/14
+4725/4725 [==============================] - 49s 10ms/step - loss: 4.6623 - accuracy: 0.7899
+Epoch 14/14
+4725/4725 [==============================] - 48s 10ms/step - loss: 4.6702 - accuracy: 0.7859
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;keras.callbacks.History at 0x794646279030&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, let’s evaluate our tuned model on the test dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eval_result = hypermodel.evaluate(test_dataset)
+print(&quot;[test loss, test accuracy]:&quot;, eval_result)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 6s 8ms/step - loss: 3.7428 - accuracy: 0.8226
+[test loss, test accuracy]: [3.7428324222564697, 0.8226337432861328]
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#@title Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -1692,7 +1923,6 @@ print(len(predictions.numpy()), len(label_batch))
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 
@@ -1763,6 +1993,11 @@ print(len(predictions.numpy()), len(label_batch))
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning-and-fine-tuning">Transfer learning and fine-tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-get-started">Let’s get started</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-pre-processing">Data loading and pre-processing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-dataset-for-performance">Prepare the dataset for performance</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augment-the-data">Augment the data</a></li>
@@ -1786,6 +2021,7 @@ print(len(predictions.numpy()), len(label_batch))
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-prediction">Evaluation and prediction</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Hyperparameter Tuning</a></li>
 </ul>
   </nav></div>
 
