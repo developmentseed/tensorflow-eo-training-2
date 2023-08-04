@@ -182,6 +182,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing Deep Learning Architectures for Different Computer Vision Tasks on Satellite Imagery</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Objectives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7c_transfer_learning_hyperparam_opt.html">Transfer learning, fine-tuning and hyperparameter optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
 </ul>
 
@@ -531,15 +532,7 @@ print(&quot;TensorFlow version:&quot;, tf.__version__)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Mount google drive.
-drive.mount(&#39;/content/gdrive&#39;)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set your root directory and tiled data folders
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set your root directory and working folders
 if &#39;google.colab&#39; in str(get_ipython()):
     # mount google drive
     drive.mount(&#39;/content/gdrive&#39;)
@@ -574,9 +567,9 @@ else:
 <p>The dataset will be partitioned into training, validation and testing splits with a 70:20:10 ratio, respectively.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_train_test_splits(dataset, image_arrays_list, label_integers_list):
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def convert_datasets(dataset, image_arrays_list, label_integers_list):
   &quot;&quot;&quot;
-  Function to get dataset splits for training and testing.
+  Prepares a dict-style dataset in the format Keras expects, (features, labels).
   &quot;&quot;&quot;
   for features in train_dataset.take(len(train_dataset)):
     image, label = features[&quot;image&quot;], features[&quot;label&quot;]
@@ -607,9 +600,9 @@ val_label_integers = []
 test_image_arrays = []
 test_label_integers = []
 
-x_train, y_train = get_train_test_splits(train_dataset, train_image_arrays, train_label_integers)
-x_val, y_val = get_train_test_splits(val_dataset, val_image_arrays, val_label_integers)
-x_test, y_test = get_train_test_splits(test_dataset, test_image_arrays, test_label_integers)
+x_train, y_train = convert_datasets(train_dataset, train_image_arrays, train_label_integers)
+x_val, y_val = convert_datasets(val_dataset, val_image_arrays, val_label_integers)
+x_test, y_test = convert_datasets(test_dataset, test_image_arrays, test_label_integers)
 </pre></div>
 </div>
 </div>
@@ -630,8 +623,8 @@ x_test, y_test = get_train_test_splits(test_dataset, test_image_arrays, test_lab
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Dataset specific parameters to be used in the model structure
-input_shape=(64, 64, 3)
-num_classes = 10
+INPUT_SHAPE =(64, 64, 3)
+NUM_CLASSES = 10
 </pre></div>
 </div>
 </div>
@@ -662,10 +655,10 @@ num_classes = 10
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=input_shape),
+  tf.keras.layers.Flatten(input_shape=INPUT_SHAPE),
   tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
   tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(num_classes)
+  tf.keras.layers.Dense(NUM_CLASSES)
 ])
 </pre></div>
 </div>
@@ -1096,8 +1089,8 @@ x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>input_shape = (200, 200, 3)
-num_classes = 6
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INPUT_SHAPE = (200, 200, 3)
+NUM_CLASSES = 6
 </pre></div>
 </div>
 </div>
@@ -1105,10 +1098,10 @@ num_classes = 6
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=input_shape),
+  tf.keras.layers.Flatten(input_shape=INPUT_SHAPE),
   tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
   tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(num_classes)
+  tf.keras.layers.Dense(NUM_CLASSES)
 ])
 
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
