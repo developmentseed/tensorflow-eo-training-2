@@ -504,22 +504,21 @@ ee.Initialize()
 #print(tf.__version__)
 from tensorflow.keras import layers, losses, models, metrics, optimizers
 
-import folium, glob, json, tifffile
+import os, folium, glob, json, tifffile
 from PIL import Image
 import numpy as np
 from random import randrange
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import imshow
 from pprint import pprint
+from google.colab import drive
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from google.colab import drive
-import os
-# set your root directory and tiled data folders
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set your root directory and working folders
 if &#39;google.colab&#39; in str(get_ipython()):
     # mount google drive
     drive.mount(&#39;/content/gdrive&#39;)
