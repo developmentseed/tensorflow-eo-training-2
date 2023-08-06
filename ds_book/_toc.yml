@@ -4,7 +4,7 @@ chapters:
   - file: docs/Lesson1a_Intro_ML_NN_DL
   - file: docs/Lesson2a_Intro_to_Google_Colab
   - file: docs/Lesson2b_Intro_TensorFlow_Keras
-  - file: docs/Lesson2b_Intro_TF2_Keras_TFDS_RadiantEarth
+  - file: docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth
   - file: docs/Lesson3_Intro_tensors_functions_datasets
   - file: docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression
   - file: docs/Lesson4b_Integrations_with_Google_Cloud_Platform
