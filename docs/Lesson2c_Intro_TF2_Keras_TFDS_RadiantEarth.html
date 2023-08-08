@@ -1,0 +1,1276 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>TensorFlow 2 and Keras quickstart for geospatial computer vision &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets" href="Lesson3_Intro_tensors_functions_datasets.html" />
+    <link rel="prev" title="Introduction to TensorFlow 2 and Keras" href="Lesson2b_Intro_TensorFlow_Keras.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Comparing RNNs and Transformers for Imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7c_transfer_learning_hyperparam_opt.html">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson8_advanced_applications.html">TensorFlow advanced applications with deep learning object detection, time-series analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training-2/main?urlpath=tree/ds_book/docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training-2/blob/main/ds_book/docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/edit/main/ds_book/docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TensorFlow 2 and Keras quickstart for geospatial computer vision</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tensorflow-datasets">Let’s use a dataset from TensorFlow Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tensorflow-2-and-keras-quickstart-for-geospatial-computer-vision">
+<h1>TensorFlow 2 and Keras quickstart for geospatial computer vision<a class="headerlink" href="#tensorflow-2-and-keras-quickstart-for-geospatial-computer-vision" title="Permalink to this heading">#</a></h1>
+<p>This short introduction uses <a class="reference external" href="https://www.tensorflow.org/guide/keras/overview">Keras</a> and is adapted from this <a class="reference external" href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/quickstart/beginner.ipynb">example</a>.</p>
+<p>Our objectives will be to:</p>
+<ol class="arabic simple">
+<li><p>Load prebuilt geospatial datasets. We’ll show how to do this firstly with <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets</a> and secondly with <a class="reference external" href="https://mlhub.earth/">Radiant Earth MLHub</a>.</p></li>
+<li><p>Build a neural network machine learning model that classifies images.</p></li>
+<li><p>Train this neural network.</p></li>
+<li><p>Evaluate the accuracy of the model.</p></li>
+</ol>
+<p>Let’s check the python version we are using. This is subject to Google colab internal updates, so be mindful of when this changes and how that impacts library versions you might be using.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!python3 --version
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python 3.10.12
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># install required libraries
+!pip install -q rasterio==1.3.8
+!pip install -q geopandas==0.13.2
+#!pip install -q tensorflow-data-validation==1.3.0 # Only works with Python versions 3.9 or earlier
+#!export TFX_DEPENDENCY_SELECTOR=NIGHTLY
+#!pip install -q --extra-index-url https://pypi-nightly.tensorflow.org/simple tensorflow-data-validation
+!pip install -q radiant_mlhub # for dataset access, see: https://mlhub.earth/
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import os, glob, functools, fnmatch, io, shutil, tarfile, json
+from zipfile import ZipFile
+from itertools import product
+from pathlib import Path
+import urllib.request
+from radiant_mlhub import Dataset, client, get_session, Collection
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from PIL import Image
+import numpy as np
+from google.colab import drive
+import tensorflow_datasets as tfds
+from tensorflow.keras.utils import plot_model
+#import tensorflow_data_validation
+import matplotlib.pyplot as plt
+</pre></div>
+</div>
+</div>
+</div>
+<p>Import TensorFlow into your program to get started:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import tensorflow as tf
+print(&quot;TensorFlow version:&quot;, tf.__version__)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorFlow version: 2.13.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mount our folders to read and write data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set your folders
+if &#39;google.colab&#39; in str(get_ipython()):
+    # mount google drive
+    drive.mount(&#39;/content/gdrive&#39;)
+    processed_outputs_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-2-processed-outputs/&#39;
+    user_outputs_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir&#39;
+    if not os.path.exists(user_outputs_dir):
+        os.makedirs(user_outputs_dir)
+    print(&#39;Running on Colab&#39;)
+else:
+    processed_outputs_dir = os.path.abspath(&quot;./data/tf-eo-devseed-2-processed-outputs&quot;)
+    user_outputs_dir = os.path.abspath(&#39;./tf-eo-devseed-2-user_outputs_dir&#39;)
+    if not os.path.exists(user_outputs_dir):
+        os.makedirs(user_outputs_dir)
+        os.makedirs(processed_outputs_dir)
+    print(f&#39;Not running on Colab, data needs to be downloaded locally at {os.path.abspath(processed_outputs_dir)}&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Move to your user directory in order to write data
+%cd $user_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+<section id="let-s-use-a-dataset-from-tensorflow-datasets">
+<h2>Let’s use a dataset from TensorFlow Datasets<a class="headerlink" href="#let-s-use-a-dataset-from-tensorflow-datasets" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets</a>, accessible via the importable API <code class="docutils literal notranslate"><span class="pre">tfds</span></code>, is convenient compared to working with raw geotiffs from file, as the associated pre-packaged datasets are accompanied by TensorFlow’s ecosystem of methods for attribution and exploration. The standardized packaging of these datasets also makes it easier to parallelize pre-processing operations which in turn makes it easier to create simple and efficient data pipelines.</p>
+<p>We will use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
+<p>The classes in this dataset are: <code class="docutils literal notranslate"><span class="pre">['Industrial',</span> <span class="pre">'Pasture',</span> <span class="pre">'River',</span> <span class="pre">'Forest',</span> <span class="pre">'AnnualCrop',</span> <span class="pre">'PermanentCrop',</span> <span class="pre">'Highway',</span> <span class="pre">'HerbaceousVegetation',</span> <span class="pre">'Residential',</span> <span class="pre">'SeaLake']</span></code></p>
+<p>The dataset will be partitioned into training, validation and testing splits with a 70:20:10 ratio, respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def convert_datasets(dataset, image_arrays_list, label_integers_list):
+  &quot;&quot;&quot;
+  Prepares a dict-style dataset in the format Keras expects, (features, labels).
+  &quot;&quot;&quot;
+  for features in dataset.take(len(dataset)):
+    image, label = features[&quot;image&quot;], features[&quot;label&quot;]
+    image_arrays_list.append(image)
+    label_integers_list.append(label)
+  x_dataset, y_dataset = np.array(image_arrays_list), np.array(label_integers_list)
+  return x_dataset, y_dataset
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Construct tf.data.Dataset(s)
+all_dataset, ds_info = tfds.load(name=&quot;eurosat/rgb&quot;, split=tfds.Split.TRAIN, with_info=True)
+
+# Shuffle the data before we partition it to make sure we don&#39;t have any unwarranted bias
+all_dataset = all_dataset.shuffle(1024)
+# Extract 30% of samples from the dataset for non-training
+val_dataset = all_dataset.take(int(len(all_dataset)*0.3))
+# Ensure that 30% of samples is excluded (&quot;skipped&quot;) when we set the training dataset
+train_dataset = all_dataset.skip(int(len(all_dataset)*0.3))
+# Take 30% of the non-training samples to use for testing, this makes up approaximately 10% of the original dataset
+test_dataset = val_dataset.take(int(len(val_dataset)*0.3))
+# Make sure the validation data skips that test reserve
+val_dataset = val_dataset.skip(int(len(val_dataset)*0.3))
+
+print(&quot;Number of samples in each split (train, val, test): &quot;, len(train_dataset), len(val_dataset), len(test_dataset))
+
+train_image_arrays = []
+train_label_integers = []
+val_image_arrays = []
+val_label_integers = []
+test_image_arrays = []
+test_label_integers = []
+
+x_train, y_train = convert_datasets(train_dataset, train_image_arrays, train_label_integers)
+x_val, y_val = convert_datasets(val_dataset, val_image_arrays, val_label_integers)
+x_test, y_test = convert_datasets(test_dataset, test_image_arrays, test_label_integers)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples in each split (train, val, test):  18900 5670 2430
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Check for all classes in each split
+# set(train_label_integers), set(test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Dataset specific parameters to be used in the model structure
+INPUT_SHAPE =(64, 64, 3)
+NUM_CLASSES = 10
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize examples of the classes in the dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fig = tfds.show_examples(all_dataset, ds_info)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2ad5d4c002f5a64474c7ef15908595b9e0692cf04414ad2e9a7215e4d6fafbde.png" src="../_images/2ad5d4c002f5a64474c7ef15908595b9e0692cf04414ad2e9a7215e4d6fafbde.png" />
+</div>
+</div>
+<p>We can also inspect some statistics on the dataset. NOTE: The dependencies for this function are unstable in Python versions <code class="docutils literal notranslate"><span class="pre">&gt;3.9</span></code> and may not work as intended under such circumstances.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#tfds.show_statistics(ds_info)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="now-let-s-build-a-very-basic-machine-learning-model">
+<h2>Now, let’s build a very basic machine learning model<a class="headerlink" href="#now-let-s-build-a-very-basic-machine-learning-model" title="Permalink to this heading">#</a></h2>
+<p>We’ll use the <code class="docutils literal notranslate"><span class="pre">tf.keras.Sequential</span></code> model structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=INPUT_SHAPE),
+  tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(NUM_CLASSES)
+])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <a class="reference external" href="https://www.tensorflow.org/guide/keras/sequential_model"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a> structure is designed to stack layers where each layer has an input <a class="reference external" href="https://www.tensorflow.org/guide/tensor">a tensor</a> and an output tensor. Layers themselves are simply functions performing matrix calculations. They may contain trainable variables and are reusable.</p>
+<p>It is most common for TensorFlow models to be composed of layers. This sequential model is composed of the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Flatten"><code class="docutils literal notranslate"><span class="pre">Flatten</span></code></a>, <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense"><code class="docutils literal notranslate"><span class="pre">Dense</span></code></a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a> layers.</p>
+<p>For each data sample provided the model, the corresponding output is a vector of <a class="reference external" href="https://developers.google.com/machine-learning/glossary#logits">logits</a> or <a class="reference external" href="https://developers.google.com/machine-learning/glossary#log-odds">log-odds</a> scores, for each class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>predictions = model(x_train[:1]).numpy()
+predictions
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> function converts logits to <em>probabilities</em> for each class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.nn.softmax(predictions).numpy()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tf.nn.softmax(predictions).numpy().min(), tf.nn.softmax(predictions).numpy().max()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step is to specify a loss function for training. We will be using <code class="docutils literal notranslate"><span class="pre">losses.SparseCategoricalCrossentropy</span></code> as it is a commonly used loss function for multi-class data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The input to the loss function is a vector of ground truth values and a vector of logits. The returned output is a scalar loss for each data sample. Loss values close to zero are good, as they imply proximity to the correct class.</p>
+<p>The untrained model will produce probabilities close to random for each class.</p>
+<p>Before the model can be trained, it needs to be configured and compiled, using Keras <code class="docutils literal notranslate"><span class="pre">Model.compile</span></code>. In this step, we establish the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers"><code class="docutils literal notranslate"><span class="pre">optimizer</span></code></a> class (which in this case will be <code class="docutils literal notranslate"><span class="pre">adam</span></code>), the <code class="docutils literal notranslate"><span class="pre">loss</span></code> to the <code class="docutils literal notranslate"><span class="pre">loss_fn</span></code> function defined earlier, and a metric that will be used evaluate the model at each iteration (herein we will use <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lr = 0.001 # learning rate
+optimizer = tf.keras.optimizers.Adam(learning_rate=lr) # optimizer
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.compile(optimizer=optimizer,
+              loss=loss_fn,
+              metrics=[&#39;accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Summarize the model
+model.summary()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_5&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ flatten_2 (Flatten)         (None, 12288)             0         
+                                                                 
+ dense_4 (Dense)             (None, 128)               1572992   
+                                                                 
+ dropout_2 (Dropout)         (None, 128)               0         
+                                                                 
+ dense_5 (Dense)             (None, 10)                1290      
+                                                                 
+=================================================================
+Total params: 1,574,282
+Trainable params: 1,574,282
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Visualize the model
+plot_model(model, show_shapes=True)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/14ebf33c0e4757c6801f7812af8ba0213ee3832f00d297f305a062ad8c69727d.png" src="../_images/14ebf33c0e4757c6801f7812af8ba0213ee3832f00d297f305a062ad8c69727d.png" />
+</div>
+</div>
+</section>
+<section id="train-and-evaluate-your-model">
+<h2>Train and evaluate your model<a class="headerlink" href="#train-and-evaluate-your-model" title="Permalink to this heading">#</a></h2>
+<p>No we will train the model using the <code class="docutils literal notranslate"><span class="pre">Model.fit</span></code> Keras method. During the following iterations, the model parameters will adjust and we will hope to see the loss.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># We will save the model fit history as an object to subsequently get attributes from (e.g. loss curves).
+# This is an optional measure.
+history = model.fit(x_train, y_train, validation_data= (x_val, y_val), epochs=10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># plot learning curves
+plt.title(&#39;Learning Curves&#39;)
+plt.xlabel(&#39;Epoch&#39;)
+plt.ylabel(&#39;Cross Entropy&#39;)
+plt.plot(history.history[&#39;loss&#39;], label=&#39;train&#39;)
+plt.plot(history.history[&#39;val_loss&#39;], label=&#39;val&#39;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+</div>
+<p>To evaluate the mode, we will use the <code class="docutils literal notranslate"><span class="pre">Model.evaluate</span></code> Keras method. The performance is evaluated on a <a class="reference external" href="https://developers.google.com/machine-learning/glossary#test-set">test set</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.evaluate(x_test,  y_test, verbose=2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can return probabilities for the predictions by attaching a softmax to the trained model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model = tf.keras.Sequential([
+  model,
+  tf.keras.layers.Softmax()
+])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s take the first test image, plot it and get the predicted class-wise probabilities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+
+def display(display_list):
+  plt.figure(figsize=(5, 5))
+
+  title = [&#39;Test Image&#39;]
+
+  for i in range(len(display_list)):
+    plt.subplot(1, len(display_list), i+1)
+    plt.title(title[i])
+    plt.imshow(tf.keras.preprocessing.image.array_to_img(display_list[i]))
+    plt.axis(&#39;off&#39;)
+  plt.show()
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># display sample test image
+display([x_test[0]])
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6a05ea92504c4320eb628b014c9ed7ecacb32844c57ae4b4f7337a223445c2fc.png" src="../_images/6a05ea92504c4320eb628b014c9ed7ecacb32844c57ae4b4f7337a223445c2fc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probabilities = probability_model(x_test[[0]])
+probabilities
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class_strings = [&#39;Industrial&#39;, &#39;Pasture&#39;, &#39;River&#39;, &#39;Forest&#39;, &#39;AnnualCrop&#39;, &#39;PermanentCrop&#39;, &#39;Highway&#39;, &#39;HerbaceousVegetation&#39;, &#39;Residential&#39;, &#39;SeaLake&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which class has the highest probability?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for s, p in zip(class_strings, probabilities[0]):
+  print(s, p)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can look at some ground truth examples again to see if this looks sound!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fig = tfds.show_examples(all_dataset, ds_info)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/50fab75de075413de46efdb425d54758da4d286a678f0acbf731297c65facd5a.png" src="../_images/50fab75de075413de46efdb425d54758da4d286a678f0acbf731297c65facd5a.png" />
+</div>
+</div>
+</section>
+<section id="part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">
+<h2>Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth<a class="headerlink" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth" title="Permalink to this heading">#</a></h2>
+<p>Load and prepare the <a class="reference external" href="https://mlhub.earth/data/rti_rwanda_crop_type">Drone Imagery Classification Training Dataset for Crop Types in Rwanda dataset from Radiant Earth</a>. You’ll need a Radiant Earth MLHub API key for this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># configure Radiant Earth MLHub access
+!mlhub configure
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ds = Dataset.fetch(&#39;rti_rwanda_crop_type&#39;)
+for c in ds.collections:
+    print(c.id)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rti_rwanda_crop_type_labels
+rti_rwanda_crop_type_source
+rti_rwanda_crop_type_raw
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>collections = [
+    &#39;rti_rwanda_crop_type_labels&#39;,
+    &#39;rti_rwanda_crop_type_source&#39;
+]
+
+def download(collection_id):
+    print(f&#39;Downloading {collection_id}...&#39;)
+    collection = Collection.fetch(collection_id)
+    path = collection.download(&#39;.&#39;)
+    tar = tarfile.open(path, &quot;r:gz&quot;)
+    tar.extractall()
+    tar.close()
+    os.remove(path)
+
+def resolve_path(base, path):
+    return Path(os.path.join(base, path)).resolve()
+
+def load_df(collection_id):
+    collection = json.load(open(f&#39;{collection_id}/collection.json&#39;, &#39;r&#39;))
+    rows = []
+    item_links = []
+    for link in collection[&#39;links&#39;]:
+        if link[&#39;rel&#39;] != &#39;item&#39;:
+            continue
+        item_links.append(link[&#39;href&#39;])
+    for item_link in item_links:
+        item_path = f&#39;{collection_id}/{item_link}&#39;
+        current_path = os.path.dirname(item_path)
+        item = json.load(open(item_path, &#39;r&#39;))
+        tile_id = item[&#39;id&#39;].split(&#39;_&#39;)[-1]
+        for asset_key, asset in item[&#39;assets&#39;].items():
+            rows.append([
+                tile_id,
+                None,
+                None,
+                asset_key,
+                str(resolve_path(current_path, asset[&#39;href&#39;]))
+            ])
+
+        for link in item[&#39;links&#39;]:
+            if link[&#39;rel&#39;] != &#39;source&#39;:
+                continue
+            link_path = resolve_path(current_path, link[&#39;href&#39;])
+            source_path = os.path.dirname(link_path)
+            try:
+                source_item = json.load(open(link_path, &#39;r&#39;))
+            except FileNotFoundError:
+                continue
+            datetime = source_item[&#39;properties&#39;][&#39;datetime&#39;]
+            satellite_platform = source_item[&#39;collection&#39;].split(&#39;_&#39;)[-1]
+            for asset_key, asset in source_item[&#39;assets&#39;].items():
+                rows.append([
+                    tile_id,
+                    datetime,
+                    satellite_platform,
+                    asset_key,
+                    str(resolve_path(source_path, asset[&#39;href&#39;]))
+                ])
+    return pd.DataFrame(rows, columns=[&#39;tile_id&#39;, &#39;datetime&#39;, &#39;satellite_platform&#39;, &#39;asset&#39;, &#39;file_path&#39;])
+
+for c in collections:
+    download(c)
+
+train_df = load_df(&#39;rti_rwanda_crop_type_labels&#39;)
+#test_df = load_df(&#39;rti_rwanda_crop_type_labels&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Read the classes
+pd.set_option(&#39;display.max_colwidth&#39;, None)
+
+data = {&#39;class_names&#39;:  [&#39;other&#39;, &#39;banana&#39;, &#39;maize&#39;, &#39;legumes&#39;, &#39;forest&#39;, &#39;structure&#39;],
+        &#39;class_ids&#39;: [0, 1, 2, 3, 4, 5]
+        }
+
+classes = pd.DataFrame(data)
+print(classes)
+
+classes.to_csv(&#39;rti_rwanda_crop_type_classes.csv&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  class_names  class_ids
+0       other          0
+1      banana          1
+2       maize          2
+3     legumes          3
+4      forest          4
+5   structure          5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train_df_labels = train_df.loc[train_df[&#39;asset&#39;] == &#39;labels&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>data_train, data_test = train_test_split(train_df_labels, test_size=0.3, random_state=1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>len(data_train), len(data_test)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1824, 782)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def get_RE_train_test(dataset, image_array_list, label_integer_list):
+  for i, r in data_train.iterrows():
+    label_path = r.file_path
+    with open(label_path) as f:
+      label_obj = json.load(f)
+    label_str = label_obj[&#39;label&#39;]
+    label_int = classes.loc[classes[&#39;class_names&#39;] == label_str, &#39;class_ids&#39;].squeeze()
+    label_integer_list.append(label_int)
+    image_path = label_path.replace(&#39;labels&#39;, &#39;source&#39;)
+    image_path = image_path.replace(&#39;source.json&#39;, &#39;&#39;)
+    image_obj = np.array(Image.open(f&quot;{image_path}/image.png&quot;))
+    image_array_list.append(image_obj)
+  return image_array_list, label_integer_list
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train_image_arrays = []
+train_label_integers = []
+
+train_image_arrays, train_label_integers = get_RE_train_test(data_train, train_image_arrays, train_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>test_image_arrays = []
+test_label_integers = []
+
+test_image_arrays, test_label_integers = get_RE_train_test(data_test, test_image_arrays, test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set(train_label_integers), set(test_label_integers)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>({0, 1, 2, 3, 4, 5}, {0, 1, 2, 3, 4, 5})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x_train, y_train = np.array(train_image_arrays), np.array(train_label_integers)
+x_test, y_test = np.array(test_image_arrays), np.array(test_label_integers)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>INPUT_SHAPE = (200, 200, 3)
+NUM_CLASSES = 6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=INPUT_SHAPE),
+  tf.keras.layers.Dense(128, activation=&#39;relu&#39;),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(NUM_CLASSES)
+])
+
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+
+model.compile(optimizer=&#39;adam&#39;,
+              loss=loss_fn,
+              metrics=[&#39;accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.fit(x_train, y_train, epochs=5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.evaluate(x_test,  y_test, verbose=2)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model = tf.keras.Sequential([
+  model,
+  tf.keras.layers.Softmax()
+])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>probability_model(x_test[:5])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson2b_Intro_TensorFlow_Keras.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to TensorFlow 2 and Keras</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson3_Intro_tensors_functions_datasets.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-use-a-dataset-from-tensorflow-datasets">Let’s use a dataset from TensorFlow Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#now-let-s-build-a-very-basic-machine-learning-model">Now, let’s build a very basic machine learning model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-and-evaluate-your-model">Train and evaluate your model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-optional-using-same-modeling-approach-but-with-a-dataset-from-radiant-earth">Part 2 (optional) using same modeling approach but with a dataset from Radiant Earth</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

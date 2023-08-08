@@ -1,0 +1,1448 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Regression using TensorFlow with Google Earth Engine Python API &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="What are cloud providers? Why might I need them for ML and Earth observation data?" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html" />
+    <link rel="prev" title="Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets" href="Lesson3_Intro_tensors_functions_datasets.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Comparing RNNs and Transformers for Imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7c_transfer_learning_hyperparam_opt.html">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson8_advanced_applications.html">TensorFlow advanced applications with deep learning object detection, time-series analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training-2/main?urlpath=tree/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training-2/blob/main/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/edit/main/ds_book/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Regression using TensorFlow with Google Earth Engine Python API</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Regression using TensorFlow with Google Earth Engine Python API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-regression">What is regression?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-and-authentication">Imports and authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-global-parameters">Set global parameters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#imagery">Imagery</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-data">Validation data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-output">Display the output</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="regression-using-tensorflow-with-google-earth-engine-python-api">
+<h1>Regression using TensorFlow with Google Earth Engine Python API<a class="headerlink" href="#regression-using-tensorflow-with-google-earth-engine-python-api" title="Permalink to this heading">#</a></h1>
+<p>This tutorial demonstrates how to train a model to predict continuous output (regression) from geospatial data. To do this, we will use the impervious surface area dataset from <a class="reference external" href="https://www.mrlc.gov/data">NLCD</a> and a Landsat 8 composite. Both datasets will be acquired from Google Earth Engine. Using the Keras sequential API, we will show how to train a <a class="reference external" href="https://arxiv.org/abs/1505.04597">U-Net</a> model to predict impervious surface area percentage for each pixel in an image.</p>
+<p>This tutorial is an adaptation of this <a class="reference external" href="https://developers.google.com/earth-engine/guides/tf_examples#regression-with-an-fcnn">example</a>.</p>
+<p>This tutorial covers:</p>
+<ol class="arabic simple">
+<li><p>Generating and exporting training/testing patches from Google Earth Engine (henceforth referred to as Earth Engine or EE).</p></li>
+<li><p>Using an iterator to supply batches furing training and testing.</p></li>
+<li><p>Training the regression model and saving it.</p></li>
+<li><p>Generating predictions with the trained model and plotting them.</p></li>
+</ol>
+<section id="what-is-regression">
+<h2>What is regression?<a class="headerlink" href="#what-is-regression" title="Permalink to this heading">#</a></h2>
+<p>Suppose we want to predict something like earthquake intensity or soil mositure given a satellite image. These express as continuous targets across pixels. This makes the objective different than classification, where a discrete set of classes are predicted across pixels. Models designed to predict a continuous output are performing regression. In a supervised context, the goal of regression is to produce results with the minimum difference (error) between the true and predicted values. We can approach this through a number of machine learning algorithms, to include deep learning with convolutional neural networks. You may have seen ConvNets used extensively for classification, but they have significant power for modeling regression problems. That said, it’s important to be aware of when deep learning is useful for regression.</p>
+<p>There are two common types of regression problems:</p>
+<ol class="arabic simple">
+<li><p>Linear, in which the input (independent) values are linearly correlated with the output (dependent) values. For example, if an input variable increases so does the output. Linear regression produces real values of an arbitrary range.</p></li>
+<li><p>Logistic, which does not assume a linear correlation between the input and output, but rather seeks to model liklihood (probabilities). Logistic regression produces propabilities so within the range of [0,1].</p></li>
+</ol>
+<p>Where a linear relationship exists, we don’t need a complex approach to accurately predict the target dependent variable. It is problems in which the relationship between the independent variables is varied and context-dependent that we might use deep learning for regression. One of the intrinsic characteristics of deep learning is the non-linearity between the layers of a network, which makes them a useful tool for solving logistic regression type problems.</p>
+<p>The main distinctions that present when using ConvNets for regression instead of classification are:</p>
+<ol class="arabic simple">
+<li><p>The labels are continuous. They will likely appear as float values between an arbitrary range that starts with zero. Note: It’s often helpful in deep learning to scale raw values to a sensible range, e.g. [0,1].</p></li>
+<li><p>The loss function is different. A common loss function used in regression is mean squared error (MSE), which measures the average of the squared differences between the predicted and true values. The lower the value of MSE the better, with a perfect value being 0.0. Note: squaring is used to amplify and penalize larger differences more than smaller ones.</p></li>
+<li><p>For regression of real values, either a linear or no activation function is used for the output layer. For regression of probabilities, a logistic activation function is used.</p></li>
+</ol>
+<figure class="align-default" id="u-net-for-regression">
+<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png"><img alt="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png" src="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text"><a class="reference external" href="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png">U-Net for regression</a> from <a class="reference external" href="https://www.researchgate.net/publication/352181228_Deep_Learning-Based_Radar_Composite_Reflectivity_Factor_Estimations_from_Fengyun-4A_Geostationary_Satellite_Observations">“Deep Learning-Based Radar Composite Reflectivity Factor Estimations from Fengyun-4A Geostationary Satellite Observations” by Sun et. al, 2021</a></span><a class="headerlink" href="#u-net-for-regression" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this tutorial, we’ll look at a practical example of using satellite imagery with descriptive features to predict pixel-wise percentages. Naturally, our labels and predictions will be constrained to a range of [0,1]. The goals will be to train a model that:</p>
+<ol class="arabic simple">
+<li><p>Generates output images in which pixels values are percentages learned from input images with descriptive features.</p></li>
+<li><p>Minimize the difference between the true percentages in the corresponding label images and the predicted percentages in the output images.</p></li>
+</ol>
+</section>
+<section id="imports-and-authentication">
+<h2>Imports and authentication<a class="headerlink" href="#imports-and-authentication" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cloud authentication.</span>
+<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">auth</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">authenticate_user</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import, authenticate and initialize the Earth Engine library.</span>
+<span class="kn">import</span> <span class="nn">ee</span>
+<span class="n">ee</span><span class="o">.</span><span class="n">Authenticate</span><span class="p">()</span>
+<span class="n">ee</span><span class="o">.</span><span class="n">Initialize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="c1">#print(tf.__version__)</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">layers</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">optimizers</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">folium</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">tifffile</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randrange</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">imshow</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Some of the operations we’ll be running, particularly model training, take prohibitively long when using Google Colab because the storage backend, Google Drive, has slow IO.</p>
+<p>So in some spots we’ll use precomputed files from the <code class="docutils literal notranslate"><span class="pre">tf-eo-devseed-2-processed-outputs</span></code> Google Drive folder, which you can create a shortcut to by navigating to this link (no need to do this twice if you did it in an earlier lesson): <a class="reference external" href="https://drive.google.com/drive/folders/1FrSTn9Iq458qQhTw_7rbaVSc739TTw9V?usp=share_link">https://drive.google.com/drive/folders/1FrSTn9Iq458qQhTw_7rbaVSc739TTw9V?usp=share_link</a></p>
+<p>We’ll also create a directory in our personal Google Drive to store user generated outputs, <code class="docutils literal notranslate"><span class="pre">tf-eo-devseed-2-user_outputs_dir</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;google.colab&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_ipython</span><span class="p">()):</span>
+    <span class="c1"># mount google drive</span>
+    <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/gdrive&#39;</span><span class="p">)</span>
+    <span class="n">processed_outputs_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed-2-processed-outputs/&#39;</span>
+    <span class="n">user_outputs_dir</span> <span class="o">=</span> <span class="s1">&#39;/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">user_outputs_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">user_outputs_dir</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running on Colab&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">processed_outputs_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;./data/tf-eo-devseed-2-processed-outputs&quot;</span><span class="p">)</span>
+    <span class="n">user_outputs_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;./tf-eo-devseed-2-user_outputs_dir&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">user_outputs_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">user_outputs_dir</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">processed_outputs_dir</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Not running on Colab, data needs to be downloaded locally at </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">processed_outputs_dir</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Move to your user_outputs_dir directory in order to write data
+%cd $user_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-global-parameters">
+<h2>Set global parameters<a class="headerlink" href="#set-global-parameters" title="Permalink to this heading">#</a></h2>
+<p>Below we’ll set up the <code class="docutils literal notranslate"><span class="pre">FEATURES_DICT</span></code> metadata objects that will help us access the satellite imagery bands we will use for training. We’ll also define the paths to our dataset splits we’ll use for training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Specify names locations for outputs in Google Drive.</span>
+<span class="n">FOLDER</span> <span class="o">=</span> <span class="s1">&#39;fcnn-demo&#39;</span>
+<span class="n">PREDICTIONS</span> <span class="o">=</span> <span class="s1">&#39;predictions&#39;</span>
+<span class="n">TEST_PATCHES</span> <span class="o">=</span> <span class="s1">&#39;test_patches&#39;</span>
+<span class="n">TRAINING_BASE</span> <span class="o">=</span> <span class="s1">&#39;training_patches&#39;</span>
+<span class="n">VAL_BASE</span> <span class="o">=</span> <span class="s1">&#39;val_patches&#39;</span>
+
+<span class="c1"># Specify inputs (Landsat bands) to the model and the response variable.</span>
+<span class="n">opticalBands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B1&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B5&#39;</span><span class="p">,</span> <span class="s1">&#39;B6&#39;</span><span class="p">,</span> <span class="s1">&#39;B7&#39;</span><span class="p">]</span>
+<span class="n">thermalBands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B10&#39;</span><span class="p">,</span> <span class="s1">&#39;B11&#39;</span><span class="p">]</span>
+<span class="n">BANDS</span> <span class="o">=</span> <span class="n">opticalBands</span> <span class="o">+</span> <span class="n">thermalBands</span>
+<span class="n">RESPONSE</span> <span class="o">=</span> <span class="s1">&#39;impervious&#39;</span>
+<span class="n">FEATURES</span> <span class="o">=</span> <span class="n">BANDS</span> <span class="o">+</span> <span class="p">[</span><span class="n">RESPONSE</span><span class="p">]</span>
+
+<span class="c1"># Specify the size and shape of patches expected by the model.</span>
+<span class="n">KERNEL_SIZE</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">KERNEL_SHAPE</span> <span class="o">=</span> <span class="p">[</span><span class="n">KERNEL_SIZE</span><span class="p">,</span> <span class="n">KERNEL_SIZE</span><span class="p">]</span>
+<span class="n">COLUMNS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">KERNEL_SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">FEATURES</span>
+<span class="p">]</span>
+<span class="n">FEATURES_DICT</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">FEATURES</span><span class="p">,</span> <span class="n">COLUMNS</span><span class="p">))</span>
+<span class="n">FEATURES_DICT</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we’ll specify some training parameters.</p>
+<p>Since this is a regression problem, we’ll use Mean Squared Error, as opposed to another metric for classification (Accuracy) or segmentation (Dice/Intsersection over Union).</p>
+<p>Larger batch sizes are better, as they allow the model to</p>
+<ol class="arabic simple">
+<li><p>more accurately estimate the gradient of the loss function</p></li>
+<li><p>more fully utilize GPU resources for efficient training</p></li>
+</ol>
+<p>Batch size can also affect model generalization, but it is somewhat configuration and problem dependent on whether this helps or hurts model generalization. It’s best to experiment to find out! See <a class="reference external" href="https://arxiv.org/abs/1804.07612">Revisiting Small Batch Training for Deep Neural Networks</a> for an investigation on this issue.</p>
+<p>SGD is a standard optimizer for deep learning models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sizes of the training and evaluation datasets.</span>
+<span class="n">TRAIN_SIZE</span> <span class="o">=</span> <span class="mi">16000</span>
+<span class="n">VAL_SIZE</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="c1"># Specify model training parameters.</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">OPTIMIZER</span> <span class="o">=</span> <span class="s1">&#39;SGD&#39;</span>
+<span class="n">LOSS</span> <span class="o">=</span> <span class="s1">&#39;MeanSquaredError&#39;</span>
+<span class="n">METRICS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RootMeanSquaredError&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PREDICTIONS</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">TEST_PATCHES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!ls fcnn-demo
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="imagery">
+<h1>Imagery<a class="headerlink" href="#imagery" title="Permalink to this heading">#</a></h1>
+<p>Collect and process the input imagery (cloud masking, compositing).  Display the composite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use Landsat 8 surface reflectance data.</span>
+<span class="n">l8sr</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">ImageCollection</span><span class="p">(</span><span class="s1">&#39;LANDSAT/LC08/C01/T1_SR&#39;</span><span class="p">)</span>
+
+<span class="c1"># Cloud masking function.</span>
+<span class="k">def</span> <span class="nf">maskL8sr</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+  <span class="n">cloudShadowBitMask</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
+  <span class="n">cloudsBitMask</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">int</span><span class="p">()</span>
+  <span class="n">qa</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;pixel_qa&#39;</span><span class="p">)</span>
+  <span class="n">mask1</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">bitwiseAnd</span><span class="p">(</span><span class="n">cloudShadowBitMask</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span>
+    <span class="n">qa</span><span class="o">.</span><span class="n">bitwiseAnd</span><span class="p">(</span><span class="n">cloudsBitMask</span><span class="p">)</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+  <span class="n">mask2</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">mask</span><span class="p">()</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+  <span class="n">mask3</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">opticalBands</span><span class="p">)</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span>
+          <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">opticalBands</span><span class="p">)</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="s1">&#39;min&#39;</span><span class="p">)</span>
+  <span class="n">mask</span> <span class="o">=</span> <span class="n">mask1</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">mask2</span><span class="p">)</span><span class="o">.</span><span class="n">And</span><span class="p">(</span><span class="n">mask3</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">opticalBands</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">addBands</span><span class="p">(</span>
+          <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">thermalBands</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">273.15</span><span class="p">,</span> <span class="mf">373.15</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="mf">273.15</span><span class="p">)</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+<span class="c1"># The image input data is a cloud-masked median composite.</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">l8sr</span><span class="o">.</span><span class="n">filterDate</span><span class="p">(</span><span class="s1">&#39;2015-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2017-12-31&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">maskL8sr</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="c1"># Use folium to visualize the imagery.</span>
+<span class="n">mapid</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">getMapId</span><span class="p">({</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;B2&#39;</span><span class="p">],</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">})</span>
+<span class="nb">map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="mf">38.</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.5</span><span class="p">])</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="n">mapid</span><span class="p">[</span><span class="s1">&#39;tile_fetcher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">url_format</span><span class="p">,</span>
+    <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;</span><span class="p">,</span>
+    <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;median composite&#39;</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
+
+<span class="n">mapid</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">getMapId</span><span class="p">({</span><span class="s1">&#39;bands&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;B10&#39;</span><span class="p">],</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="n">mapid</span><span class="p">[</span><span class="s1">&#39;tile_fetcher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">url_format</span><span class="p">,</span>
+    <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;</span><span class="p">,</span>
+    <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;thermal&#39;</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
+<span class="nb">map</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">())</span>
+<span class="nb">map</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Collect the labels (impervious surface area (in fraction of a pixel)) and display.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nlcd</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;USGS/NLCD/NLCD2016&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;impervious&#39;</span><span class="p">)</span>
+<span class="n">nlcd</span> <span class="o">=</span> <span class="n">nlcd</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+<span class="n">mapid</span> <span class="o">=</span> <span class="n">nlcd</span><span class="o">.</span><span class="n">getMapId</span><span class="p">({</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<span class="nb">map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="mf">38.</span><span class="p">,</span> <span class="o">-</span><span class="mf">122.5</span><span class="p">])</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="n">mapid</span><span class="p">[</span><span class="s1">&#39;tile_fetcher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">url_format</span><span class="p">,</span>
+    <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;</span><span class="p">,</span>
+    <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;nlcd impervious&#39;</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
+<span class="nb">map</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">())</span>
+<span class="nb">map</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will combine the Landsat composite and NLCD impervious surface raster into a single stacked image array. From that, we will break the image down into patches with width and height of 256 pixels.</p>
+<p>To convert the EE multi-band image collection to an image array, we use <a class="reference external" href="https://developers.google.com/earth-engine/api_docs#eeimageneighborhoodtoarray"><code class="docutils literal notranslate"><span class="pre">neighborhoodToArray()</span></code></a>, then proceed to sample the image at selective areas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">featureStack</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span>
+  <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">BANDS</span><span class="p">),</span>
+  <span class="n">nlcd</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">RESPONSE</span><span class="p">)</span>
+<span class="p">])</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+<span class="nb">list</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">List</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">KERNEL_SIZE</span><span class="p">)</span>
+<span class="n">lists</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">List</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">KERNEL_SIZE</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Kernel</span><span class="o">.</span><span class="n">fixed</span><span class="p">(</span><span class="n">KERNEL_SIZE</span><span class="p">,</span> <span class="n">KERNEL_SIZE</span><span class="p">,</span> <span class="n">lists</span><span class="p">)</span>
+
+<span class="n">arrays</span> <span class="o">=</span> <span class="n">featureStack</span><span class="o">.</span><span class="n">neighborhoodToArray</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use some pre-made geometries to sample the stack in strategic locations.  Specifically, these are hand-made polygons in which to take the 256x256 samples.  Display the sampling polygons on a map, red for training polygons, blue for evaluation.</p>
+<p>We will strategiclly sample the imagery using some diverse, representative geometries. The red geometries plotted below are for training, while the blue are for validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trainingPolys</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">FeatureCollection</span><span class="p">(</span><span class="s1">&#39;projects/google/DemoTrainingGeometries&#39;</span><span class="p">)</span>
+<span class="n">valPolys</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">FeatureCollection</span><span class="p">(</span><span class="s1">&#39;projects/google/DemoEvalGeometries&#39;</span><span class="p">)</span>
+
+<span class="n">polyImage</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">byte</span><span class="p">()</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="n">trainingPolys</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">paint</span><span class="p">(</span><span class="n">valPolys</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">polyImage</span> <span class="o">=</span> <span class="n">polyImage</span><span class="o">.</span><span class="n">updateMask</span><span class="p">(</span><span class="n">polyImage</span><span class="p">)</span>
+
+<span class="n">mapid</span> <span class="o">=</span> <span class="n">polyImage</span><span class="o">.</span><span class="n">getMapId</span><span class="p">({</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;palette&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]})</span>
+<span class="nb">map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="mf">38.</span><span class="p">,</span> <span class="o">-</span><span class="mf">100.</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span>
+    <span class="n">tiles</span><span class="o">=</span><span class="n">mapid</span><span class="p">[</span><span class="s1">&#39;tile_fetcher&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">url_format</span><span class="p">,</span>
+    <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;Map Data &amp;copy; &lt;a href=&quot;https://earthengine.google.com/&quot;&gt;Google Earth Engine&lt;/a&gt;&#39;</span><span class="p">,</span>
+    <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;training polygons&#39;</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
+<span class="nb">map</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">())</span>
+<span class="nb">map</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># How many polygons do we have in total?</span>
+<span class="n">trainingPolys</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">(),</span> <span class="n">valPolys</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sampling">
+<h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">#</a></h1>
+<p>Now we will use those geometries to extract samples from the stacked image array. Within each geometry we take a 256x256 neighborhood of pixels around several points, shard them to prevent memory error and then collect them into a single tfrecord. This is done for the training and validation data separately.</p>
+<p>Note: for brevity’s sake in this tutorial, we are only sampling from 2 training geometries. You can revise <code class="docutils literal notranslate"><span class="pre">range(2):</span> <span class="pre">#range(trainingPolys.size().getInfo())</span></code> if you wish to use all geometries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="c1"># Convert the feature collections to lists for iteration.</span>
+<span class="n">trainingPolysList</span> <span class="o">=</span> <span class="n">trainingPolys</span><span class="o">.</span><span class="n">toList</span><span class="p">(</span><span class="n">trainingPolys</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="n">valPolysList</span> <span class="o">=</span> <span class="n">valPolys</span><span class="o">.</span><span class="n">toList</span><span class="p">(</span><span class="n">valPolys</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+
+<span class="c1"># These numbers determined experimentally.</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">200</span> <span class="c1"># Number of shards in each polygon.</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">2000</span> <span class="c1"># Total sample size in each polygon.</span>
+
+<span class="c1"># Export all the training data (in many pieces), with one task</span>
+<span class="c1"># per geometry.</span>
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span> <span class="c1">#range(trainingPolys.size().getInfo()):</span>
+  <span class="n">geomSample</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">FeatureCollection</span><span class="p">([])</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">arrays</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+      <span class="n">region</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">trainingPolysList</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="o">.</span><span class="n">geometry</span><span class="p">(),</span>
+      <span class="n">scale</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+      <span class="n">numPixels</span> <span class="o">=</span> <span class="n">N</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span> <span class="c1"># Size of the shard.</span>
+      <span class="n">seed</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span>
+      <span class="n">tileScale</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="p">)</span>
+    <span class="n">geomSample</span> <span class="o">=</span> <span class="n">geomSample</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+    <span class="c1">#print(geomSample)</span>
+
+  <span class="n">desc</span> <span class="o">=</span> <span class="n">TRAINING_BASE</span> <span class="o">+</span> <span class="s1">&#39;_g&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+  <span class="n">task_train</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">Export</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">toDrive</span><span class="p">(</span>
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">geomSample</span><span class="p">,</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">desc</span><span class="p">,</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">FOLDER</span><span class="p">,</span>
+    <span class="n">fileNamePrefix</span> <span class="o">=</span> <span class="n">desc</span><span class="p">,</span>
+    <span class="n">fileFormat</span> <span class="o">=</span> <span class="s1">&#39;TFRecord&#39;</span><span class="p">,</span>
+    <span class="n">selectors</span> <span class="o">=</span> <span class="n">BANDS</span> <span class="o">+</span> <span class="p">[</span><span class="n">RESPONSE</span><span class="p">]</span>
+  <span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">FOLDER</span><span class="p">,</span> <span class="n">desc</span><span class="p">)</span>
+  <span class="n">task_train</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll do a similar sampling procedure for the validation data. To keep the dataset size reasonable for the Colab + Google Drive setup, we will only sample and export 1 validation polygon. Revise the corresponding line for the validation set to sample from the full range of validation polygons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># Export all the evaluation data.</span>
+<span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="c1">#range(valPolys.size().getInfo()):</span>
+  <span class="n">geomSample</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">FeatureCollection</span><span class="p">([])</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="n">arrays</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+      <span class="n">region</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">valPolysList</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="o">.</span><span class="n">geometry</span><span class="p">(),</span>
+      <span class="n">scale</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+      <span class="n">numPixels</span> <span class="o">=</span> <span class="n">N</span> <span class="o">/</span> <span class="n">n</span><span class="p">,</span>
+      <span class="n">seed</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span>
+      <span class="n">tileScale</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="p">)</span>
+    <span class="n">geomSample</span> <span class="o">=</span> <span class="n">geomSample</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+  <span class="n">desc</span> <span class="o">=</span> <span class="n">VAL_BASE</span> <span class="o">+</span> <span class="s1">&#39;_g&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+  <span class="n">task_validation</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">Export</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">toDrive</span><span class="p">(</span>
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">geomSample</span><span class="p">,</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">desc</span><span class="p">,</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">FOLDER</span><span class="p">,</span>
+    <span class="n">fileNamePrefix</span> <span class="o">=</span> <span class="n">desc</span><span class="p">,</span>
+    <span class="n">fileFormat</span> <span class="o">=</span> <span class="s1">&#39;TFRecord&#39;</span><span class="p">,</span>
+    <span class="n">selectors</span> <span class="o">=</span> <span class="n">BANDS</span> <span class="o">+</span> <span class="p">[</span><span class="n">RESPONSE</span><span class="p">]</span>
+  <span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">FOLDER</span><span class="p">,</span> <span class="n">desc</span><span class="p">)</span>
+  <span class="n">task_validation</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These tasks take a while depending on the amount of data. In this case, we’re exporting a small TFRecord but it still takes 20 minutes because of slow IO to Google Drive. We can use the EE API’s <code class="docutils literal notranslate"><span class="pre">getTaskStatus</span></code> function to report the status of the background export task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_task_status</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">getTaskStatus</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>  <span class="c1"># if the status list is empty</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Task not found.&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">status</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;state&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;RUNNING&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Task is still running.&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># waits for n seconds before checking again</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Task is no longer running. Current state: </span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+<span class="n">check_task_status</span><span class="p">(</span><span class="n">task_validation</span><span class="p">)</span>
+<span class="n">check_task_status</span><span class="p">(</span><span class="n">task_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once the tasks finish, we can see the results here.</p>
+<p>!ls fcnn-demo</p>
+<p>Since the above cell takes a long time to run, let’s cancel it and switch to using the directory with the prepared intermediate and final data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $processed_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+<p>and check that the files are there</p>
+<p>!ls fcnn-demo</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="training-data">
+<h1>Training data<a class="headerlink" href="#training-data" title="Permalink to this heading">#</a></h1>
+<p>Now that we have exported a TFRecord from Earth Engine, let’s load it into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.  Unfortunately, there isn’t a path to load the data directly from Earth Engine into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_tfrecord</span><span class="p">(</span><span class="n">example_proto</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;The parsing function.</span>
+<span class="sd">  Read a serialized example into the structure defined by FEATURES_DICT.</span>
+<span class="sd">  Args:</span>
+<span class="sd">    example_proto: a serialized Example.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A dictionary of tensors, keyed by feature name.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span><span class="n">example_proto</span><span class="p">,</span> <span class="n">FEATURES_DICT</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">to_tuple</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Function to convert a dictionary of tensors to a tuple of (inputs, outputs).</span>
+<span class="sd">  Turn the tensors returned by parse_tfrecord into a stack in HWC shape.</span>
+<span class="sd">  Args:</span>
+<span class="sd">    inputs: A dictionary of tensors, keyed by feature name.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A tuple of (inputs, outputs).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">inputsList</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">FEATURES</span><span class="p">]</span>
+  <span class="n">stacked</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">inputsList</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="c1"># Convert from CHW to HWC</span>
+  <span class="n">stacked</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">stacked</span><span class="p">[:,:,:</span><span class="nb">len</span><span class="p">(</span><span class="n">BANDS</span><span class="p">)],</span> <span class="n">stacked</span><span class="p">[:,:,</span><span class="nb">len</span><span class="p">(</span><span class="n">BANDS</span><span class="p">):]</span>
+
+
+<span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Function to read, parse and format to tuple a set of input tfrecord files.</span>
+<span class="sd">  Get all the files matching the pattern, parse and convert to tuple.</span>
+<span class="sd">  Args:</span>
+<span class="sd">    pattern: A file pattern to match in a google drive bucket.</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A tf.data.Dataset</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">glob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+  <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">compression_type</span><span class="o">=</span><span class="s1">&#39;GZIP&#39;</span><span class="p">)</span>
+  <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">parse_tfrecord</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">to_tuple</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">dataset</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Parse the training dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_training_dataset</span><span class="p">():</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Get the preprocessed training dataset</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A tf.data.Dataset of training data.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+	<span class="n">globb</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">TRAINING_BASE</span><span class="si">}</span><span class="s2">*&quot;</span>
+	<span class="n">dataset</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">globb</span><span class="p">)</span>
+	<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">BUFFER_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+	<span class="k">return</span> <span class="n">dataset</span>
+
+<span class="n">training</span> <span class="o">=</span> <span class="n">get_training_dataset</span><span class="p">()</span>
+
+<span class="c1">#view the first element</span>
+<span class="c1">#print(iter(training.take(1)).next())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="validation-data">
+<h1>Validation data<a class="headerlink" href="#validation-data" title="Permalink to this heading">#</a></h1>
+<p>Parse the validation dataset.  Note that the validation dataset has a batch size of 1 which is different from the training dataset. Another distinction is that the validation dataset is not shuffled.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_val_dataset</span><span class="p">():</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Get the preprocessed validation dataset</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    A tf.data.Dataset of validation data.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+	<span class="n">globb</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">VAL_BASE</span><span class="si">}</span><span class="s2">*&quot;</span>
+	<span class="n">dataset</span> <span class="o">=</span> <span class="n">get_dataset</span><span class="p">(</span><span class="n">globb</span><span class="p">)</span>
+	<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+	<span class="k">return</span> <span class="n">dataset</span>
+
+<span class="n">validation</span> <span class="o">=</span> <span class="n">get_val_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="model">
+<h1>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h1>
+<p>For our model, we will use a Keras implementation of the U-Net model, and provide the network with 256x256 pixel image patches as input. The output will be probabilities for each pixel (a continuous output).</p>
+<p>As this is a regression problem, we apply mean squared error as our loss function. As well, we implement a saturating activation function to address any artifacts that are produced from squashing the range of values to [0,1] (something we need to do to make a sensible measurement of impervious surface fraction per pixel).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">conv_block</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">):</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">input_tensor</span><span class="p">)</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">encoder</span>
+
+<span class="k">def</span> <span class="nf">encoder_block</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">):</span>
+	<span class="n">encoder</span> <span class="o">=</span> <span class="n">conv_block</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">)</span>
+	<span class="n">encoder_pool</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))(</span><span class="n">encoder</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">encoder_pool</span><span class="p">,</span> <span class="n">encoder</span>
+
+<span class="k">def</span> <span class="nf">decoder_block</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">concat_tensor</span><span class="p">,</span> <span class="n">num_filters</span><span class="p">):</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2DTranspose</span><span class="p">(</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">input_tensor</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">concat_tensor</span><span class="p">,</span> <span class="n">decoder</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">num_filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">()(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="n">decoder</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">)(</span><span class="n">decoder</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">decoder</span>
+
+<span class="k">def</span> <span class="nf">get_model</span><span class="p">():</span>
+	<span class="n">inputs</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">BANDS</span><span class="p">)])</span> <span class="c1"># 256</span>
+	<span class="n">encoder0_pool</span><span class="p">,</span> <span class="n">encoder0</span> <span class="o">=</span> <span class="n">encoder_block</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="c1"># 128</span>
+	<span class="n">encoder1_pool</span><span class="p">,</span> <span class="n">encoder1</span> <span class="o">=</span> <span class="n">encoder_block</span><span class="p">(</span><span class="n">encoder0_pool</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="c1"># 64</span>
+	<span class="n">encoder2_pool</span><span class="p">,</span> <span class="n">encoder2</span> <span class="o">=</span> <span class="n">encoder_block</span><span class="p">(</span><span class="n">encoder1_pool</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="c1"># 32</span>
+	<span class="n">encoder3_pool</span><span class="p">,</span> <span class="n">encoder3</span> <span class="o">=</span> <span class="n">encoder_block</span><span class="p">(</span><span class="n">encoder2_pool</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="c1"># 16</span>
+	<span class="n">encoder4_pool</span><span class="p">,</span> <span class="n">encoder4</span> <span class="o">=</span> <span class="n">encoder_block</span><span class="p">(</span><span class="n">encoder3_pool</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span> <span class="c1"># 8</span>
+	<span class="n">center</span> <span class="o">=</span> <span class="n">conv_block</span><span class="p">(</span><span class="n">encoder4_pool</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span> <span class="c1"># center</span>
+	<span class="n">decoder4</span> <span class="o">=</span> <span class="n">decoder_block</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">encoder4</span><span class="p">,</span> <span class="mi">512</span><span class="p">)</span> <span class="c1"># 16</span>
+	<span class="n">decoder3</span> <span class="o">=</span> <span class="n">decoder_block</span><span class="p">(</span><span class="n">decoder4</span><span class="p">,</span> <span class="n">encoder3</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="c1"># 32</span>
+	<span class="n">decoder2</span> <span class="o">=</span> <span class="n">decoder_block</span><span class="p">(</span><span class="n">decoder3</span><span class="p">,</span> <span class="n">encoder2</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="c1"># 64</span>
+	<span class="n">decoder1</span> <span class="o">=</span> <span class="n">decoder_block</span><span class="p">(</span><span class="n">decoder2</span><span class="p">,</span> <span class="n">encoder1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="c1"># 128</span>
+	<span class="n">decoder0</span> <span class="o">=</span> <span class="n">decoder_block</span><span class="p">(</span><span class="n">decoder1</span><span class="p">,</span> <span class="n">encoder0</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="c1"># 256</span>
+	<span class="n">outputs</span> <span class="o">=</span> <span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">)(</span><span class="n">decoder0</span><span class="p">)</span>
+
+	<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">inputs</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="n">outputs</span><span class="p">])</span>
+
+	<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+		<span class="n">optimizer</span><span class="o">=</span><span class="n">optimizers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">OPTIMIZER</span><span class="p">),</span>
+		<span class="n">loss</span><span class="o">=</span><span class="n">losses</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">LOSS</span><span class="p">),</span>
+		<span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">METRICS</span><span class="p">])</span>
+
+	<span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="training-the-model">
+<h1>Training the model<a class="headerlink" href="#training-the-model" title="Permalink to this heading">#</a></h1>
+<p>Now we train the compiled network by calling <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.  Typically we would train at least a full epoch, which is a full pass through the trainind dataset. However, this takes prohibitively long when using Google Clab + Google Drive for storage, an epoch takes 10 minutes on a T4 GPU. We will instead train for 2 reduced epochs of step size 20, meaning we will train on 40 samples, which works for a demo.  On a faster infrasturcture setup, the model may improve with more iteration, which can be experimented with by <a class="reference external" href="https://cloud.google.com/ml-engine/docs/tensorflow/using-hyperparameter-tuning">hyperparameter tuning</a> and implementation of early stopping mechanisms.</p>
+<p>Notice in the Google Colab Resource usage window how long it takes for GPU memory to start being utilized. it’s helpful during training to inspect the GPU and CPU resource usage in real time to understand what resources your model training needs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">()</span>
+<span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">training</span><span class="p">,</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="c1"># typically we would specify int(TRAIN_SIZE / BATCH_SIZE) to iterate through all batches</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="n">validation</span><span class="p">,</span>
+    <span class="n">validation_steps</span><span class="o">=</span><span class="n">VAL_SIZE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s save the trained model to file. We need to switch back to the user outputs dir briefly in order to save to a writeable user folder in your personal Google Drive.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $user_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">save_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/model_out_batch_</span><span class="si">{</span><span class="n">BATCH_SIZE</span><span class="si">}</span><span class="s2">_ep</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">save_model_path</span><span class="p">)):</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">save_model_path</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_model_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will switch back to the already processed outputs to load a model trained for 2 full epochs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $processed_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+<p>After saving the trained model, you may want to run predictions later. Let’s try loading our saved model to show how it can be reused without having to retrain the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a trained model.</span>
+<span class="n">MODEL_DIR</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/model_out_batch_</span><span class="si">{</span><span class="n">BATCH_SIZE</span><span class="si">}</span><span class="s2">_ep</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2">/&quot;</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">MODEL_DIR</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="prediction">
+<h1>Prediction<a class="headerlink" href="#prediction" title="Permalink to this heading">#</a></h1>
+<p>Now, let’s make predictions for a new area to see how the model generalizes to new data. Bear in mind, the model was trained on data in the US because that is where the labels were available, but let’s see the trained model applies to a region of Lima, Peru.</p>
+<p>Again, we will use a defined geometry to process and export imagery from Earth Engine in TFRecord format. Then we’ll use our trained model to predict impervious surface area percentages on the new imagery and write the predictions to both a TFRecord file and image patches (true color and prediction).</p>
+<p>We separate the image export from the predict function because the export only needs to happen once, but perhaps you’ll experiment with the model setup and run new predictions several times.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">doExport</span><span class="p">(</span><span class="n">out_image_base</span><span class="p">,</span> <span class="n">kernel_buffer</span><span class="p">,</span> <span class="n">region</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Run the image export task.  Block until complete.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">task</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">batch</span><span class="o">.</span><span class="n">Export</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">toDrive</span><span class="p">(</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">BANDS</span><span class="p">),</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">out_image_base</span><span class="p">,</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">FOLDER</span><span class="p">,</span>
+    <span class="n">fileNamePrefix</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">out_image_base</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">region</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">getInfo</span><span class="p">()[</span><span class="s1">&#39;coordinates&#39;</span><span class="p">],</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">fileFormat</span> <span class="o">=</span> <span class="s1">&#39;TFRecord&#39;</span><span class="p">,</span>
+    <span class="n">maxPixels</span> <span class="o">=</span> <span class="mf">1e10</span><span class="p">,</span>
+    <span class="n">formatOptions</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;patchDimensions&#39;</span><span class="p">:</span> <span class="n">KERNEL_SHAPE</span><span class="p">,</span>
+      <span class="s1">&#39;kernelSize&#39;</span><span class="p">:</span> <span class="n">kernel_buffer</span><span class="p">,</span>
+      <span class="s1">&#39;compressed&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+      <span class="s1">&#39;maxFileSize&#39;</span><span class="p">:</span> <span class="mi">104857600</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+
+  <span class="n">task</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+  <span class="c1"># Block until the task completes.</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running image export to google drive...&#39;</span><span class="p">)</span>
+  <span class="kn">import</span> <span class="nn">time</span>
+  <span class="k">while</span> <span class="n">task</span><span class="o">.</span><span class="n">active</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+  <span class="c1"># Error condition</span>
+  <span class="k">if</span> <span class="n">task</span><span class="o">.</span><span class="n">status</span><span class="p">()[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;COMPLETED&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error with image export.&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Image export completed.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>def get_files_list(out_image_base):
+    &quot;&quot;&quot;Retrieve the list of image and JSON files.&quot;&quot;&quot;
+    filesList = glob.glob(f&quot;{FOLDER}/*&quot;)
+    exportFilesList = [s for s in filesList if out_image_base in s]
+
+    imageFilesList = []
+    jsonFile = None
+    for f in exportFilesList:
+        if f.endswith(&#39;.tfrecord.gz&#39;):
+            imageFilesList.append(f)
+        elif f.endswith(&#39;.json&#39;):
+            jsonFile = f
+            
+    imageFilesList.sort()
+    
+    return imageFilesList, jsonFile
+
+def load_json(jsonFile):
+    &quot;&quot;&quot;Load the JSON mixer file.&quot;&quot;&quot;
+    jsonText = !cat {jsonFile}
+    mixer = json.loads(jsonText.nlstr)
+    return mixer
+
+def save_predictions(predictions, patches, x_buffer, y_buffer):
+    &quot;&quot;&quot;Process and save the predictions.&quot;&quot;&quot;
+    for i, prediction in zip(range(len(predictions)), predictions):
+        predictionPatch = prediction[
+            x_buffer:x_buffer+KERNEL_SIZE, y_buffer:y_buffer+KERNEL_SIZE]
+        p_image_array = np.array(predictionPatch)
+        tifffile.imsave(f&quot;{FOLDER}/{PREDICTIONS}/patch_pred_{i}.tif&quot;, p_image_array)
+
+def get_image_features_dict(bands, buffered_shape):
+    &quot;&quot;&quot;Generate the image features dictionary.&quot;&quot;&quot;
+    imageColumns = [
+        tf.io.FixedLenFeature(shape=buffered_shape, dtype=tf.float32) for k in bands
+    ]
+    imageFeaturesDict = dict(zip(bands, imageColumns))
+    return imageFeaturesDict
+
+def process_dataset(imageFilesList, imageFeaturesDict):
+    &quot;&quot;&quot;Process the image dataset.&quot;&quot;&quot;
+    def parse_image(example_proto):
+        return tf.io.parse_single_example(example_proto, imageFeaturesDict)
+
+    def toTupleImage(inputs):
+        inputsList = [inputs.get(key) for key in BANDS]
+        stacked = tf.stack(inputsList, axis=0)
+        stacked = tf.transpose(stacked, [1, 2, 0])
+        return stacked
+
+    imageDataset = tf.data.TFRecordDataset(imageFilesList, compression_type=&#39;GZIP&#39;)
+    imageDataset = imageDataset.map(parse_image, num_parallel_calls=5)
+    imageDataset = imageDataset.map(toTupleImage).batch(1)
+    
+    return imageDataset
+
+def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
+    &quot;&quot;&quot;Perform inference on exported imagery, upload to Earth Engine.&quot;&quot;&quot;
+    # Assuming BANDS, KERNEL_SHAPE, and FOLDER are defined globally or can be set here
+    
+    # 1. Calculate required parameters
+    x_buffer = int(kernel_buffer[0] / 2)
+    y_buffer = int(kernel_buffer[1] / 2)
+    buffered_shape = [
+        KERNEL_SHAPE[0] + kernel_buffer[0],
+        KERNEL_SHAPE[1] + kernel_buffer[1]
+    ]
+    
+    # 2. Retrieve the list of files
+    imageFilesList, jsonFile = get_files_list(out_image_base)
+
+    # 3. Generate the image features dictionary
+    imageFeaturesDict = get_image_features_dict(BANDS, buffered_shape)
+
+    # 4. Process the image dataset
+    imageDataset = process_dataset(imageFilesList, imageFeaturesDict)
+
+    # 5. Perform predictions
+    mixer = load_json(jsonFile)
+    patches = mixer[&#39;totalPatches&#39;]
+    predictions = m.predict(imageDataset, steps=patches, verbose=1)
+
+    # 6. Save the predictions
+    if save_prediction:
+      save_predictions(predictions, patches, x_buffer, y_buffer)
+
+    return predictions, patches
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s supply our area of interest to make predictions for. We also provide some string parameters for file naming and finally, the shape for the image outputs. On that, the model can accept larger dimensions than 256x256 (which it was trained on) provided that they are uniform in width and height (note that we didn’t specify an input shape in the first layer of the network) but at some point as the dimensions increase a memory ceiling will be encountered (<a class="reference external" href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Long_Fully_Convolutional_Networks_2015_CVPR_paper.pdf">reference</a>). So, proceed with caution on that. We will try one technique here to address the common issue of edge artifacts. Specifically, we will buffer our images during prediction using a 128x128 kernel, which pads the image with an additional 64 pixels on both width and height, and then clip the prediction down to the original central region of 256x256 pixels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Output assets</span>
+
+<span class="c1"># Base file name to use for TFRecord files and assets.</span>
+<span class="n">lima_image_base</span> <span class="o">=</span> <span class="s1">&#39;FCNN_demo_lima_384_&#39;</span>
+<span class="c1"># Half this will extend on the sides of each patch.</span>
+<span class="n">lima_kernel_buffer</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">]</span>
+<span class="c1"># Lima [-77.133581 -12.164808 -76.876993 -11.93859]</span>
+<span class="n">lima_region</span> <span class="o">=</span> <span class="n">ee</span><span class="o">.</span><span class="n">Geometry</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span>
+        <span class="p">[[[</span><span class="o">-</span><span class="mf">77.133581</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.93859</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">77.133581</span><span class="p">,</span> <span class="o">-</span><span class="mf">12.164808</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">76.876993</span><span class="p">,</span> <span class="o">-</span><span class="mf">12.164808</span><span class="p">],</span>
+          <span class="p">[</span><span class="o">-</span><span class="mf">76.876993</span><span class="p">,</span> <span class="o">-</span><span class="mf">11.93859</span><span class="p">]]],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Exporting the image we ran prediction takes too long with Colab + Google Drive, so we’ll comment this out for now.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the export.</span>
+<span class="c1"># doExport(lima_image_base, lima_kernel_buffer, lima_region)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the prediction.</span>
+<span class="n">predictions</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">doPrediction</span><span class="p">(</span><span class="n">lima_image_base</span><span class="p">,</span> <span class="n">lima_kernel_buffer</span><span class="p">,</span> <span class="n">save_prediction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="display-the-output">
+<h1>Display the output<a class="headerlink" href="#display-the-output" title="Permalink to this heading">#</a></h1>
+<p>Let’s take a look at randomly indexed samples from our prediction output. We also will check the minimum and maximum values (impervious surface area percentages) in the prediction image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+
+<span class="c1"># Define a gridspec layout to keep the left and right plot the same size</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+
+<span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">index_random</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># randomly pick different integers</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">index_random</span><span class="p">)</span>
+
+<span class="n">ax0</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">TEST_PATCHES</span><span class="si">}</span><span class="s2">/patch_test_</span><span class="si">{</span><span class="n">index_random</span><span class="si">}</span><span class="s2">.tif&quot;</span><span class="p">)))</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># Show the predicted image with a colormap (e.g., &#39;viridis&#39;) which indicates probability.</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PREDICTIONS</span><span class="si">}</span><span class="s2">/patch_pred_</span><span class="si">{</span><span class="n">index_random</span><span class="si">}</span><span class="s2">.tif&quot;</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predicted impervious surface area percentage&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set_fontsize</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># Add a colorbar for the prediction image in its own axis</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PREDICTIONS</span><span class="si">}</span><span class="s2">/patch_pred_</span><span class="si">{</span><span class="n">index_random</span><span class="si">}</span><span class="s2">.tif&quot;</span><span class="p">))</span>
+<span class="n">image_test</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">image_test</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson3_Intro_tensors_functions_datasets.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson4b_Integrations_with_Google_Cloud_Platform.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">What are cloud providers? Why might I need them for ML and Earth observation data?</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Regression using TensorFlow with Google Earth Engine Python API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-regression">What is regression?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-and-authentication">Imports and authentication</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-global-parameters">Set global parameters</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#imagery">Imagery</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-data">Training data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#validation-data">Validation data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#model">Model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-model">Training the model</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-output">Display the output</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

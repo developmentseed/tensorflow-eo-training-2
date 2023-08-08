@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to TensorFlow 2 and Keras &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson2b_Intro_TensorFlow_Keras';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TensorFlow 2 and Keras quickstart for geospatial computer vision" href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html" />
+    <link rel="prev" title="Introduction to Google Colab" href="Lesson2a_Intro_to_Google_Colab.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Comparing RNNs and Transformers for Imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7c_transfer_learning_hyperparam_opt.html">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson8_advanced_applications.html">TensorFlow advanced applications with deep learning object detection, time-series analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training-2/main?urlpath=tree/ds_book/docs/Lesson2b_Intro_TensorFlow_Keras.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training-2/blob/main/ds_book/docs/Lesson2b_Intro_TensorFlow_Keras.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/edit/main/ds_book/docs/Lesson2b_Intro_TensorFlow_Keras.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson2b_Intro_TensorFlow_Keras.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson2b_Intro_TensorFlow_Keras.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to TensorFlow 2 and Keras</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-tensorflow">What is TensorFlow?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorflow-s-structure">TensorFlow’s structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-so-many-people-like-tensorflow">Why do so many people like TensorFlow?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-keras">What is Keras?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-notes">User notes</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensorflow-2-and-keras">
+<h1>Introduction to TensorFlow 2 and Keras<a class="headerlink" href="#introduction-to-tensorflow-2-and-keras" title="Permalink to this heading">#</a></h1>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<p>The goal of this notebook is to teach some basics of the TensorFlow framework and the Keras API.</p>
+<section id="what-is-tensorflow">
+<h3>What is TensorFlow?<a class="headerlink" href="#what-is-tensorflow" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://www.tensorflow.org/guide%5D">TensorFlow</a> is an open-source framework developed in late 2015 by Google for building various machine learning and deep learning models. TensorFlow is free and open-source, thanks to the Apache Open Source license.</p>
+<p>The main objective of using TensorFlow is to reduce the complexity of implementing computations on large numerical data sets. In practice, these large computations can manifest as training and inference with machine learning or deep learning models.</p>
+<p>TensorFlow was designed to operate with multiple CPUs or GPUs, as well as a growing number of mobile operating systems. The framework includes wrappers in Python, C++, and Java.</p>
+<figure class="align-default" id="tflogo">
+<a class="reference internal image-reference" href="../_images/TFops.png"><img alt="../_images/TFops.png" src="../_images/TFops.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text"><a class="reference external" href="https://github.com/deep-diver/mlops-hf-tf-vision-models">Image source</a></span><a class="headerlink" href="#tflogo" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="how-does-it-work">
+<h4>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading">#</a></h4>
+<p>TensorFlow accepts inputs as a n-dimensional array called a Tensor. These units can be used in quick, singular computations or in structured graphs. The framework was initially designed to support creation of a flowchart of operations (a graph) to be applied to input Tensors, which travel in one direction and out the other. Importantly, TensorFlow 2.0 introduced eager execution to the framework. Eager execution is based on the immediate evaluation of operations, as opposed to graph mode, in which operations are chained together and outputs are produced only when an input is passed through the whole graph. Thus, eager execution allows intermediate values to be returned from sequential operations. Stated otherwise, with eager execution, the values of tensors are calculated as they occur in your code.</p>
+<p>Eager execution does not build graphs, and the operations return actual values instead of computational graphs to run later. With Eager execution, TensorFlow calculates the values of tensors wherever they occur in a program. One benefit of eager execution is simplified debugging, as errors are easy to isolate when breaking down a program into executable components. Secondly, eager execution reduces boilerplate code as functions themselves are immediately callable and don’t have to be instantiated by sessions first. The third benefit worth mentioning is that eager execution is especially useful for rapid research and experimentation, as it allows for easy swapping of components without having to rewrite the entire graph.</p>
+</section>
+<section id="tensorflow-s-structure">
+<h4>TensorFlow’s structure<a class="headerlink" href="#tensorflow-s-structure" title="Permalink to this heading">#</a></h4>
+<p>There are five main components to TensorFlow’s structure.</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing">Preprocessing the data using tf.keras.preprocessing</a></p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model">Building the model using tf.keras.Model</a></p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit">Training / estimating the model using tf.keras.Model.fit()</a></p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/Model#evaluate">Evaluating the model using tf.keras.Model.evaluate()</a></p></li>
+<li><p><a class="reference external" href="https://keras.io/examples/keras_recipes/tf_serving/">Serving / distributing the model using TFServing</a></p></li>
+</ol>
+<p>The name Tensorflow derives from the way in which the framework receives input in the form of a multi-dimensional array, i.e. the tensors. These tensors flow through TensorFlow operations (hence the framework’s name), producing intermediate and output tensors.</p>
+<p>Outside of these five aforementioned components, there is a <a class="reference external" href="https://www.tensorflow.org/resources/libraries-extensions">plethora of utilities and extensions</a> that enrich the TensorFlow ecosystem. Some noteworthy mentions include <a class="reference external" href="https://www.tensorflow.org/tensorboard">TensorBoard</a> for model visualization and metrics logging, <a class="reference external" href="https://www.tensorflow.org/tfx/guide/tfdv">TensorFlow Data Validation</a> for dataset inspection and statistics and <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets</a> which provides a catalog of pre-built datasets ready for machine learning.</p>
+</section>
+<section id="why-do-so-many-people-like-tensorflow">
+<h4>Why do so many people like TensorFlow?<a class="headerlink" href="#why-do-so-many-people-like-tensorflow" title="Permalink to this heading">#</a></h4>
+<p>TensorFlow is intentionally user-friendly (especially since the integration of the Keras API), with helpful plugins to visualize model training and a useful software debugging tool. As well, TensorFlow is highly scalable, with easy deployment on both CPUs and GPUs.</p>
+</section>
+</section>
+<section id="what-is-keras">
+<h3>What is Keras?<a class="headerlink" href="#what-is-keras" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://keras.io/about/">Keras</a> is an API built on Python which reduces the cognitive load associated with programming models through human readability and simple and consistent structures.</p>
+<p>Keras is what some might call a wrapper for TensorFlow. It is intended for rapid experimentation. Starting with TensorFlow 2.0, the Keras API was directly built into the TensorFlow framework (<code class="docutils literal notranslate"><span class="pre">tf.keras</span></code>) and henceforth recommended as the main interface for deep learning model development with the TensorFlow. This integration was originally distinct from the original Keras API, which was relatively framework-agnostic. In the <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> API, Keras abstraction is built directly upon TensorFlow low level protocols. The distinction in functionality between <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> and the Keras library is minimal when it comes to building Tensorflow programs. Recently, <a class="reference external" href="https://keras.io/keras_core/announcement/">Keras announced</a> they are soon releasing a multi-framework release: Keras 3.0 in Fall 2023. This version will presumably make it easier to switch between Pytorch, Tensorflow and JAX backends for training deep learning models, and make it easier to convert models from one framework format to another.</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code>, we can address all components of a machine learning life cycle. This includes, model definition (architecture selection, network topology, activation function), model compilation (loss function, optimization function), model fitting a.k.a. training or estimation (set number of epochs, batch size), model evaluation (evaluation metric), model prediction (class label, numerical value, probability depending on domain).</p>
+<p>Tha main components of Keras include:</p>
+<ol class="arabic simple">
+<li><p><span class="xref myst">tf.keras.Model</span>, used to execute the main steps in a modeling workflow, such as train and evaluate.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers">tf.keras.layers</a>, used to define the tensor in/tensor out computation functions and network topology. With this API, we can construct models with varying levels of complexity. There are two main subclasses that factor into model design when working with the layers API:
+a. the <a class="reference external" href="https://www.tensorflow.org/guide/keras/sequential_model">tf.keras.Sequential</a>, which we use when stacking layers to be executed sequentially and each layer has only one input tensor and one output tensor, and
+b. the <a class="reference external" href="https://www.tensorflow.org/guide/keras/functional_api">tf.keras.Functional</a> which is used for constructing networks with non-sequential topology (RNNs), layer reuse, and support for multiple inputs or outputs.</p></li>
+</ol>
+<figure class="align-default" id="keras-functional">
+<a class="reference internal image-reference" href="../_images/Keras_functional_vs_sequential.png"><img alt="../_images/Keras_functional_vs_sequential.png" src="../_images/Keras_functional_vs_sequential.png" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text"><a class="reference external" href="https://stackoverflow.com/questions/58092176/keras-sequential-vs-functional-api-for-multi-task-learning-neural-network">Image source</a></span><a class="headerlink" href="#keras-functional" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="3">
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/Callback">tf.keras.callbacks</a>, used to program specific actions to occur during training, such as log training metrics, visualize interim/internal states and statistics of the model during training, and perform early stopping when the model converges.</p></li>
+<li><p><span class="xref myst">tf.keras.preprocessing</span>, which offers support for prepping raw data from disk to model ready Tensor format.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers">tf.keras.optimizers</a> where all of the state of the art optimizers can be plugged in. Learning rate decay / scheduling can also be implemented as part of this API.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/metrics">tf.keras.metrics</a> which is used for assessing the performance of the model during training. A metric is the target to optimize during training, with specific metrics chosen for specific modeling objectives.</p></li>
+<li><p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/losses">tf.keras.losses</a> that informs the model quantitatively how much it should try to minimize during training by providing a measure of error. Similar to metrics, specific loss functions are selected for specific modeling objectives.</p></li>
+</ol>
+<p>As an example using the `tf.keras.Functional`` API, our main workflow will follow the diagram below.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/Keras_functional_API.jpg"><img alt="../_images/Keras_functional_API.jpg" src="../_images/Keras_functional_API.jpg" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Keras Functional API diagram (from <span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span>).</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The main difference between the Sequential and Functional APIs for model definition are that the latter, albeit more complex, supports multiple input and output paths (e.g. a scalar and a matrix) as it requires explicit connection of layers together (i.e. if the input to layer <code class="docutils literal notranslate"><span class="pre">x</span></code> is layer <code class="docutils literal notranslate"><span class="pre">y</span></code> then that must be defined). The Sequential API in comparison assumes linear interaction between the stacked layers and thus that they all build from the initial input.</p>
+</section>
+<section id="user-notes">
+<h3>User notes<a class="headerlink" href="#user-notes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>TensorFlow 2.x should be installed with a Python version no older than 3.6.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson2a_Intro_to_Google_Colab.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Google Colab</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">TensorFlow 2 and Keras quickstart for geospatial computer vision</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-tensorflow">What is TensorFlow?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tensorflow-s-structure">TensorFlow’s structure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-do-so-many-people-like-tensorflow">Why do so many people like TensorFlow?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-keras">What is Keras?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-notes">User notes</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,2021 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Transfer learning, fine-tuning and hyperparameter tuning &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson7c_transfer_learning_hyperparam_opt';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TensorFlow advanced applications with deep learning object detection, time-series analysis" href="Lesson8_advanced_applications.html" />
+    <link rel="prev" title="Comparing RNNs and Transformers for Imagery" href="Lesson7b_comparing_RNN_transformer_architectures.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Comparing RNNs and Transformers for Imagery</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson8_advanced_applications.html">TensorFlow advanced applications with deep learning object detection, time-series analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training-2/main?urlpath=tree/ds_book/docs/Lesson7c_transfer_learning_hyperparam_opt.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training-2/blob/main/ds_book/docs/Lesson7c_transfer_learning_hyperparam_opt.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/edit/main/ds_book/docs/Lesson7c_transfer_learning_hyperparam_opt.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson7c_transfer_learning_hyperparam_opt.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson7c_transfer_learning_hyperparam_opt.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Transfer learning, fine-tuning and hyperparameter tuning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning-and-fine-tuning">Transfer learning and fine-tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-get-started">Let’s get started</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-pre-processing">Data loading and pre-processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-dataset-for-performance">Prepare the dataset for performance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augment-the-data">Augment the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rescale-pixel-values">Rescale pixel values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-pre-trained-network-backbone">Load the pre-trained network (backbone)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature extraction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#freeze-the-pre-trained-network">Freeze the pre-trained network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-note-for-use-of-batchnormalization-layers">Critical note for use of BatchNormalization layers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-new-classification-layer-head">Add a new classification layer (head)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-model">Compile the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-curves">Learning curves</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning">Fine tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-freeze-some-top-layers-of-the-model">Un-freeze some top layers of the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Compile the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continue-training-the-model">Continue training the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-prediction">Evaluation and prediction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Hyperparameter Tuning</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="transfer-learning-fine-tuning-and-hyperparameter-tuning">
+<h1>Transfer learning, fine-tuning and hyperparameter tuning<a class="headerlink" href="#transfer-learning-fine-tuning-and-hyperparameter-tuning" title="Permalink to this heading">#</a></h1>
+<p>This tutorial will walk through the process of transfer learning from a pre-trained network and a minimal approach to hyperparamater tuning. We’ll discuss what transfer learning and hyperparamater tuning are, when to consider them and demonstrate how to do so practically. This is an adaptation of this <a class="reference external" href="https://www.tensorflow.org/tutorials/images/transfer_learning#data_download">example</a> and this <a class="reference external" href="https://www.tensorflow.org/tutorials/keras/keras_tuner">one</a>.</p>
+<section id="transfer-learning-and-fine-tuning">
+<h2>Transfer learning and fine-tuning<a class="headerlink" href="#transfer-learning-and-fine-tuning" title="Permalink to this heading">#</a></h2>
+<p>A pre-trained model is the result of a network that has been trained already on a large dataset, usually characterized by a high degree of generalization. These models, which require a long training time using significant computing resources, have most often learned to understand very basic representations of features across domains, such as edges and shapes. Because of their generalizability, they can be helpful in expediting the training process for a custom task because they’ve already grasped the basic features, allowing for any new training to focus on the more particular, higher-order features. This is the intuition behind a process known as transfer learning. In practice, transfer learning can help to reduce the amount of time it takes to train a performant custom model. Sometimes pre-trained models are referred to as “backbone” networks.</p>
+<p>There are two main strategies to transfer learning, which we will discuss and practice in this tutorial:</p>
+<ol class="arabic simple">
+<li><p>Feature Extraction: In this technique, we use some of the layers from the the pre-trained network (with all of its learnings) to extract features from the custom data, and then append a new classifier (and perhaps several other layers) on top to learn more higher-order features and classify per the unique task. This process doesn’t retrain any parts of the pre-trained network. It just uses some layers from it that have been “frozen” to derive some basic/generic features from the custom data. Any new layers are targeting the unique classes and characteristics of the custom data.</p></li>
+<li><p>Fine-Tuning: In this technique, we actually “unfreeze” some of the pre-trained network (usually the last few layers) to adjust the learned parameters using custom data. This process allows for the higher-order features of the new, custom data to be directly blended and jointly learned with the information already gathered by the pre-trained network. In effect, this may help make the whole network more relevant to the custom data and task. This technique is best used for situations in which the new training dataset is relatively large and somewhat similar to the original dataset seen by the pre-trained model.</p></li>
+</ol>
+</section>
+<section id="hyperparameter-tuning">
+<h2>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading">#</a></h2>
+<p>Hyperparameters are the variables in a machine learning network that determine the topology and regulate the training process. Unlike trainable parameters, these variables do not change during training. There are exceptions to this, such as in the case of learning rate decay. One way to think of hyperparameters is in the sense of gears that you tune to affect the performance of the model. They can be largely broken down into two groups:</p>
+<ol class="arabic simple">
+<li><p>Model hyperparameters: these relate to aspects such as how many hidden layers a network has, how wide the layers are, what the kernel size is.</p></li>
+<li><p>Algorithm hyperparameters: these have more impact on the speed and learning rigor of the model. Examples include the learning rate and the number of epochs.</p></li>
+</ol>
+<p>Hyperparameters can be tuned (sometimes referred to as optimized) with two methods:</p>
+<ol class="arabic simple">
+<li><p>Manual hyperparameter tuning, where the machine learning practitioner adjusts and experiments with values.</p></li>
+<li><p>Automatic hyperparameter tuning, where the machine learning practitioner sets up a hyperparameter search space to try many different hyperparameter combinations across a grid or within boundaries, and then selects the combination that results in the best performance based on a tuning algorithm.</p></li>
+</ol>
+<p>Typically, many hyperparameters can remain fixed when fine-tuning. Usually, this gets a machine learning model the vast majority of the way toward peak performance. However, some pitfalls can arise if learning rates are too large (resulting in failure to converge) or epochs too few. And when transferring models to finetune on larger and higher resolution images, sometimes hyperparameters need to be tuned to account for smaller object sizes. We recommend starting a machine learning experiment with manual hyperparameter tuning and gradually adjusting values to understand how you need to adjust the learning process for your problem. Automatic hyperparameter tuning can be overkill and expensive because it requires running potentially many iterative experiments, utilizing resources and time, to arrive at what may be negligible differences in configuration (and performance) compared with manual tuning. That said, if you are not resource constrained and have an idea of what informative experiments you would like to run up front, automatic hyperparameter tuning can be an efficient way to select a best performing model. In this tutorial, we’ll explore how to do a minimal, automatic hyperparameter tuning experiment using the Keras library.</p>
+<section id="let-s-get-started">
+<h3>Let’s get started<a class="headerlink" href="#let-s-get-started" title="Permalink to this heading">#</a></h3>
+<p>So, now that we have these two tranfer learning strategies and hyperparameter tuning in mind, let’s get started with a practical example. We will revisit the use case in which we want to classify satellite images from the <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">Eurosat RGB land cover image classification dataset available on TensorFlow Datasets</a>. The goal will be to see how transfer learning and hyperparameter tuning may help us arrive at a performant model quickly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># install required libraries
+!pip install -q rasterio==1.3.8
+!pip install -q geopandas==0.13.2
+!pip install -q -U keras-tuner==1.3.5
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">47.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">176.1/176.1 kB</span> <span class=" -Color -Color-Red">1.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># import required libraries
+import os, glob, functools, fnmatch, io, shutil, tarfile, json
+from zipfile import ZipFile
+from itertools import product
+from pathlib import Path
+import urllib.request
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from PIL import Image
+import numpy as np
+from google.colab import drive
+import tensorflow as tf
+import tensorflow_datasets as tfds
+from tensorflow.keras.utils import plot_model
+import matplotlib.pyplot as plt
+import keras_tuner as kt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># set your folders
+if &#39;google.colab&#39; in str(get_ipython()):
+    # mount google drive
+    drive.mount(&#39;/content/gdrive&#39;)
+    processed_outputs_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-2-processed-outputs/&#39;
+    user_outputs_dir = &#39;/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir&#39;
+    if not os.path.exists(user_outputs_dir):
+        os.makedirs(user_outputs_dir)
+    print(&#39;Running on Colab&#39;)
+else:
+    processed_outputs_dir = os.path.abspath(&quot;./data/tf-eo-devseed-2-processed-outputs&quot;)
+    user_outputs_dir = os.path.abspath(&#39;./tf-eo-devseed-2-user_outputs_dir&#39;)
+    if not os.path.exists(user_outputs_dir):
+        os.makedirs(user_outputs_dir)
+        os.makedirs(processed_outputs_dir)
+    print(f&#39;Not running on Colab, data needs to be downloaded locally at {os.path.abspath(processed_outputs_dir)}&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mounted at /content/gdrive
+Running on Colab
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Move to your user directory in order to write data
+%cd $user_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-loading-and-pre-processing">
+<h2>Data loading and pre-processing<a class="headerlink" href="#data-loading-and-pre-processing" title="Permalink to this heading">#</a></h2>
+<p>We will again use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
+<p>The classes in this dataset are: <code class="docutils literal notranslate"><span class="pre">['Industrial',</span> <span class="pre">'Pasture',</span> <span class="pre">'River',</span> <span class="pre">'Forest',</span> <span class="pre">'AnnualCrop',</span> <span class="pre">'PermanentCrop',</span> <span class="pre">'Highway',</span> <span class="pre">'HerbaceousVegetation',</span> <span class="pre">'Residential',</span> <span class="pre">'SeaLake']</span></code></p>
+<p>The dataset will be partitioned into training, validation and testing splits with a 70:20:10 ratio, respectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Construct tf.data.Dataset(s)
+all_dataset, ds_info = tfds.load(name=&quot;eurosat/rgb&quot;, split=tfds.Split.TRAIN, with_info=True)
+all_dataset = all_dataset.shuffle(1024)
+validation_dataset = all_dataset.take(int(len(all_dataset)*0.3))
+train_dataset = all_dataset.skip(int(len(all_dataset)*0.3))
+test_dataset = validation_dataset.take(int(len(validation_dataset)*0.3))
+validation_dataset = validation_dataset.skip(int(len(validation_dataset)*0.3))
+
+print(&quot;Number of samples in each split (train, val, test): &quot;, len(train_dataset), len(validation_dataset), len(test_dataset))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading and preparing dataset 89.91 MiB (download: 89.91 MiB, generated: Unknown size, total: 89.91 MiB) to /root/tensorflow_datasets/eurosat/rgb/2.0.0...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "eabea66d4c1845b59f6ab5c0c7109bc0", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "dc9f1c1ee16e49ceb933e6c3ea4fae89", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "c1a85e00ac7342f487c451615c495b61", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "eba151f84c3248d1a7001d6415e70b99", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "ac5a5c601331454bbe1c104f38f275db", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "49dff39ccfed453a96bfbcb07a91410c", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset eurosat downloaded and prepared to /root/tensorflow_datasets/eurosat/rgb/2.0.0. Subsequent calls will reuse this data.
+Number of samples in each split (train, val, test):  18900 5670 2430
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Dataset specific parameters to be used in the model structure
+INPUT_SHAPE = (64, 64, 3)
+NUM_CLASSES = 10
+BATCH_SIZE = 4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Batch the datasets
+train_dataset = train_dataset.batch(BATCH_SIZE)
+validation_dataset = validation_dataset.batch(BATCH_SIZE)
+test_dataset = test_dataset.batch(BATCH_SIZE)
+
+print(&quot;Number of batches in each split (train, val, test): &quot;, len(train_dataset), len(validation_dataset), len(test_dataset))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of batches in each split (train, val, test):  4725 1418 608
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Keras expects non-dictionary style format for its input
+def convert_dataset(item):
+    &quot;&quot;&quot;Prepares a dict-style dataset in the format Keras expects, (features, labels).&quot;&quot;&quot;
+    image = item[&#39;image&#39;]
+    label = item[&#39;label&#39;]
+    return image, label
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>train_dataset = train_dataset.map(convert_dataset)
+validation_dataset = validation_dataset.map(convert_dataset)
+test_dataset = test_dataset.map(convert_dataset)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Inspect the structure of the dataset
+print(train_dataset.element_spec)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(TensorSpec(shape=(None, 64, 64, 3), dtype=tf.uint8, name=None), TensorSpec(shape=(None,), dtype=tf.int64, name=None))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize examples of the classes in the dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fig = tfds.show_examples(all_dataset, ds_info)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ce05e02eef4753f1d67bd11bcea2501cced8b0a6cf656015618e2e83810b2a81.png" src="../_images/ce05e02eef4753f1d67bd11bcea2501cced8b0a6cf656015618e2e83810b2a81.png" />
+</div>
+</div>
+<section id="prepare-the-dataset-for-performance">
+<h3>Prepare the dataset for performance<a class="headerlink" href="#prepare-the-dataset-for-performance" title="Permalink to this heading">#</a></h3>
+<p>We will use buffered prefetching to efficiently load samples from disk with I/O blockages. Read more on this technique in this <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">data performance</a> guide.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>AUTOTUNE = tf.data.AUTOTUNE
+
+train_dataset = train_dataset.prefetch(buffer_size=AUTOTUNE)
+validation_dataset = validation_dataset.prefetch(buffer_size=AUTOTUNE)
+test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="augment-the-data">
+<h3>Augment the data<a class="headerlink" href="#augment-the-data" title="Permalink to this heading">#</a></h3>
+<p>We will apply various transformations (that reflect realistic representations) to improve the robustness of our dataset. For example, these will include rotation and flipping. In effect, these will help the model see more variety and avoid overfitting. Another good guide for data augmentation can be found <a class="reference external" href="https://www.tensorflow.org/tutorials/images/data_augmentation">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>data_augmentation = tf.keras.Sequential([
+  tf.keras.layers.RandomFlip(&#39;horizontal&#39;),
+  tf.keras.layers.RandomRotation(0.2),
+])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: The augmentation layers defined above are only active during training, not during evaluation or prediction.</p>
+<p>Let’s try these layers on a sample training image and plot the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>for image, _ in train_dataset.take(1): #batch in train_dataset.take(1):
+  #image, label = batch[&quot;image&quot;].numpy(), batch[&quot;label&quot;].numpy()
+  plt.figure(figsize=(10, 10))
+  first_image = image[0]
+  for i in range(9):
+    ax = plt.subplot(3, 3, i + 1)
+    augmented_image = data_augmentation(tf.expand_dims(first_image, 0))
+    plt.imshow(augmented_image[0] / 255)
+    plt.axis(&#39;off&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/336b986c21c6b5a8bee795c1eed46de7e8205b5b2b339bbb6861566840729ff4.png" src="../_images/336b986c21c6b5a8bee795c1eed46de7e8205b5b2b339bbb6861566840729ff4.png" />
+</div>
+</div>
+</section>
+<section id="rescale-pixel-values">
+<h3>Rescale pixel values<a class="headerlink" href="#rescale-pixel-values" title="Permalink to this heading">#</a></h3>
+<p>We want our custom data, in this case the Eurosat images, to fit the scale expected by the pre-trained model. We will load the pretrained <code class="docutils literal notranslate"><span class="pre">tf.keras.applications.MobileNetV2</span></code> model soon, which expects pixel values between <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> so let’s rescale the new data to fit that criteria and add this as a preprocessing step in our final model set up.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>preprocess_input = tf.keras.applications.mobilenet_v2.preprocess_input
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: Alternatively, pixel values can be arbitrarily rescaled from <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">255]</span></code> to <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> using <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Rescaling</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rescale = tf.keras.layers.Rescaling(1./127.5, offset=-1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: When using <code class="docutils literal notranslate"><span class="pre">tf.keras.applications</span></code> such as the above for MobileNetV2, always check the associated docs to know whether pixels should be scaled within <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> or <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1]</span></code>.</p>
+</section>
+</section>
+<section id="load-the-pre-trained-network-backbone">
+<h2>Load the pre-trained network (backbone)<a class="headerlink" href="#load-the-pre-trained-network-backbone" title="Permalink to this heading">#</a></h2>
+<p>Now we will load the model that will serve as the base from which we transfer learn using our Eurosat dataset. <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2/MobileNetV2">MobileNetV2</a> is a model that was developed at Google. It learned from the ImageNet dataset, which is a large and generalized dataset of natural images which has been used extensively for development of pre-trained models in computer vision.</p>
+<p>We will use the final-most pre-classification layer from the pre-trained network, known as the “bottleneck layer”, for feature extraction.</p>
+<p>A key step when loading the pre-trained network is to specify the <code class="docutils literal notranslate"><span class="pre">include_top=False</span></code> argument, which prevents inclusion of the classification layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Create the base model from the pre-trained model MobileNet V2
+IMG_SHAPE = INPUT_SHAPE
+base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
+                                               include_top=False,
+                                               weights=&#39;imagenet&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:tensorflow:`input_shape` is undefined or non-square, or `rows` is not in [96, 128, 160, 192, 224]. Weights for input shape (224, 224) will be loaded as the default.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_224_no_top.h5
+9406464/9406464 [==============================] - 0s 0us/step
+</pre></div>
+</div>
+</div>
+</div>
+<p>This feature extractor converts each <code class="docutils literal notranslate"><span class="pre">64x64x3</span></code> image into a <code class="docutils literal notranslate"><span class="pre">2x2x1280</span></code> block of features. Let’s see what it does to an example batch of images:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#batch = next(iter(train_dataset))
+image_batch, label_batch = next(iter(train_dataset)) #batch[&quot;image&quot;].numpy(), batch[&quot;label&quot;].numpy()
+#print(image_batch)
+feature_batch = base_model(image_batch)
+print(feature_batch.shape)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 2, 2, 1280)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-extraction">
+<h2>Feature extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">#</a></h2>
+<p>The next step is to freeze the pre-trained convolutional network we loaded, and implement it as a feature extractor, which will serve as input to a newly added top-level classifier that we will train using our custom data.</p>
+<section id="freeze-the-pre-trained-network">
+<h3>Freeze the pre-trained network<a class="headerlink" href="#freeze-the-pre-trained-network" title="Permalink to this heading">#</a></h3>
+<p>Freezing the convolutional base network before compiling and training the model is crucial. By setting by setting <code class="docutils literal notranslate"><span class="pre">layer.trainable</span> <span class="pre">=</span> <span class="pre">False</span></code> for a layer, we ensure its weights don’t get updated/re-trained during training. There are many layers in MobileNetV2, so we will just freeze the whole network by setting the entire network’s <code class="docutils literal notranslate"><span class="pre">trainable</span></code> flag to False.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>base_model.trainable = False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="critical-note-for-use-of-batchnormalization-layers">
+<h3>Critical note for use of BatchNormalization layers<a class="headerlink" href="#critical-note-for-use-of-batchnormalization-layers" title="Permalink to this heading">#</a></h3>
+<p>It’s common to include <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.BatchNormalization</span></code> layers in a model, but in the context of fine-tuning which we will explore later on, it’s important that these layers are treated with precaution.</p>
+<p>Under the mode of <code class="docutils literal notranslate"><span class="pre">layer.trainable</span> <span class="pre">=</span> <span class="pre">False</span></code>, a <code class="docutils literal notranslate"><span class="pre">BatchNormalization</span></code> layer won’t apply any updates to its mean and variance statistics. This is called inference mode. Keeping BatchNormalization layers in inference mode during fine-tuning is important, otherwise, the non-trainable weights will be updated and this will corrupt what the pre-trained model has already learned.</p>
+<p>More on this can be read in this <a class="reference external" href="https://www.tensorflow.org/guide/keras/transfer_learning">transfer learning guide</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Let&#39;s take a look at the base model architecture
+base_model.summary()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;mobilenetv2_1.00_224&quot;
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 64, 64, 3)]  0           []                               
+                                                                                                  
+ Conv1 (Conv2D)                 (None, 32, 32, 32)   864         [&#39;input_1[0][0]&#39;]                
+                                                                                                  
+ bn_Conv1 (BatchNormalization)  (None, 32, 32, 32)   128         [&#39;Conv1[0][0]&#39;]                  
+                                                                                                  
+ Conv1_relu (ReLU)              (None, 32, 32, 32)   0           [&#39;bn_Conv1[0][0]&#39;]               
+                                                                                                  
+ expanded_conv_depthwise (Depth  (None, 32, 32, 32)  288         [&#39;Conv1_relu[0][0]&#39;]             
+ wiseConv2D)                                                                                      
+                                                                                                  
+ expanded_conv_depthwise_BN (Ba  (None, 32, 32, 32)  128         [&#39;expanded_conv_depthwise[0][0]&#39;]
+ tchNormalization)                                                                                
+                                                                                                  
+ expanded_conv_depthwise_relu (  (None, 32, 32, 32)  0           [&#39;expanded_conv_depthwise_BN[0][0
+ ReLU)                                                           ]&#39;]                              
+                                                                                                  
+ expanded_conv_project (Conv2D)  (None, 32, 32, 16)  512         [&#39;expanded_conv_depthwise_relu[0]
+                                                                 [0]&#39;]                            
+                                                                                                  
+ expanded_conv_project_BN (Batc  (None, 32, 32, 16)  64          [&#39;expanded_conv_project[0][0]&#39;]  
+ hNormalization)                                                                                  
+                                                                                                  
+ block_1_expand (Conv2D)        (None, 32, 32, 96)   1536        [&#39;expanded_conv_project_BN[0][0]&#39;
+                                                                 ]                                
+                                                                                                  
+ block_1_expand_BN (BatchNormal  (None, 32, 32, 96)  384         [&#39;block_1_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_1_expand_relu (ReLU)     (None, 32, 32, 96)   0           [&#39;block_1_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_1_pad (ZeroPadding2D)    (None, 33, 33, 96)   0           [&#39;block_1_expand_relu[0][0]&#39;]    
+                                                                                                  
+ block_1_depthwise (DepthwiseCo  (None, 16, 16, 96)  864         [&#39;block_1_pad[0][0]&#39;]            
+ nv2D)                                                                                            
+                                                                                                  
+ block_1_depthwise_BN (BatchNor  (None, 16, 16, 96)  384         [&#39;block_1_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_1_depthwise_relu (ReLU)  (None, 16, 16, 96)   0           [&#39;block_1_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_1_project (Conv2D)       (None, 16, 16, 24)   2304        [&#39;block_1_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_1_project_BN (BatchNorma  (None, 16, 16, 24)  96          [&#39;block_1_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_2_expand (Conv2D)        (None, 16, 16, 144)  3456        [&#39;block_1_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_2_expand_BN (BatchNormal  (None, 16, 16, 144)  576        [&#39;block_2_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_2_expand_relu (ReLU)     (None, 16, 16, 144)  0           [&#39;block_2_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_2_depthwise (DepthwiseCo  (None, 16, 16, 144)  1296       [&#39;block_2_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_2_depthwise_BN (BatchNor  (None, 16, 16, 144)  576        [&#39;block_2_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_2_depthwise_relu (ReLU)  (None, 16, 16, 144)  0           [&#39;block_2_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_2_project (Conv2D)       (None, 16, 16, 24)   3456        [&#39;block_2_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_2_project_BN (BatchNorma  (None, 16, 16, 24)  96          [&#39;block_2_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_2_add (Add)              (None, 16, 16, 24)   0           [&#39;block_1_project_BN[0][0]&#39;,     
+                                                                  &#39;block_2_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_3_expand (Conv2D)        (None, 16, 16, 144)  3456        [&#39;block_2_add[0][0]&#39;]            
+                                                                                                  
+ block_3_expand_BN (BatchNormal  (None, 16, 16, 144)  576        [&#39;block_3_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_3_expand_relu (ReLU)     (None, 16, 16, 144)  0           [&#39;block_3_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_3_pad (ZeroPadding2D)    (None, 17, 17, 144)  0           [&#39;block_3_expand_relu[0][0]&#39;]    
+                                                                                                  
+ block_3_depthwise (DepthwiseCo  (None, 8, 8, 144)   1296        [&#39;block_3_pad[0][0]&#39;]            
+ nv2D)                                                                                            
+                                                                                                  
+ block_3_depthwise_BN (BatchNor  (None, 8, 8, 144)   576         [&#39;block_3_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_3_depthwise_relu (ReLU)  (None, 8, 8, 144)    0           [&#39;block_3_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_3_project (Conv2D)       (None, 8, 8, 32)     4608        [&#39;block_3_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_3_project_BN (BatchNorma  (None, 8, 8, 32)    128         [&#39;block_3_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_4_expand (Conv2D)        (None, 8, 8, 192)    6144        [&#39;block_3_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_4_expand_BN (BatchNormal  (None, 8, 8, 192)   768         [&#39;block_4_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_4_expand_relu (ReLU)     (None, 8, 8, 192)    0           [&#39;block_4_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_4_depthwise (DepthwiseCo  (None, 8, 8, 192)   1728        [&#39;block_4_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_4_depthwise_BN (BatchNor  (None, 8, 8, 192)   768         [&#39;block_4_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_4_depthwise_relu (ReLU)  (None, 8, 8, 192)    0           [&#39;block_4_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_4_project (Conv2D)       (None, 8, 8, 32)     6144        [&#39;block_4_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_4_project_BN (BatchNorma  (None, 8, 8, 32)    128         [&#39;block_4_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_4_add (Add)              (None, 8, 8, 32)     0           [&#39;block_3_project_BN[0][0]&#39;,     
+                                                                  &#39;block_4_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_5_expand (Conv2D)        (None, 8, 8, 192)    6144        [&#39;block_4_add[0][0]&#39;]            
+                                                                                                  
+ block_5_expand_BN (BatchNormal  (None, 8, 8, 192)   768         [&#39;block_5_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_5_expand_relu (ReLU)     (None, 8, 8, 192)    0           [&#39;block_5_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_5_depthwise (DepthwiseCo  (None, 8, 8, 192)   1728        [&#39;block_5_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_5_depthwise_BN (BatchNor  (None, 8, 8, 192)   768         [&#39;block_5_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_5_depthwise_relu (ReLU)  (None, 8, 8, 192)    0           [&#39;block_5_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_5_project (Conv2D)       (None, 8, 8, 32)     6144        [&#39;block_5_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_5_project_BN (BatchNorma  (None, 8, 8, 32)    128         [&#39;block_5_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_5_add (Add)              (None, 8, 8, 32)     0           [&#39;block_4_add[0][0]&#39;,            
+                                                                  &#39;block_5_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_6_expand (Conv2D)        (None, 8, 8, 192)    6144        [&#39;block_5_add[0][0]&#39;]            
+                                                                                                  
+ block_6_expand_BN (BatchNormal  (None, 8, 8, 192)   768         [&#39;block_6_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_6_expand_relu (ReLU)     (None, 8, 8, 192)    0           [&#39;block_6_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_6_pad (ZeroPadding2D)    (None, 9, 9, 192)    0           [&#39;block_6_expand_relu[0][0]&#39;]    
+                                                                                                  
+ block_6_depthwise (DepthwiseCo  (None, 4, 4, 192)   1728        [&#39;block_6_pad[0][0]&#39;]            
+ nv2D)                                                                                            
+                                                                                                  
+ block_6_depthwise_BN (BatchNor  (None, 4, 4, 192)   768         [&#39;block_6_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_6_depthwise_relu (ReLU)  (None, 4, 4, 192)    0           [&#39;block_6_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_6_project (Conv2D)       (None, 4, 4, 64)     12288       [&#39;block_6_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_6_project_BN (BatchNorma  (None, 4, 4, 64)    256         [&#39;block_6_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_7_expand (Conv2D)        (None, 4, 4, 384)    24576       [&#39;block_6_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_7_expand_BN (BatchNormal  (None, 4, 4, 384)   1536        [&#39;block_7_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_7_expand_relu (ReLU)     (None, 4, 4, 384)    0           [&#39;block_7_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_7_depthwise (DepthwiseCo  (None, 4, 4, 384)   3456        [&#39;block_7_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_7_depthwise_BN (BatchNor  (None, 4, 4, 384)   1536        [&#39;block_7_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_7_depthwise_relu (ReLU)  (None, 4, 4, 384)    0           [&#39;block_7_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_7_project (Conv2D)       (None, 4, 4, 64)     24576       [&#39;block_7_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_7_project_BN (BatchNorma  (None, 4, 4, 64)    256         [&#39;block_7_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_7_add (Add)              (None, 4, 4, 64)     0           [&#39;block_6_project_BN[0][0]&#39;,     
+                                                                  &#39;block_7_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_8_expand (Conv2D)        (None, 4, 4, 384)    24576       [&#39;block_7_add[0][0]&#39;]            
+                                                                                                  
+ block_8_expand_BN (BatchNormal  (None, 4, 4, 384)   1536        [&#39;block_8_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_8_expand_relu (ReLU)     (None, 4, 4, 384)    0           [&#39;block_8_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_8_depthwise (DepthwiseCo  (None, 4, 4, 384)   3456        [&#39;block_8_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_8_depthwise_BN (BatchNor  (None, 4, 4, 384)   1536        [&#39;block_8_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_8_depthwise_relu (ReLU)  (None, 4, 4, 384)    0           [&#39;block_8_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_8_project (Conv2D)       (None, 4, 4, 64)     24576       [&#39;block_8_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_8_project_BN (BatchNorma  (None, 4, 4, 64)    256         [&#39;block_8_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_8_add (Add)              (None, 4, 4, 64)     0           [&#39;block_7_add[0][0]&#39;,            
+                                                                  &#39;block_8_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_9_expand (Conv2D)        (None, 4, 4, 384)    24576       [&#39;block_8_add[0][0]&#39;]            
+                                                                                                  
+ block_9_expand_BN (BatchNormal  (None, 4, 4, 384)   1536        [&#39;block_9_expand[0][0]&#39;]         
+ ization)                                                                                         
+                                                                                                  
+ block_9_expand_relu (ReLU)     (None, 4, 4, 384)    0           [&#39;block_9_expand_BN[0][0]&#39;]      
+                                                                                                  
+ block_9_depthwise (DepthwiseCo  (None, 4, 4, 384)   3456        [&#39;block_9_expand_relu[0][0]&#39;]    
+ nv2D)                                                                                            
+                                                                                                  
+ block_9_depthwise_BN (BatchNor  (None, 4, 4, 384)   1536        [&#39;block_9_depthwise[0][0]&#39;]      
+ malization)                                                                                      
+                                                                                                  
+ block_9_depthwise_relu (ReLU)  (None, 4, 4, 384)    0           [&#39;block_9_depthwise_BN[0][0]&#39;]   
+                                                                                                  
+ block_9_project (Conv2D)       (None, 4, 4, 64)     24576       [&#39;block_9_depthwise_relu[0][0]&#39;] 
+                                                                                                  
+ block_9_project_BN (BatchNorma  (None, 4, 4, 64)    256         [&#39;block_9_project[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_9_add (Add)              (None, 4, 4, 64)     0           [&#39;block_8_add[0][0]&#39;,            
+                                                                  &#39;block_9_project_BN[0][0]&#39;]     
+                                                                                                  
+ block_10_expand (Conv2D)       (None, 4, 4, 384)    24576       [&#39;block_9_add[0][0]&#39;]            
+                                                                                                  
+ block_10_expand_BN (BatchNorma  (None, 4, 4, 384)   1536        [&#39;block_10_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_10_expand_relu (ReLU)    (None, 4, 4, 384)    0           [&#39;block_10_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_10_depthwise (DepthwiseC  (None, 4, 4, 384)   3456        [&#39;block_10_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_10_depthwise_BN (BatchNo  (None, 4, 4, 384)   1536        [&#39;block_10_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_10_depthwise_relu (ReLU)  (None, 4, 4, 384)   0           [&#39;block_10_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_10_project (Conv2D)      (None, 4, 4, 96)     36864       [&#39;block_10_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_10_project_BN (BatchNorm  (None, 4, 4, 96)    384         [&#39;block_10_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_11_expand (Conv2D)       (None, 4, 4, 576)    55296       [&#39;block_10_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_11_expand_BN (BatchNorma  (None, 4, 4, 576)   2304        [&#39;block_11_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_11_expand_relu (ReLU)    (None, 4, 4, 576)    0           [&#39;block_11_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_11_depthwise (DepthwiseC  (None, 4, 4, 576)   5184        [&#39;block_11_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_11_depthwise_BN (BatchNo  (None, 4, 4, 576)   2304        [&#39;block_11_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_11_depthwise_relu (ReLU)  (None, 4, 4, 576)   0           [&#39;block_11_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_11_project (Conv2D)      (None, 4, 4, 96)     55296       [&#39;block_11_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_11_project_BN (BatchNorm  (None, 4, 4, 96)    384         [&#39;block_11_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_11_add (Add)             (None, 4, 4, 96)     0           [&#39;block_10_project_BN[0][0]&#39;,    
+                                                                  &#39;block_11_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_12_expand (Conv2D)       (None, 4, 4, 576)    55296       [&#39;block_11_add[0][0]&#39;]           
+                                                                                                  
+ block_12_expand_BN (BatchNorma  (None, 4, 4, 576)   2304        [&#39;block_12_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_12_expand_relu (ReLU)    (None, 4, 4, 576)    0           [&#39;block_12_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_12_depthwise (DepthwiseC  (None, 4, 4, 576)   5184        [&#39;block_12_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_12_depthwise_BN (BatchNo  (None, 4, 4, 576)   2304        [&#39;block_12_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_12_depthwise_relu (ReLU)  (None, 4, 4, 576)   0           [&#39;block_12_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_12_project (Conv2D)      (None, 4, 4, 96)     55296       [&#39;block_12_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_12_project_BN (BatchNorm  (None, 4, 4, 96)    384         [&#39;block_12_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_12_add (Add)             (None, 4, 4, 96)     0           [&#39;block_11_add[0][0]&#39;,           
+                                                                  &#39;block_12_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_13_expand (Conv2D)       (None, 4, 4, 576)    55296       [&#39;block_12_add[0][0]&#39;]           
+                                                                                                  
+ block_13_expand_BN (BatchNorma  (None, 4, 4, 576)   2304        [&#39;block_13_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_13_expand_relu (ReLU)    (None, 4, 4, 576)    0           [&#39;block_13_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_13_pad (ZeroPadding2D)   (None, 5, 5, 576)    0           [&#39;block_13_expand_relu[0][0]&#39;]   
+                                                                                                  
+ block_13_depthwise (DepthwiseC  (None, 2, 2, 576)   5184        [&#39;block_13_pad[0][0]&#39;]           
+ onv2D)                                                                                           
+                                                                                                  
+ block_13_depthwise_BN (BatchNo  (None, 2, 2, 576)   2304        [&#39;block_13_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_13_depthwise_relu (ReLU)  (None, 2, 2, 576)   0           [&#39;block_13_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_13_project (Conv2D)      (None, 2, 2, 160)    92160       [&#39;block_13_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_13_project_BN (BatchNorm  (None, 2, 2, 160)   640         [&#39;block_13_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_14_expand (Conv2D)       (None, 2, 2, 960)    153600      [&#39;block_13_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_14_expand_BN (BatchNorma  (None, 2, 2, 960)   3840        [&#39;block_14_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_14_expand_relu (ReLU)    (None, 2, 2, 960)    0           [&#39;block_14_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_14_depthwise (DepthwiseC  (None, 2, 2, 960)   8640        [&#39;block_14_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_14_depthwise_BN (BatchNo  (None, 2, 2, 960)   3840        [&#39;block_14_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_14_depthwise_relu (ReLU)  (None, 2, 2, 960)   0           [&#39;block_14_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_14_project (Conv2D)      (None, 2, 2, 160)    153600      [&#39;block_14_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_14_project_BN (BatchNorm  (None, 2, 2, 160)   640         [&#39;block_14_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_14_add (Add)             (None, 2, 2, 160)    0           [&#39;block_13_project_BN[0][0]&#39;,    
+                                                                  &#39;block_14_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_15_expand (Conv2D)       (None, 2, 2, 960)    153600      [&#39;block_14_add[0][0]&#39;]           
+                                                                                                  
+ block_15_expand_BN (BatchNorma  (None, 2, 2, 960)   3840        [&#39;block_15_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_15_expand_relu (ReLU)    (None, 2, 2, 960)    0           [&#39;block_15_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_15_depthwise (DepthwiseC  (None, 2, 2, 960)   8640        [&#39;block_15_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_15_depthwise_BN (BatchNo  (None, 2, 2, 960)   3840        [&#39;block_15_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_15_depthwise_relu (ReLU)  (None, 2, 2, 960)   0           [&#39;block_15_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_15_project (Conv2D)      (None, 2, 2, 160)    153600      [&#39;block_15_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_15_project_BN (BatchNorm  (None, 2, 2, 160)   640         [&#39;block_15_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ block_15_add (Add)             (None, 2, 2, 160)    0           [&#39;block_14_add[0][0]&#39;,           
+                                                                  &#39;block_15_project_BN[0][0]&#39;]    
+                                                                                                  
+ block_16_expand (Conv2D)       (None, 2, 2, 960)    153600      [&#39;block_15_add[0][0]&#39;]           
+                                                                                                  
+ block_16_expand_BN (BatchNorma  (None, 2, 2, 960)   3840        [&#39;block_16_expand[0][0]&#39;]        
+ lization)                                                                                        
+                                                                                                  
+ block_16_expand_relu (ReLU)    (None, 2, 2, 960)    0           [&#39;block_16_expand_BN[0][0]&#39;]     
+                                                                                                  
+ block_16_depthwise (DepthwiseC  (None, 2, 2, 960)   8640        [&#39;block_16_expand_relu[0][0]&#39;]   
+ onv2D)                                                                                           
+                                                                                                  
+ block_16_depthwise_BN (BatchNo  (None, 2, 2, 960)   3840        [&#39;block_16_depthwise[0][0]&#39;]     
+ rmalization)                                                                                     
+                                                                                                  
+ block_16_depthwise_relu (ReLU)  (None, 2, 2, 960)   0           [&#39;block_16_depthwise_BN[0][0]&#39;]  
+                                                                                                  
+ block_16_project (Conv2D)      (None, 2, 2, 320)    307200      [&#39;block_16_depthwise_relu[0][0]&#39;]
+                                                                                                  
+ block_16_project_BN (BatchNorm  (None, 2, 2, 320)   1280        [&#39;block_16_project[0][0]&#39;]       
+ alization)                                                                                       
+                                                                                                  
+ Conv_1 (Conv2D)                (None, 2, 2, 1280)   409600      [&#39;block_16_project_BN[0][0]&#39;]    
+                                                                                                  
+ Conv_1_bn (BatchNormalization)  (None, 2, 2, 1280)  5120        [&#39;Conv_1[0][0]&#39;]                 
+                                                                                                  
+ out_relu (ReLU)                (None, 2, 2, 1280)   0           [&#39;Conv_1_bn[0][0]&#39;]              
+                                                                                                  
+==================================================================================================
+Total params: 2,257,984
+Trainable params: 0
+Non-trainable params: 2,257,984
+__________________________________________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="add-a-new-classification-layer-head">
+<h3>Add a new classification layer (head)<a class="headerlink" href="#add-a-new-classification-layer-head" title="Permalink to this heading">#</a></h3>
+<p>We will add a layer that averages over the feature maps and produce a flat vector for each sample in the batch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
+feature_batch_average = global_average_layer(feature_batch)
+print(feature_batch_average.shape)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 1280)
+</pre></div>
+</div>
+</div>
+</div>
+<p>From this, we add the classification layer, <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code>, to obtain a single prediction per image from the averaged feature maps. This will produce <code class="docutils literal notranslate"><span class="pre">logits</span></code>, raw prediction values for each class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>prediction_layer = tf.keras.layers.Dense(NUM_CLASSES)
+prediction_batch = prediction_layer(feature_batch_average)
+print(prediction_batch.shape)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4, 10)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will put everything together and build a model that includes the data augmentation, rescaling, feature extractor layers and classification head using the <a class="reference external" href="https://www.tensorflow.org/guide/keras/functional">Keras Functional API</a>. Of note, we are setting <code class="docutils literal notranslate"><span class="pre">training=False</span></code> because this model contains a <code class="docutils literal notranslate"><span class="pre">BatchNormalization</span></code> layer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>inputs = tf.keras.Input(shape=INPUT_SHAPE)
+x = data_augmentation(inputs)
+x = preprocess_input(x)
+x = base_model(x, training=False)
+x = global_average_layer(x)
+x = tf.keras.layers.Dropout(0.2)(x)
+outputs = prediction_layer(x)
+model = tf.keras.Model(inputs, outputs)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="compile-the-model">
+<h3>Compile the model<a class="headerlink" href="#compile-the-model" title="Permalink to this heading">#</a></h3>
+<p>Compile the model. There are 10 classes in the Eurosat dataset, so we will use an appropriate loss function for multi-class classification, <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.SparseCategoricalCrossentropy</span></code>, with <code class="docutils literal notranslate"><span class="pre">from_logits=True</span></code> as this model generates linear output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>base_learning_rate = 0.0001
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=[&#39;accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.summary()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model_2&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_4 (InputLayer)        [(None, 64, 64, 3)]       0         
+                                                                 
+ sequential (Sequential)     (None, 64, 64, 3)         0         
+                                                                 
+ tf.math.truediv_2 (TFOpLamb  (None, 64, 64, 3)        0         
+ da)                                                             
+                                                                 
+ tf.math.subtract_2 (TFOpLam  (None, 64, 64, 3)        0         
+ bda)                                                            
+                                                                 
+ mobilenetv2_1.00_224 (Funct  (None, 2, 2, 1280)       2257984   
+ ional)                                                          
+                                                                 
+ global_average_pooling2d (G  (None, 1280)             0         
+ lobalAveragePooling2D)                                          
+                                                                 
+ dropout_2 (Dropout)         (None, 1280)              0         
+                                                                 
+ dense (Dense)               (None, 10)                12810     
+                                                                 
+=================================================================
+Total params: 2,270,794
+Trainable params: 1,874,250
+Non-trainable params: 396,544
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<p>The over 2 million parameters in the frozen MobileNetV2 backbone, and much fewer which are <em>trainable</em> parameters in our added Dense layer. These parameters are all divided between two key <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> objects: weights and biases.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>len(model.trainable_variables)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-the-model">
+<h3>Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this heading">#</a></h3>
+<p>We will train for some epochs, and then check the accuracy on the validation set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>initial_epochs = 10
+
+loss0, accuracy0 = model.evaluate(validation_dataset)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1418/1418 [==============================] - 12s 8ms/step - loss: 0.2271 - accuracy: 0.9409
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(&quot;initial loss: {:.2f}&quot;.format(loss0))
+print(&quot;initial accuracy: {:.2f}&quot;.format(accuracy0))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial loss: 0.23
+initial accuracy: 0.94
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>history = model.fit(train_dataset,
+                    epochs=initial_epochs,
+                    validation_data=validation_dataset)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
+4725/4725 [==============================] - 101s 19ms/step - loss: 0.7256 - accuracy: 0.8037 - val_loss: 0.3702 - val_accuracy: 0.8892
+Epoch 2/10
+4725/4725 [==============================] - 84s 18ms/step - loss: 0.7342 - accuracy: 0.8290 - val_loss: 0.3017 - val_accuracy: 0.9279
+Epoch 3/10
+4725/4725 [==============================] - 86s 18ms/step - loss: 0.6330 - accuracy: 0.8524 - val_loss: 0.3817 - val_accuracy: 0.9063
+Epoch 4/10
+4725/4725 [==============================] - 82s 17ms/step - loss: 0.5637 - accuracy: 0.8679 - val_loss: 0.5452 - val_accuracy: 0.8827
+Epoch 5/10
+4725/4725 [==============================] - 84s 18ms/step - loss: 0.5080 - accuracy: 0.8756 - val_loss: 0.4518 - val_accuracy: 0.9058
+Epoch 6/10
+4725/4725 [==============================] - 87s 18ms/step - loss: 0.5309 - accuracy: 0.8803 - val_loss: 0.3846 - val_accuracy: 0.9095
+Epoch 7/10
+4725/4725 [==============================] - 84s 18ms/step - loss: 0.5076 - accuracy: 0.8806 - val_loss: 0.4084 - val_accuracy: 0.9074
+Epoch 8/10
+4725/4725 [==============================] - 82s 17ms/step - loss: 0.4432 - accuracy: 0.8919 - val_loss: 0.2718 - val_accuracy: 0.9337
+Epoch 9/10
+4725/4725 [==============================] - 86s 18ms/step - loss: 0.4198 - accuracy: 0.8955 - val_loss: 0.2734 - val_accuracy: 0.9370
+Epoch 10/10
+4725/4725 [==============================] - 85s 18ms/step - loss: 0.3976 - accuracy: 0.8980 - val_loss: 0.4292 - val_accuracy: 0.8871
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="learning-curves">
+<h3>Learning curves<a class="headerlink" href="#learning-curves" title="Permalink to this heading">#</a></h3>
+<p>The learning curves for the training and validation accuracy/loss help us visualize what happens when we use the MobileNetV2 pre-trained model as a fixed feature extractor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acc = history.history[&#39;accuracy&#39;]
+val_acc = history.history[&#39;val_accuracy&#39;]
+
+loss = history.history[&#39;loss&#39;]
+val_loss = history.history[&#39;val_loss&#39;]
+
+plt.figure(figsize=(8, 8))
+plt.subplot(2, 1, 1)
+plt.plot(acc, label=&#39;Training Accuracy&#39;)
+plt.plot(val_acc, label=&#39;Validation Accuracy&#39;)
+plt.legend(loc=&#39;lower right&#39;)
+plt.ylabel(&#39;Accuracy&#39;)
+plt.ylim([min(plt.ylim()),1])
+plt.title(&#39;Training and Validation Accuracy&#39;)
+
+plt.subplot(2, 1, 2)
+plt.plot(loss, label=&#39;Training Loss&#39;)
+plt.plot(val_loss, label=&#39;Validation Loss&#39;)
+plt.legend(loc=&#39;upper right&#39;)
+plt.ylabel(&#39;Cross Entropy&#39;)
+plt.ylim([0,1.0])
+plt.title(&#39;Training and Validation Loss&#39;)
+plt.xlabel(&#39;epoch&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c0f649d23a4e543442ed969d5b18508c7b0b9c3f3527384b0d7da6f3a805a673.png" src="../_images/c0f649d23a4e543442ed969d5b18508c7b0b9c3f3527384b0d7da6f3a805a673.png" />
+</div>
+</div>
+<p>Note that the validation metrics are better than the training metrics. This is mainly the case because certain layers such as <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.BatchNormalization</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dropout</span></code> impact accuracy during training. However, they are inactive when calculating validation loss. A second yet much more minor reason for why the training metrics are lower is because
+validation metrics are evaluated at the end of each epoch while training metrics are calculated as an average in each epoch. Therefore, validation metrics represent the concrete end of an epoch not the interim progress.</p>
+<p>Now let’s measure the performance of the model on new data from the test set. By the way, Keras’ <code class="docutils literal notranslate"><span class="pre">model.evaluate</span></code> method will report the loss and metric defined in the <code class="docutils literal notranslate"><span class="pre">modile.compile</span></code> step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss_test, accuracy = model.evaluate(test_dataset)
+print(&#39;Test accuracy :&#39;, accuracy)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 4s 7ms/step - loss: 0.4591 - accuracy: 0.8856
+Test accuracy : 0.8855966925621033
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fine-tuning">
+<h2>Fine tuning<a class="headerlink" href="#fine-tuning" title="Permalink to this heading">#</a></h2>
+<p>When we were using the pre-trained network for feature extraction alone, we were only training a minimal set of added layers on top of the MobileNetV2 backbone. None of the backbone was trained.</p>
+<p>It’s possible we can improve the accuracy of our model further by fine-tuning the weights from the final-most pre-classification layers of the backbone by training them with our added classification layers.</p>
+<p>This fused training should refine the pre-trained feature maps from a generic to more specific representation of the custom data.</p>
+<p>Note: It’s best to fine-tune after having trained the top-level classifier with the backbone set to non-trainable. Reason being, if we were to try to jointly train a randomly initialized classifier on top of a pre-trained model, the computed gradients will be too large, causing major gradient updates and information degradation to the pre-trained model. As well, a best practice is to only fine-tune a minimal set of top-most layers from the backbone instead of the entire network since the bottom-most layers are really just learning simple, generic features. This harkens back to the goal of fine-tuning, which is to refine the higher-order feature maps to the custom data.</p>
+<section id="un-freeze-some-top-layers-of-the-model">
+<h3>Un-freeze some top layers of the model<a class="headerlink" href="#un-freeze-some-top-layers-of-the-model" title="Permalink to this heading">#</a></h3>
+<p>We will unfreeze our backbone, the <code class="docutils literal notranslate"><span class="pre">base_model</span></code>, and instead, just set the bottom (generic) layers to be un-trainable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>base_model.trainable = True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Let&#39;s take a look to see how many layers are in the base model
+print(&quot;Number of layers in the base model: &quot;, len(base_model.layers))
+
+# Fine-tune from this layer onwards
+fine_tune_at = 100
+
+# Freeze all the layers before the `fine_tune_at` layer
+for layer in base_model.layers[:fine_tune_at]:
+  layer.trainable = False
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of layers in the base model:  154
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Compile the model<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>We must then recompile the model for these changes to take effect. It’s key to use a low learning rate because otherwise, we might overfit with such a large model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              optimizer = tf.keras.optimizers.RMSprop(learning_rate=base_learning_rate/10),
+              metrics=[&#39;accuracy&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>model.summary()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model_2&quot;
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_4 (InputLayer)        [(None, 64, 64, 3)]       0         
+                                                                 
+ sequential (Sequential)     (None, 64, 64, 3)         0         
+                                                                 
+ tf.math.truediv_2 (TFOpLamb  (None, 64, 64, 3)        0         
+ da)                                                             
+                                                                 
+ tf.math.subtract_2 (TFOpLam  (None, 64, 64, 3)        0         
+ bda)                                                            
+                                                                 
+ mobilenetv2_1.00_224 (Funct  (None, 2, 2, 1280)       2257984   
+ ional)                                                          
+                                                                 
+ global_average_pooling2d (G  (None, 1280)             0         
+ lobalAveragePooling2D)                                          
+                                                                 
+ dropout_2 (Dropout)         (None, 1280)              0         
+                                                                 
+ dense (Dense)               (None, 10)                12810     
+                                                                 
+=================================================================
+Total params: 2,270,794
+Trainable params: 1,874,250
+Non-trainable params: 396,544
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>len(model.trainable_variables)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="continue-training-the-model">
+<h3>Continue training the model<a class="headerlink" href="#continue-training-the-model" title="Permalink to this heading">#</a></h3>
+<p>Lastly, we will fine-tune by resuming training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fine_tune_epochs = 10
+total_epochs =  initial_epochs + fine_tune_epochs
+
+history_fine = model.fit(train_dataset,
+                         epochs=total_epochs,
+                         initial_epoch=history.epoch[-1],
+                         validation_data=validation_dataset)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 10/20
+4725/4725 [==============================] - 89s 17ms/step - loss: 0.2605 - accuracy: 0.9337 - val_loss: 0.2264 - val_accuracy: 0.9485
+Epoch 11/20
+4725/4725 [==============================] - 79s 17ms/step - loss: 0.2482 - accuracy: 0.9435 - val_loss: 0.2442 - val_accuracy: 0.9474
+Epoch 12/20
+4725/4725 [==============================] - 80s 17ms/step - loss: 0.2535 - accuracy: 0.9436 - val_loss: 0.2325 - val_accuracy: 0.9487
+Epoch 13/20
+4725/4725 [==============================] - 77s 16ms/step - loss: 0.2435 - accuracy: 0.9454 - val_loss: 0.2533 - val_accuracy: 0.9471
+Epoch 14/20
+4725/4725 [==============================] - 82s 17ms/step - loss: 0.2508 - accuracy: 0.9438 - val_loss: 0.2260 - val_accuracy: 0.9517
+Epoch 15/20
+4725/4725 [==============================] - 80s 17ms/step - loss: 0.2410 - accuracy: 0.9456 - val_loss: 0.2448 - val_accuracy: 0.9503
+Epoch 16/20
+4725/4725 [==============================] - 81s 17ms/step - loss: 0.2430 - accuracy: 0.9450 - val_loss: 0.2370 - val_accuracy: 0.9492
+Epoch 17/20
+4725/4725 [==============================] - 81s 17ms/step - loss: 0.2376 - accuracy: 0.9477 - val_loss: 0.2275 - val_accuracy: 0.9541
+Epoch 18/20
+4725/4725 [==============================] - 79s 17ms/step - loss: 0.2410 - accuracy: 0.9475 - val_loss: 0.2210 - val_accuracy: 0.9526
+Epoch 19/20
+4725/4725 [==============================] - 81s 17ms/step - loss: 0.2302 - accuracy: 0.9463 - val_loss: 0.2488 - val_accuracy: 0.9483
+Epoch 20/20
+4725/4725 [==============================] - 80s 17ms/step - loss: 0.2359 - accuracy: 0.9462 - val_loss: 0.2241 - val_accuracy: 0.9527
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, the learning curves for the training and validation accuracy/loss help us visualize what happens when we fine-tune using the MobileNetV2 pre-trained model. Overfitting may be happening if we see a much higher validation loss compared to its training counterpart. This is not abnormal as the new, custom data is much smaller than that which was initially used to train the MobileNetV2 backbone.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss, history_fine.history[&#39;loss&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acc, history_fine.history[&#39;accuracy&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acc += history_fine.history[&#39;accuracy&#39;]
+val_acc += history_fine.history[&#39;val_accuracy&#39;]
+
+loss += history_fine.history[&#39;loss&#39;]
+val_loss += history_fine.history[&#39;val_loss&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8, 8))
+plt.subplot(2, 1, 1)
+plt.plot(acc, label=&#39;Training Accuracy&#39;)
+plt.plot(val_acc, label=&#39;Validation Accuracy&#39;)
+plt.ylim([0.8, 1])
+plt.plot([initial_epochs-1,initial_epochs-1],
+          plt.ylim(), label=&#39;Start Fine Tuning&#39;)
+plt.legend(loc=&#39;lower right&#39;)
+plt.title(&#39;Training and Validation Accuracy&#39;)
+
+plt.subplot(2, 1, 2)
+plt.plot(loss, label=&#39;Training Loss&#39;)
+plt.plot(val_loss, label=&#39;Validation Loss&#39;)
+plt.ylim([0, 1.0])
+plt.plot([initial_epochs-1,initial_epochs-1],
+         plt.ylim(), label=&#39;Start Fine Tuning&#39;)
+plt.legend(loc=&#39;upper right&#39;)
+plt.title(&#39;Training and Validation Loss&#39;)
+plt.xlabel(&#39;epoch&#39;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e049c693d81dc8bdf3825150f7e969c75392edb7f91591ed87465837bdf9bbae.png" src="../_images/e049c693d81dc8bdf3825150f7e969c75392edb7f91591ed87465837bdf9bbae.png" />
+</div>
+</div>
+</section>
+<section id="evaluation-and-prediction">
+<h3>Evaluation and prediction<a class="headerlink" href="#evaluation-and-prediction" title="Permalink to this heading">#</a></h3>
+<p>Now let’s measure the performance of the fine-tuned model on new data from the test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss, accuracy = model.evaluate(test_dataset)
+print(&#39;Test accuracy :&#39;, accuracy)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 4s 7ms/step - loss: 0.2514 - accuracy: 0.9510
+Test accuracy : 0.9510288238525391
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this model, we can predict the probabilities of an image belonging to one of the 10 classes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Retrieve a batch of images from the test set
+image_batch, label_batch = test_dataset.as_numpy_iterator().next()
+predictions = model.predict_on_batch(image_batch).flatten()
+
+# Apply a sigmoid since our model returns logits
+predictions = tf.nn.sigmoid(predictions)
+predictions = tf.where(predictions &lt; 0.5, 0, 1)
+
+print(&#39;Predictions:\n&#39;, predictions.numpy())
+print(&#39;Labels:\n&#39;, label_batch)
+
+print(len(predictions.numpy()), len(label_batch))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predictions:
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0]
+Labels:
+ [9 7 2 0]
+40 4
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h2>Hyperparameter Tuning<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>To use the <a class="reference external" href="https://keras.io/api/keras_tuner/">Keras tuner library</a>, we have to format our model in a model builder function. All this takes is enveloping the constituent layers we defined above in a function, ensuring that any arguments such as <code class="docutils literal notranslate"><span class="pre">INPUT_SHAPE</span></code> have been defined outside of the function.</p>
+<p>We will tune the learning rate in the following experiment, with the goal of selecting the optimal value from a range between <code class="docutils literal notranslate"><span class="pre">[0.0001,</span> <span class="pre">0.01]</span></code>.</p>
+<p>The function will return the compiled model using the selection of hyperparameters defined.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def model_builder(hp):
+  inputs = tf.keras.Input(shape=INPUT_SHAPE)
+  x = data_augmentation(inputs)
+  x = preprocess_input(x)
+  x = base_model(x, training=False)
+  x = global_average_layer(x)
+  x = tf.keras.layers.Dropout(0.2)(x)
+  outputs = prediction_layer(x)
+  model = tf.keras.Model(inputs, outputs)
+
+  # Tune the learning rate for the optimizer
+  # Choose an optimal value from between 0.0001 to 0.01
+  hp_learning_rate = hp.Float(&#39;learning_rate&#39;, min_value=1e-4, max_value=1e-2)
+  # Choose an optimal value from 0.01, 0.001, or 0.0001
+  # hp_learning_rate = hp.Choice(&#39;learning_rate&#39;, values=[1e-2, 1e-3, 1e-4])
+
+  model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=hp_learning_rate),
+                loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                metrics=[&#39;accuracy&#39;])
+
+  return model
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we will instantiate the tuner algorithm, in this case one called <a class="reference external" href="https://arxiv.org/pdf/1603.06560.pdf">Hyperband</a>. Herein, we have to specify the objective to optimize for and the allowable number of epochs to train an experiment for (usually this is to a large value and safeguarded by an early stopping callback which we’ll define next). Note that the <code class="docutils literal notranslate"><span class="pre">project_name</span></code> argument defines a folder that will hold all of the checkpoints and logs from the trials in this experiment. By default, if the search is rerun with this same directory, the search will resume from the state captured in those checkpoints. This can be changed by including <code class="docutils literal notranslate"><span class="pre">overwrite=True</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Move to your workshop directory in order to write data
+%cd $user_outputs_dir
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner = kt.Hyperband(model_builder,
+                     objective=&#39;accuracy&#39;,
+                     max_epochs=2,
+                     project_name=&#39;exp_hp_0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will also include a callback function that halts training when convergence has been achieved, despite whether the number of epochs defined is still in excess. This is a useful strategy to improve the resource efficiency of our models and prevent overfitting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stop_early = tf.keras.callbacks.EarlyStopping(monitor=&#39;val_loss&#39;, patience=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Commence the tuning process. Note that the arguments for <code class="docutils literal notranslate"><span class="pre">tuner.search</span></code> are the same as those for Keras’ <code class="docutils literal notranslate"><span class="pre">model.fit</span></code> method.</p>
+<p>From this, we will find out which value is optimal for the learning rate.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner.search(train_dataset, epochs=20, callbacks=[stop_early])
+
+# Get the optimal hyperparameters
+best_hps=tuner.get_best_hyperparameters(num_trials=1)[0]
+
+print(f&quot;&quot;&quot;
+The hyperparameter search is complete. The optimal learning rate for the optimizer
+is {best_hps.get(&#39;learning_rate&#39;)}.
+&quot;&quot;&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Search: Running Trial #1
+
+Value             |Best Value So Far |Hyperparameter
+0.0012082         |0.0012082         |learning_rate
+2                 |2                 |tuner/epochs
+0                 |0                 |tuner/initial_epoch
+2                 |2                 |tuner/bracket
+0                 |0                 |tuner/round
+
+Epoch 1/2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we know the best hyperparameters from our tuning experiments, let’s train the model and determine the best performing epoch.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Build the model with the optimal hyperparameters and train it on the data for 20 epochs
+model = tuner.hypermodel.build(best_hps)
+history = model.fit(train_dataset, epochs=20)
+
+acc_per_epoch = history.history[&#39;accuracy&#39;]
+best_epoch = acc_per_epoch.index(max(acc_per_epoch)) + 1
+print(&#39;Best epoch: %d&#39; % (best_epoch,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, let’s evaluate our tuned model on the test dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eval_result = hypermodel.evaluate(test_dataset)
+print(&quot;[test loss, test accuracy]:&quot;, eval_result)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#@title Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#@title MIT License
+#
+# Copyright (c) 2017 François Chollet                                                                                                                    # IGNORE_COPYRIGHT: cleared by OSS licensing
+#
+# Permission is hereby granted, free of charge, to any person obtaining a
+# copy of this software and associated documentation files (the &quot;Software&quot;),
+# to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+# DEALINGS IN THE SOFTWARE.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson7b_comparing_RNN_transformer_architectures.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Comparing RNNs and Transformers for Imagery</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson8_advanced_applications.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">TensorFlow advanced applications with deep learning object detection, time-series analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transfer-learning-and-fine-tuning">Transfer learning and fine-tuning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hyperparameter-tuning">Hyperparameter tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-s-get-started">Let’s get started</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-loading-and-pre-processing">Data loading and pre-processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-dataset-for-performance">Prepare the dataset for performance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#augment-the-data">Augment the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rescale-pixel-values">Rescale pixel values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-the-pre-trained-network-backbone">Load the pre-trained network (backbone)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-extraction">Feature extraction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#freeze-the-pre-trained-network">Freeze the pre-trained network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#critical-note-for-use-of-batchnormalization-layers">Critical note for use of BatchNormalization layers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-a-new-classification-layer-head">Add a new classification layer (head)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-model">Compile the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-curves">Learning curves</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning">Fine tuning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#un-freeze-some-top-layers-of-the-model">Un-freeze some top layers of the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Compile the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continue-training-the-model">Continue training the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-and-prediction">Evaluation and prediction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Hyperparameter Tuning</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

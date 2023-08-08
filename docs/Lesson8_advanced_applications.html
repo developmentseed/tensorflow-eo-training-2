@@ -1,0 +1,731 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>TensorFlow advanced applications with deep learning object detection, time-series analysis &#8212; Deep learning with TensorFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson8_advanced_applications';</script>
+    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Appendix" href="appendix.html" />
+    <link rel="prev" title="Transfer learning, fine-tuning and hyperparameter tuning" href="Lesson7c_transfer_learning_hyperparam_opt.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2a_Intro_to_Google_Colab.html">Introduction to Google Colab</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson2b_Intro_TensorFlow_Keras.html">Introduction to TensorFlow 2 and Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html">TensorFlow 2 and Keras quickstart for geospatial computer vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson3_Intro_tensors_functions_datasets.html">Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html">Regression using TensorFlow with Google Earth Engine Python API</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html">What are cloud providers? Why might I need them for ML and Earth observation data?</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson5a_prep_data_ML_segmentation.html">Processing earth observation data for semantic segmentation with deep learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5b_deeplearning_segmentation_UNet.html">Semantic segmentation with Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson5c_segmentation_ViT.html">Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6a_evaluation.html">Evaluating Semantic Segmentation Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson6b_dealing_with_limited_data.html">Dealing with limited data for semantic segmentation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson7a_comparing_architectures.html">Comparing deep learning architectures for different computer vision tasks on satellite imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7b_comparing_RNN_transformer_architectures.html">Comparing RNNs and Transformers for Imagery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson7c_transfer_learning_hyperparam_opt.html">Transfer learning, fine-tuning and hyperparameter tuning</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">TensorFlow advanced applications with deep learning object detection, time-series analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/developmentseed/tensorflow-eo-training-2/main?urlpath=tree/ds_book/docs/Lesson8_advanced_applications.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/developmentseed/tensorflow-eo-training-2/blob/main/ds_book/docs/Lesson8_advanced_applications.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/edit/main/ds_book/docs/Lesson8_advanced_applications.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/developmentseed/tensorflow-eo-training-2/issues/new?title=Issue%20on%20page%20%2Fdocs/Lesson8_advanced_applications.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/Lesson8_advanced_applications.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>TensorFlow advanced applications with deep learning object detection, time-series analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-segmentation-with-u-net">Semantic Segmentation with U-Net</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-transformers-and-masked-autoencoders-for-classification-and-segmentation">Vision Transformers and Masked AutoEncoders for classification and segmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-and-change-detection-without-spatial-features">Time series and change detection without spatial features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#so-what-s-better-architectures-that-operate-on-time-or-spatial-features">So what’s better, architectures that operate on time or spatial features?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yolov5-for-object-detection-in-wildlife-imagery-and-remote-sensing">YOLOv5 for Object Detection in Wildlife Imagery and Remote Sensing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mask-r-cnn-for-object-detection-and-instance-segmentation-of-oil-slicks-in-radar-imagery">Mask R-CNN for Object Detection and Instance Segmentation of Oil Slicks in Radar Imagery</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-detection-example">Object Detection Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tensorflow-advanced-applications-with-deep-learning-object-detection-time-series-analysis">
+<h1>TensorFlow advanced applications with deep learning object detection, time-series analysis<a class="headerlink" href="#tensorflow-advanced-applications-with-deep-learning-object-detection-time-series-analysis" title="Permalink to this heading">#</a></h1>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Understand the limits of deep learning models built to work with 3D imagery and variants that have been developed for 4D time series</p></li>
+<li><p>Understand theory, use cases, and architecture options for time series modeling and change detection</p></li>
+<li><p>Understand difference between semantic segmentation and object detection, labeling and modeling challenges with each approach</p></li>
+<li><p>Cover R-CNN family, Yolo object detection families of architectures.</p></li>
+</ul>
+<section id="semantic-segmentation-with-u-net">
+<h3>Semantic Segmentation with U-Net<a class="headerlink" href="#semantic-segmentation-with-u-net" title="Permalink to this heading">#</a></h3>
+<p>In Lesson 1a Introduction to ML Neural Networks and Deep Learning, we introduced the U-Net architecture, a popular architecture in remote sensing. U-Net has been onw of the most popular architectures for segmentation fo remote sensing images because:</p>
+<ol class="arabic simple">
+<li><p>Since U-Net is fully convolutional, it requires fewer parameters to train than models with multiple heads (R-CNNs) or models with many fully connected layers.</p></li>
+<li><p>U-Net’s skip connections learns powerful features across many spatial scales that preserve high resolution features</p></li>
+<li><p>the U-Net architecture can handle very high resolution images without saturating GPU memory, unlike other frameworks that learn many features per each section of an image.</p></li>
+</ol>
+<p>U-net is therefore one of the most popular architectures for segmentation in very high resolution imagery (and low resolution imagery as well). At Development Seed, we’ve used CNN-based U-Net architectures for segmentation of supraglacial lakes <a class="reference external" href="https://developmentseed.org/blog/2022-12-13-segmenting-supraglacial-lakes">https://developmentseed.org/blog/2022-12-13-segmenting-supraglacial-lakes</a></p>
+<p>The traditional U-net architecture has been adapted and improved to work with high resolution 2D and 3D imagery. Of these SSCA-Net has been a popular option which uses self and channel attention.</p>
+<figure class="align-default" id="sccanetfig">
+<a class="reference internal image-reference" href="../_images/scca.jpg"><img alt="../_images/scca.jpg" src="../_images/scca.jpg" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/12f6ee8747d2a45108f03b027f3125eb/scca.jpg"><span class="xref download myst">SCCA Image</span></a> from “SSCA-Net: Simultaneous Self- and Channel-Attention Neural Network for Multiscale Structure-Preserving Vessel Segmentation”</span><a class="headerlink" href="#sccanetfig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In the above figure, the SCCANet reflects the structure of a U-Net with some modifications:</p>
+<ol class="arabic simple">
+<li><p>The typical initial residual blocks in the encoder have been replaced by an RFU block, which is simply a 3x3 convolution followed by batch normalization and RELU.</p></li>
+<li><p>They use a squeeze and excitation pyramid pooling (SEPP) module at the end of the encoder, which makes use of atrous convolutions and a spatial pyramid to account for multiscale features.</p></li>
+<li><p>The decoder includes SCA modules that use self and channel attention to efficiently model long range dependencies in feature maps that are learned from previous convolution operations.</p></li>
+</ol>
+<p>The SCCA model is very resource intensive to train, not just becaus eof the complexity of learning features for many different spatial scales at high resolution, but also because it requires large amounts of complex segmentation label data.</p>
+</section>
+<section id="vision-transformers-and-masked-autoencoders-for-classification-and-segmentation">
+<h3>Vision Transformers and Masked AutoEncoders for classification and segmentation<a class="headerlink" href="#vision-transformers-and-masked-autoencoders-for-classification-and-segmentation" title="Permalink to this heading">#</a></h3>
+<p>Of the multiple variants of vision transformers that have been developed since 2020, most recently Masked Auto-Encoders (MAEs) have shown strong performance, without requiring labeled data for pretraining! MAEs reframe the model training task from a fully supervised task that requires labeled imagery to a self supervised learning task that only requires imagery (but large amounts of it).</p>
+<p>Masked auto encoders learn by randomly or selectively masking out parts of an input image, than learning to predict the contents of the masked portion, with the objective being to minimize the difference between the original input and the filled in masked result. Unlike traditional vision transformers, MAEs only encode the unmasked image patches, reducing compute and memory requirements for training large image feature encoders. The MAE decoder then accepts as inputs the embeddings from the MAE encoder, plus the positional embeddings of the mask patches that need to be predicted. The MAE decoder is very lightweight, and can be reformulated and quickly fine-tuned for specific downstream tasks, including image classification, segmentation, etc. (He et al. 2021).</p>
+<p>Recent approaches in this vein include:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2212.14532.pdf">ScaleMAE - A Scale-Aware Masked Autoencoder for Multiscale Geospatial Representation Learning</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2207.08051.pdf">SatMAE - Pre-training Transformers for Temporal and Multi-Spectral Satellite Imagery</a></p></li>
+</ol>
+<p>Both architectures use vision transformers with masked auto encoders to attend to information across the spectral and spatial dimensions. Of these, Scale-MAE is more recent and shows favorable performance relative to SatMAE.</p>
+<figure class="align-default" id="scalemaefig">
+<a class="reference internal image-reference" href="https://ai-climate.berkeley.edu/scale-mae-website/static/images/scale-teaser.png"><img alt="https://ai-climate.berkeley.edu/scale-mae-website/static/images/scale-teaser.png" src="https://ai-climate.berkeley.edu/scale-mae-website/static/images/scale-teaser.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text"><a class="reference external" href="https://ai-climate.berkeley.edu/scale-mae-website/static/images/scale-teaser.png">Scale-MAE Image</a> from “A Scale-Aware Masked Autoencoder for Multiscale Geospatial Representation Learning”</span><a class="headerlink" href="#scalemaefig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Scale-MAE demonstrated higher knn-classification performance when fine tuned on different remote sensing benchmarks and used as a feature extractor. It also achieved higher semantic segmentation performance compared to other convolutional and MAE-based approaches. See the <a class="reference external" href="https://arxiv.org/pdf/2212.14532.pdf">paper</a> for details.</p>
+<p>Scale-MAE has some important constraints:</p>
+<ul class="simple">
+<li><p>the resolution of the sensor inputs must match, similar to other CNN and ViT architectures.</p></li>
+<li><p>GPU memory use is large relative to traditional MAE</p></li>
+<li><p>Scale-MAE took a long time to train and fine-tune.</p></li>
+</ul>
+<p>As mentioned in Lesson 7b, vision transformers that operate on very high resolution image time series are very resource intensive to train and fine tune. In contrast, other approaches have explored discarding spatial attention and convolutional networks that prioritize learning spatial features altogether in favor of learning spectral and temporal features for change detection and segmentation tasks.</p>
+</section>
+<section id="time-series-and-change-detection-without-spatial-features">
+<h3>Time series and change detection without spatial features<a class="headerlink" href="#time-series-and-change-detection-without-spatial-features" title="Permalink to this heading">#</a></h3>
+<p>In contrast to vision transformers, Presto uses transformers to learn features for pixel time series, along the spectral and temporal dimensions. It does not learn textural information, discarding this expensive training requirement in favor of a more easily trainable and fine-tunable architecture relative to Sat-MAE and Scale-MAE. The paper makes direct comparisons to Sat-MAE and Scale-MAE on computer vision tasks, including single label and multi-label image classification, regression to predict algal bloom and fuel moisture intensity, and segmentation of complex cropland cover in different geographies.</p>
+<figure class="align-default" id="prestofig">
+<a class="reference internal image-reference" href="../_images/presto.png"><img alt="../_images/presto.png" src="../_images/presto.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/89391995520ebce9e4cdbe833fb0f30e/presto.png"><span class="xref download myst">Presto Image</span></a> from “Lightweight, Pre-trained Transformers for Remote Sensing Timeseries”</span><a class="headerlink" href="#prestofig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Overall, Presto outperforms Sat-MAE and Scale-MAE on image classification and pixel segmentation. It’s worth noting that the Presto paper evaluated Sat-MAE and Scale-MAE by passing single time steps of 28x28 pixels per sample and evaluated Presto by passing more informative single pixel time series of 9 pixels per sample for training and inference. The results show that the time dimension is more informative than the spatial dimension, but this paper does not evaluate a MAE that learns spatial, spectral, and temporal features from an image time series (Tseng et al. 2023).</p>
+<p>While we have not yet tested the performance of Presto, at Development Seed we have tested other models that operate on pixel time series. Our team has seen great success with TinyCD, a model using Mix and Match Attention that operates on pixel time series (Codegoni et al. 2022).</p>
+<p>We used this model for burn scar change detection in the 2023 ChaBud Wildfire Detection Challenge, achieving a competitive IoU score on the public leaderboard of .7609, outperforming the DeepLabV3+ ResNet baseline which was.6765. Similar to SSCA Net, DeepLabv3 uses atrous convolutions and spatial pyramid pooling to learn spatial features at multiple scales.</p>
+<p>You can view the TinyCD model implementation here:
+<a class="github reference external" href="https://github.com/developmentseed/chabud2023/blob/main/chabud/tinycd_model.py">developmentseed/chabud2023</a></p>
+</section>
+<section id="so-what-s-better-architectures-that-operate-on-time-or-spatial-features">
+<h3>So what’s better, architectures that operate on time or spatial features?<a class="headerlink" href="#so-what-s-better-architectures-that-operate-on-time-or-spatial-features" title="Permalink to this heading">#</a></h3>
+<p>The short answer is that it depends on the problem. In the remote sensing domain, the temporal component is typically going to be more informative in resolution-constrained problems, where texture and other spatial features are less informative. If your detection target of interest has these qualities, spatial features like texture and edges may be particularly important and you may want to use a well established object detection or instance segmentation architecture fine-tuned from pretrained weights.</p>
+<ol class="arabic simple">
+<li><p>a well-resolved object with clear, simple boundaries</p></li>
+<li><p>the object is not extremely disjoint</p></li>
+<li><p>the object occurs within a well defined and limited range of spatial scales and aspect ratios</p></li>
+</ol>
+<p>Using an object detection architecture gives you the benefit of being able to count and localize your phenomena of interest (for example, the number of agricultural fields or abandoned mines in a forest). With an instance segmentation architecture, the model can count, localize, and map the extent of the phenomena. Another advantage of object detection is that it is easier to make object detection labels in some cases than complex polygons for segmentation.</p>
+<p>The following figure shows the differences between pixel classification (semantic segmentation), object detection, and instance segmentation.</p>
+<figure class="align-default" id="detectioncategoriesfig">
+<a class="reference internal image-reference" href="../_images/coco-task-examples-1.png"><img alt="../_images/coco-task-examples-1.png" src="../_images/coco-task-examples-1.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/7032dc25da8a0a89ece92c3ee3fc3fe4/coco-task-examples-1.png"><span class="xref download myst">Computer Vision Detection Categories</span></a> from Lin et al. Microsoft COCO: Common Objects in Context</span><a class="headerlink" href="#detectioncategoriesfig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>At Development Seed, we’ve used object detection in both remote sensing and non-remote sensing domains with success.</p>
+</section>
+<section id="yolov5-for-object-detection-in-wildlife-imagery-and-remote-sensing">
+<h3>YOLOv5 for Object Detection in Wildlife Imagery and Remote Sensing<a class="headerlink" href="#yolov5-for-object-detection-in-wildlife-imagery-and-remote-sensing" title="Permalink to this heading">#</a></h3>
+<p>We’ve tested and deployed Megadetector, a model pretrained on day and night wildlife imagery from many habitats around thw world. Megadetector is based on the YOLOv5 architecture, a great option for object detection as it is relatively fast to train and can run inference in near real-time, keeping GPU or CPU compute costs lower than slower architectures. All the code used to test model inference, export the model to a compiled format so it runs fast on a CPU, and to set up a containerized service for the model lives here: <a class="github reference external" href="https://github.com/tnc-ca-geo/animl-ml/tree/master/api/megadetectorv5">tnc-ca-geo/animl-ml</a></p>
+<p>Of particular note with object detection is that the output of these models typically need some preprocessing steps. This is because object detection models make multiple predictions per image (multiple bounding boxes) instead of a single prediction (a segmented image, or category). A common step in object detection is to apply Non-Max Suppression (NMS), which aligns overlapping predictions and culls low confidence predictions. An example of NMS can be seen <a class="reference external" href="https://github.com/tnc-ca-geo/animl-ml/blob/master/api/megadetectorv5/mdv5_handler.py#L175">here</a>. Bounding box outputs must also be rescaled if transformations are applied to image inputs. A common image transformation for object detection is <a class="reference external" href="https://github.com/tnc-ca-geo/animl-ml/blob/master/api/megadetectorv5/mdv5_handler.py#L280">letterbox</a>, which preserves the aspect ratio of the input image by selectively padding and resizing the input. These same transformations need to be applied to the model output, the bounding box coordinates.</p>
+<p>Some examples of YOLOv5’s use in object detection in remote sensing include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://iopscience.iop.org/article/10.1088/1742-6596/2181/1/012025">Marine ship detection</a> (Zhang et al 2022)</p></li>
+<li><p><a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/9672196">Aircraft Detection</a> (Luo et al 2022)</p></li>
+</ul>
+</section>
+<section id="mask-r-cnn-for-object-detection-and-instance-segmentation-of-oil-slicks-in-radar-imagery">
+<h3>Mask R-CNN for Object Detection and Instance Segmentation of Oil Slicks in Radar Imagery<a class="headerlink" href="#mask-r-cnn-for-object-detection-and-instance-segmentation-of-oil-slicks-in-radar-imagery" title="Permalink to this heading">#</a></h3>
+<p>While Yolov5 optimizes for speed, Mask R-CNN and related Regional Convolutional Neural Networks (R-CNNs) optimize for accuracy. We fine-tuned a Mask R-CNN model to map oil slicks emitted from shipping vessels as well as fixed marine infrastructure such as oil platforms, check out the <a class="reference external" href="https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html">abstract</a> and presentation. Our imagery source, Sentinel-1, was resampled from 10 meters to approximately 70 meter resolution because our detection targets of interest were easily resolvable by Sentinel-1 at 70 meter resolution.</p>
+<figure class="align-default" id="maskrcnndetectionsfig">
+<a class="reference internal image-reference" href="../_images/EGU23-16932_maskrcnn_results.jpg"><img alt="../_images/EGU23-16932_maskrcnn_results.jpg" src="../_images/EGU23-16932_maskrcnn_results.jpg" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/8f3d5910f6fdb3ef47496dcf4aeb4816/EGU23-16932_maskrcnn_results.jpg"><span class="xref download myst">Mask R-CNN detections true positive detections of anthropogenic oil slicks (Credit: Skytruth)</span></a> from “Improving the accuracy of SAR-based oil slick detection”, <a class="reference external" href="https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html">https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html</a></span><a class="headerlink" href="#maskrcnndetectionsfig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We compared results to a U-Net that produced semantic segmentation results, and found that Mask R-CNN produces less class confusion within individual oil slick events, but can hallucinate oil slicks where there are slick look-alikes, such as natural oil seeps, biogenic oils from algae blooms, seaweed, or ocean waves.</p>
+<figure class="align-default" id="slicklookalikesfig">
+<a class="reference internal image-reference" href="../_images/EGU23-16932_slick_look_alikes.jpg"><img alt="../_images/EGU23-16932_slick_look_alikes.jpg" src="../_images/EGU23-16932_slick_look_alikes.jpg" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/3ca3b6333f67249ffa85b322ad115fff/EGU23-16932_slick_look_alikes.jpg"><span class="xref download myst">Common False Positive Classes for Oil Slicks (Credit: Skytruth)</span></a> from “Improving the accuracy of SAR-based oil slick detection”, <a class="reference external" href="https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html">https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html</a></span><a class="headerlink" href="#slicklookalikesfig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Semantic segmentation and instance segmentation models come with different trade-offs when it comes to the segmentation of oil slicks. While the oil slicks are visually distinct and easy to spot, determining their specific category source is more difficult. In semantic segmentation, these errors manifest as a mix of correct and incorrect pixel predictions within the same oil slick event, when all pixels should be of the same class.</p>
+<p>On the other hand, Mask R-CNN enforces that all pixels of an object should be of the same class, but it can predict the wrong category, takes longer to train that a U-Net, and can predict multiple objects from complex, disjoint oil slicks that belong to a single event, which interferes with count accuracies.</p>
+<p>See this <a class="reference external" href="https://docs.google.com/presentation/d/1p9937k2S1wjDejmY9eCmrCngpxyIV3AoVqyeQh9G1Z4/edit#slide=id.ga490768a9a_0_10">presentation</a> and <a class="reference external" href="https://meetingorganizer.copernicus.org/EGU23/EGU23-16932.html">abstract</a> for more details.</p>
+</section>
+<section id="object-detection-example">
+<h3>Object Detection Example<a class="headerlink" href="#object-detection-example" title="Permalink to this heading">#</a></h3>
+<p>Let’s walk through an example for training a vision transformer based object detection model with Keras: <a class="reference external" href="https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/vision/ipynb/object_detection_using_vision_transformer.ipynb">https://colab.research.google.com/github/keras-team/keras-io/blob/master/examples/vision/ipynb/object_detection_using_vision_transformer.ipynb</a></p>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>He, K., et al. (2021). Masked Autoencoders Are Scalable Vision Learners. arXiv preprint. Retrieved from <a class="reference external" href="https://arxiv.org/abs/2111.06377">https://arxiv.org/abs/2111.06377</a></p></li>
+<li><p>Tseng, G., et al. (2023). Lightweight, Pre-trained Transformers for Remote Sensing Timeseries. arXiv preprint. Retrieved from <a class="reference external" href="https://arxiv.org/abs/2304.14065">https://arxiv.org/abs/2304.14065</a></p></li>
+<li><p>Codegoni, A., Lombardi, G., &amp; Ferrari, A. (2022). TINYCD: A (Not So) Deep Learning Model For Change Detection. Retrieved from <a class="reference external" href="https://arxiv.org/abs/2207.13159">https://arxiv.org/abs/2207.13159</a></p></li>
+</ol>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson7c_transfer_learning_hyperparam_opt.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Transfer learning, fine-tuning and hyperparameter tuning</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="appendix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#semantic-segmentation-with-u-net">Semantic Segmentation with U-Net</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-transformers-and-masked-autoencoders-for-classification-and-segmentation">Vision Transformers and Masked AutoEncoders for classification and segmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-series-and-change-detection-without-spatial-features">Time series and change detection without spatial features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#so-what-s-better-architectures-that-operate-on-time-or-spatial-features">So what’s better, architectures that operate on time or spatial features?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yolov5-for-object-detection-in-wildlife-imagery-and-remote-sensing">YOLOv5 for Object Detection in Wildlife Imagery and Remote Sensing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mask-r-cnn-for-object-detection-and-instance-segmentation-of-oil-slicks-in-radar-imagery">Mask R-CNN for Object Detection and Instance Segmentation of Oil Slicks in Radar Imagery</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-detection-example">Object Detection Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Development Seed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
