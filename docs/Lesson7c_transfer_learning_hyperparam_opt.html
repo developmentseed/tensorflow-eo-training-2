@@ -1811,23 +1811,11 @@ is {best_hps.get(&#39;learning_rate&#39;)}.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Trial 2 Complete [00h 02m 46s]
-accuracy: 0.10068783164024353
-
-Best accuracy So Far: 0.10068783164024353
-Total elapsed time: 00h 05m 33s
-
-The hyperparameter search is complete. The optimal learning rate for the optimizer
-is 0.004864341677325753.
-</pre></div>
-</div>
-</div>
 </div>
 <p>Now that we know the best hyperparameters from our tuning experiments, let’s train the model and determine the best performing epoch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Build the model with the optimal hyperparameters and train it on the data for 20 epochs
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Build the model with the optimal hyperparameters and train it on the data for 4 epochs
 model = tuner.hypermodel.build(best_hps)
 history = model.fit(train_dataset, epochs=8)
 
