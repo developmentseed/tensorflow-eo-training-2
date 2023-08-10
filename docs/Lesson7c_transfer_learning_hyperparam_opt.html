@@ -523,8 +523,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">47.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">176.1/176.1 kB</span> <span class=" -Color -Color-Red">1.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">50.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">176.1/176.1 kB</span> <span class=" -Color -Color-Red">2.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -587,6 +587,11 @@ Running on Colab
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -613,7 +618,7 @@ print(&quot;Number of samples in each split (train, val, test): &quot;, len(trai
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading and preparing dataset 89.91 MiB (download: 89.91 MiB, generated: Unknown size, total: 89.91 MiB) to /root/tensorflow_datasets/eurosat/rgb/2.0.0...
 </pre></div>
 </div>
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "eabea66d4c1845b59f6ab5c0c7109bc0", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "dc9f1c1ee16e49ceb933e6c3ea4fae89", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "c1a85e00ac7342f487c451615c495b61", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "eba151f84c3248d1a7001d6415e70b99", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "ac5a5c601331454bbe1c104f38f275db", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "49dff39ccfed453a96bfbcb07a91410c", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset eurosat downloaded and prepared to /root/tensorflow_datasets/eurosat/rgb/2.0.0. Subsequent calls will reuse this data.
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e7d39d587fc3425ca42db9d67c1ac758", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "9542b16300f24ef3937fc1d3d308e3e7", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "0790a125dcfe44738590ca9e8c887874", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "694f53e925dd4ec3aaf8c9e2aa976a83", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset eurosat downloaded and prepared to /root/tensorflow_datasets/eurosat/rgb/2.0.0. Subsequent calls will reuse this data.
 Number of samples in each split (train, val, test):  18900 5670 2430
 </pre></div>
 </div>
@@ -688,7 +693,7 @@ print(train_dataset.element_spec)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ce05e02eef4753f1d67bd11bcea2501cced8b0a6cf656015618e2e83810b2a81.png" src="../_images/ce05e02eef4753f1d67bd11bcea2501cced8b0a6cf656015618e2e83810b2a81.png" />
+<img alt="../_images/e2b028e1d2a395f77957b7120467b86c48716caba134b22116619269c328fee1.png" src="../_images/e2b028e1d2a395f77957b7120467b86c48716caba134b22116619269c328fee1.png" />
 </div>
 </div>
 <section id="prepare-the-dataset-for-performance">
@@ -736,7 +741,7 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/336b986c21c6b5a8bee795c1eed46de7e8205b5b2b339bbb6861566840729ff4.png" src="../_images/336b986c21c6b5a8bee795c1eed46de7e8205b5b2b339bbb6861566840729ff4.png" />
+<img alt="../_images/79db9a83f6460051b9c6abbaab891db4e7acfb71e753283568ed31d1e7713486.png" src="../_images/79db9a83f6460051b9c6abbaab891db4e7acfb71e753283568ed31d1e7713486.png" />
 </div>
 </div>
 </section>
@@ -781,7 +786,7 @@ base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/mobilenet_v2/mobilenet_v2_weights_tf_dim_ordering_tf_kernels_1.0_224_no_top.h5
-9406464/9406464 [==============================] - 0s 0us/step
+9406464/9406464 [==============================] - 1s 0us/step
 </pre></div>
 </div>
 </div>
@@ -1301,19 +1306,19 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rat
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model_2&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model&quot;
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
 =================================================================
- input_4 (InputLayer)        [(None, 64, 64, 3)]       0         
+ input_2 (InputLayer)        [(None, 64, 64, 3)]       0         
                                                                  
  sequential (Sequential)     (None, 64, 64, 3)         0         
                                                                  
- tf.math.truediv_2 (TFOpLamb  (None, 64, 64, 3)        0         
- da)                                                             
+ tf.math.truediv (TFOpLambda  (None, 64, 64, 3)        0         
+ )                                                               
                                                                  
- tf.math.subtract_2 (TFOpLam  (None, 64, 64, 3)        0         
- bda)                                                            
+ tf.math.subtract (TFOpLambd  (None, 64, 64, 3)        0         
+ a)                                                              
                                                                  
  mobilenetv2_1.00_224 (Funct  (None, 2, 2, 1280)       2257984   
  ional)                                                          
@@ -1321,14 +1326,14 @@ _________________________________________________________________
  global_average_pooling2d (G  (None, 1280)             0         
  lobalAveragePooling2D)                                          
                                                                  
- dropout_2 (Dropout)         (None, 1280)              0         
+ dropout (Dropout)           (None, 1280)              0         
                                                                  
  dense (Dense)               (None, 10)                12810     
                                                                  
 =================================================================
 Total params: 2,270,794
-Trainable params: 1,874,250
-Non-trainable params: 396,544
+Trainable params: 12,810
+Non-trainable params: 2,257,984
 _________________________________________________________________
 </pre></div>
 </div>
@@ -1342,7 +1347,7 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
 </pre></div>
 </div>
 </div>
@@ -1360,7 +1365,7 @@ loss0, accuracy0 = model.evaluate(validation_dataset)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1418/1418 [==============================] - 12s 8ms/step - loss: 0.2271 - accuracy: 0.9409
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1418/1418 [==============================] - 14s 9ms/step - loss: 2.7675 - accuracy: 0.1557
 </pre></div>
 </div>
 </div>
@@ -1373,8 +1378,8 @@ print(&quot;initial accuracy: {:.2f}&quot;.format(accuracy0))
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial loss: 0.23
-initial accuracy: 0.94
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>initial loss: 2.77
+initial accuracy: 0.16
 </pre></div>
 </div>
 </div>
@@ -1389,25 +1394,25 @@ initial accuracy: 0.94
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
-4725/4725 [==============================] - 101s 19ms/step - loss: 0.7256 - accuracy: 0.8037 - val_loss: 0.3702 - val_accuracy: 0.8892
+4725/4725 [==============================] - 58s 11ms/step - loss: 1.1679 - accuracy: 0.6061 - val_loss: 0.6880 - val_accuracy: 0.7744
 Epoch 2/10
-4725/4725 [==============================] - 84s 18ms/step - loss: 0.7342 - accuracy: 0.8290 - val_loss: 0.3017 - val_accuracy: 0.9279
+4725/4725 [==============================] - 52s 11ms/step - loss: 0.7045 - accuracy: 0.7712 - val_loss: 0.5544 - val_accuracy: 0.8210
 Epoch 3/10
-4725/4725 [==============================] - 86s 18ms/step - loss: 0.6330 - accuracy: 0.8524 - val_loss: 0.3817 - val_accuracy: 0.9063
+4725/4725 [==============================] - 50s 11ms/step - loss: 0.6095 - accuracy: 0.8019 - val_loss: 0.5040 - val_accuracy: 0.8400
 Epoch 4/10
-4725/4725 [==============================] - 82s 17ms/step - loss: 0.5637 - accuracy: 0.8679 - val_loss: 0.5452 - val_accuracy: 0.8827
+4725/4725 [==============================] - 52s 11ms/step - loss: 0.5752 - accuracy: 0.8144 - val_loss: 0.4693 - val_accuracy: 0.8476
 Epoch 5/10
-4725/4725 [==============================] - 84s 18ms/step - loss: 0.5080 - accuracy: 0.8756 - val_loss: 0.4518 - val_accuracy: 0.9058
+4725/4725 [==============================] - 52s 11ms/step - loss: 0.5468 - accuracy: 0.8233 - val_loss: 0.4595 - val_accuracy: 0.8496
 Epoch 6/10
-4725/4725 [==============================] - 87s 18ms/step - loss: 0.5309 - accuracy: 0.8803 - val_loss: 0.3846 - val_accuracy: 0.9095
+4725/4725 [==============================] - 50s 11ms/step - loss: 0.5243 - accuracy: 0.8267 - val_loss: 0.4379 - val_accuracy: 0.8586
 Epoch 7/10
-4725/4725 [==============================] - 84s 18ms/step - loss: 0.5076 - accuracy: 0.8806 - val_loss: 0.4084 - val_accuracy: 0.9074
+4725/4725 [==============================] - 52s 11ms/step - loss: 0.5160 - accuracy: 0.8317 - val_loss: 0.4288 - val_accuracy: 0.8626
 Epoch 8/10
-4725/4725 [==============================] - 82s 17ms/step - loss: 0.4432 - accuracy: 0.8919 - val_loss: 0.2718 - val_accuracy: 0.9337
+4725/4725 [==============================] - 52s 11ms/step - loss: 0.5046 - accuracy: 0.8327 - val_loss: 0.4287 - val_accuracy: 0.8596
 Epoch 9/10
-4725/4725 [==============================] - 86s 18ms/step - loss: 0.4198 - accuracy: 0.8955 - val_loss: 0.2734 - val_accuracy: 0.9370
+4725/4725 [==============================] - 49s 10ms/step - loss: 0.4945 - accuracy: 0.8376 - val_loss: 0.4275 - val_accuracy: 0.8649
 Epoch 10/10
-4725/4725 [==============================] - 85s 18ms/step - loss: 0.3976 - accuracy: 0.8980 - val_loss: 0.4292 - val_accuracy: 0.8871
+4725/4725 [==============================] - 47s 10ms/step - loss: 0.4897 - accuracy: 0.8407 - val_loss: 0.4082 - val_accuracy: 0.8693
 </pre></div>
 </div>
 </div>
@@ -1446,7 +1451,7 @@ plt.show()
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c0f649d23a4e543442ed969d5b18508c7b0b9c3f3527384b0d7da6f3a805a673.png" src="../_images/c0f649d23a4e543442ed969d5b18508c7b0b9c3f3527384b0d7da6f3a805a673.png" />
+<img alt="../_images/3d8b0509c8938adba1458a72312181dc7f76a2e005f42fe7ad3a28a78877c12a.png" src="../_images/3d8b0509c8938adba1458a72312181dc7f76a2e005f42fe7ad3a28a78877c12a.png" />
 </div>
 </div>
 <p>Note that the validation metrics are better than the training metrics. This is mainly the case because certain layers such as <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.BatchNormalization</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dropout</span></code> impact accuracy during training. However, they are inactive when calculating validation loss. A second yet much more minor reason for why the training metrics are lower is because
@@ -1460,8 +1465,8 @@ print(&#39;Test accuracy :&#39;, accuracy)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 4s 7ms/step - loss: 0.4591 - accuracy: 0.8856
-Test accuracy : 0.8855966925621033
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 4s 7ms/step - loss: 0.4550 - accuracy: 0.8469
+Test accuracy : 0.8469135761260986
 </pre></div>
 </div>
 </div>
@@ -1524,19 +1529,19 @@ for layer in base_model.layers[:fine_tune_at]:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model_2&quot;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;model&quot;
 _________________________________________________________________
  Layer (type)                Output Shape              Param #   
 =================================================================
- input_4 (InputLayer)        [(None, 64, 64, 3)]       0         
+ input_2 (InputLayer)        [(None, 64, 64, 3)]       0         
                                                                  
  sequential (Sequential)     (None, 64, 64, 3)         0         
                                                                  
- tf.math.truediv_2 (TFOpLamb  (None, 64, 64, 3)        0         
- da)                                                             
+ tf.math.truediv (TFOpLambda  (None, 64, 64, 3)        0         
+ )                                                               
                                                                  
- tf.math.subtract_2 (TFOpLam  (None, 64, 64, 3)        0         
- bda)                                                            
+ tf.math.subtract (TFOpLambd  (None, 64, 64, 3)        0         
+ a)                                                              
                                                                  
  mobilenetv2_1.00_224 (Funct  (None, 2, 2, 1280)       2257984   
  ional)                                                          
@@ -1544,7 +1549,7 @@ _________________________________________________________________
  global_average_pooling2d (G  (None, 1280)             0         
  lobalAveragePooling2D)                                          
                                                                  
- dropout_2 (Dropout)         (None, 1280)              0         
+ dropout (Dropout)           (None, 1280)              0         
                                                                  
  dense (Dense)               (None, 10)                12810     
                                                                  
@@ -1587,27 +1592,27 @@ history_fine = model.fit(train_dataset,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 10/20
-4725/4725 [==============================] - 89s 17ms/step - loss: 0.2605 - accuracy: 0.9337 - val_loss: 0.2264 - val_accuracy: 0.9485
+4725/4725 [==============================] - 90s 17ms/step - loss: 0.5006 - accuracy: 0.8370 - val_loss: 0.3183 - val_accuracy: 0.8968
 Epoch 11/20
-4725/4725 [==============================] - 79s 17ms/step - loss: 0.2482 - accuracy: 0.9435 - val_loss: 0.2442 - val_accuracy: 0.9474
+4725/4725 [==============================] - 76s 16ms/step - loss: 0.3784 - accuracy: 0.8821 - val_loss: 0.2646 - val_accuracy: 0.9152
 Epoch 12/20
-4725/4725 [==============================] - 80s 17ms/step - loss: 0.2535 - accuracy: 0.9436 - val_loss: 0.2325 - val_accuracy: 0.9487
+4725/4725 [==============================] - 77s 16ms/step - loss: 0.3205 - accuracy: 0.8991 - val_loss: 0.2720 - val_accuracy: 0.9152
 Epoch 13/20
-4725/4725 [==============================] - 77s 16ms/step - loss: 0.2435 - accuracy: 0.9454 - val_loss: 0.2533 - val_accuracy: 0.9471
+4725/4725 [==============================] - 74s 16ms/step - loss: 0.2962 - accuracy: 0.9084 - val_loss: 0.2276 - val_accuracy: 0.9310
 Epoch 14/20
-4725/4725 [==============================] - 82s 17ms/step - loss: 0.2508 - accuracy: 0.9438 - val_loss: 0.2260 - val_accuracy: 0.9517
+4725/4725 [==============================] - 77s 16ms/step - loss: 0.2827 - accuracy: 0.9130 - val_loss: 0.2748 - val_accuracy: 0.9183
 Epoch 15/20
-4725/4725 [==============================] - 80s 17ms/step - loss: 0.2410 - accuracy: 0.9456 - val_loss: 0.2448 - val_accuracy: 0.9503
+4725/4725 [==============================] - 73s 16ms/step - loss: 0.2694 - accuracy: 0.9167 - val_loss: 0.2679 - val_accuracy: 0.9238
 Epoch 16/20
-4725/4725 [==============================] - 81s 17ms/step - loss: 0.2430 - accuracy: 0.9450 - val_loss: 0.2370 - val_accuracy: 0.9492
+4725/4725 [==============================] - 74s 16ms/step - loss: 0.2744 - accuracy: 0.9182 - val_loss: 0.2556 - val_accuracy: 0.9270
 Epoch 17/20
-4725/4725 [==============================] - 81s 17ms/step - loss: 0.2376 - accuracy: 0.9477 - val_loss: 0.2275 - val_accuracy: 0.9541
+4725/4725 [==============================] - 74s 16ms/step - loss: 0.2649 - accuracy: 0.9218 - val_loss: 0.2000 - val_accuracy: 0.9395
 Epoch 18/20
-4725/4725 [==============================] - 79s 17ms/step - loss: 0.2410 - accuracy: 0.9475 - val_loss: 0.2210 - val_accuracy: 0.9526
+4725/4725 [==============================] - 76s 16ms/step - loss: 0.2728 - accuracy: 0.9235 - val_loss: 0.2472 - val_accuracy: 0.9323
 Epoch 19/20
-4725/4725 [==============================] - 81s 17ms/step - loss: 0.2302 - accuracy: 0.9463 - val_loss: 0.2488 - val_accuracy: 0.9483
+4725/4725 [==============================] - 73s 15ms/step - loss: 0.2654 - accuracy: 0.9239 - val_loss: 0.2396 - val_accuracy: 0.9280
 Epoch 20/20
-4725/4725 [==============================] - 80s 17ms/step - loss: 0.2359 - accuracy: 0.9462 - val_loss: 0.2241 - val_accuracy: 0.9527
+4725/4725 [==============================] - 73s 15ms/step - loss: 0.2606 - accuracy: 0.9242 - val_loss: 0.2241 - val_accuracy: 0.9362
 </pre></div>
 </div>
 </div>
@@ -1615,14 +1620,14 @@ Epoch 20/20
 <p>Again, the learning curves for the training and validation accuracy/loss help us visualize what happens when we fine-tune using the MobileNetV2 pre-trained model. Overfitting may be happening if we see a much higher validation loss compared to its training counterpart. This is not abnormal as the new, custom data is much smaller than that which was initially used to train the MobileNetV2 backbone.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>loss, history_fine.history[&#39;loss&#39;]
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#loss, history_fine.history[&#39;loss&#39;]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acc, history_fine.history[&#39;accuracy&#39;]
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>#acc, history_fine.history[&#39;accuracy&#39;]
 </pre></div>
 </div>
 </div>
@@ -1664,7 +1669,7 @@ plt.show()
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e049c693d81dc8bdf3825150f7e969c75392edb7f91591ed87465837bdf9bbae.png" src="../_images/e049c693d81dc8bdf3825150f7e969c75392edb7f91591ed87465837bdf9bbae.png" />
+<img alt="../_images/1062fb22eb7bb1e940e6fbee27cfe1336af736cf40daad4170374ae7c757f8f6.png" src="../_images/1062fb22eb7bb1e940e6fbee27cfe1336af736cf40daad4170374ae7c757f8f6.png" />
 </div>
 </div>
 </section>
@@ -1679,8 +1684,8 @@ print(&#39;Test accuracy :&#39;, accuracy)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 4s 7ms/step - loss: 0.2514 - accuracy: 0.9510
-Test accuracy : 0.9510288238525391
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 5s 8ms/step - loss: 0.2487 - accuracy: 0.9259
+Test accuracy : 0.9259259104728699
 </pre></div>
 </div>
 </div>
@@ -1705,10 +1710,10 @@ print(len(predictions.numpy()), len(label_batch))
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predictions:
- [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
- 0 0 0]
+ [0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
+ 1 0 0]
 Labels:
- [9 7 2 0]
+ [1 0 6 6]
 40 4
 </pre></div>
 </div>
@@ -1735,9 +1740,9 @@ Labels:
 
   # Tune the learning rate for the optimizer
   # Choose an optimal value from between 0.0001 to 0.01
-  hp_learning_rate = hp.Float(&#39;learning_rate&#39;, min_value=1e-4, max_value=1e-2)
+  # hp_learning_rate = hp.Float(&#39;learning_rate&#39;, min_value=1e-4, max_value=1e-2)
   # Choose an optimal value from 0.01, 0.001, or 0.0001
-  # hp_learning_rate = hp.Choice(&#39;learning_rate&#39;, values=[1e-2, 1e-3, 1e-4])
+  hp_learning_rate = hp.Choice(&#39;learning_rate&#39;, values=[1e-2, 1e-3, 1e-4])
 
   model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=hp_learning_rate),
                 loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -1756,12 +1761,17 @@ Labels:
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner = kt.Hyperband(model_builder,
                      objective=&#39;accuracy&#39;,
-                     max_epochs=2,
+                     max_epochs=4,
                      project_name=&#39;exp_hp_0&#39;)
 </pre></div>
 </div>
@@ -1770,7 +1780,7 @@ Labels:
 <p>We will also include a callback function that halts training when convergence has been achieved, despite whether the number of epochs defined is still in excess. This is a useful strategy to improve the resource efficiency of our models and prevent overfitting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stop_early = tf.keras.callbacks.EarlyStopping(monitor=&#39;val_loss&#39;, patience=1)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stop_early = tf.keras.callbacks.EarlyStopping(monitor=&#39;val_loss&#39;, patience=2)
 </pre></div>
 </div>
 </div>
@@ -1792,16 +1802,14 @@ is {best_hps.get(&#39;learning_rate&#39;)}.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Search: Running Trial #1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Trial 2 Complete [00h 02m 46s]
+accuracy: 0.10068783164024353
 
-Value             |Best Value So Far |Hyperparameter
-0.0012082         |0.0012082         |learning_rate
-2                 |2                 |tuner/epochs
-0                 |0                 |tuner/initial_epoch
-2                 |2                 |tuner/bracket
-0                 |0                 |tuner/round
+Best accuracy So Far: 0.10068783164024353
+Total elapsed time: 00h 05m 33s
 
-Epoch 1/2
+The hyperparameter search is complete. The optimal learning rate for the optimizer
+is 0.004864341677325753.
 </pre></div>
 </div>
 </div>
@@ -1823,8 +1831,14 @@ print(&#39;Best epoch: %d&#39; % (best_epoch,))
 <p>Finally, let’s evaluate our tuned model on the test dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eval_result = hypermodel.evaluate(test_dataset)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eval_result = model.evaluate(test_dataset)
 print(&quot;[test loss, test accuracy]:&quot;, eval_result)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 9s 13ms/step - loss: 13.8348 - accuracy: 0.1091
+[test loss, test accuracy]: [13.834805488586426, 0.10905349999666214]
 </pre></div>
 </div>
 </div>
