@@ -774,8 +774,8 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Create the base model from the pre-trained model MobileNet V2
-IMG_SHAPE = INPUT_SHAPE
-base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
+INPUT_SHAPE = INPUT_SHAPE
+base_model = tf.keras.applications.MobileNetV2(input_shape=INPUT_SHAPE,
                                                include_top=False,
                                                weights=&#39;imagenet&#39;)
 </pre></div>
@@ -1358,7 +1358,7 @@ _________________________________________________________________
 <p>We will train for some epochs, and then check the accuracy on the validation set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>initial_epochs = 10
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>initial_epochs = 4 # 10
 
 loss0, accuracy0 = model.evaluate(validation_dataset)
 </pre></div>
@@ -1580,7 +1580,7 @@ _________________________________________________________________
 <p>Lastly, we will fine-tune by resuming training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fine_tune_epochs = 10
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>fine_tune_epochs = 4 # 10
 total_epochs =  initial_epochs + fine_tune_epochs
 
 history_fine = model.fit(train_dataset,
@@ -1728,6 +1728,16 @@ Labels:
 <p>The function will return the compiled model using the selection of hyperparameters defined.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>base_model = tf.keras.applications.MobileNetV2(input_shape=INPUT_SHAPE,
+                                               include_top=False,
+                                               weights=&#39;imagenet&#39;)
+base_model.trainable = False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>def model_builder(hp):
   inputs = tf.keras.Input(shape=INPUT_SHAPE)
   x = data_augmentation(inputs)
@@ -1819,7 +1829,7 @@ is 0.004864341677325753.
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Build the model with the optimal hyperparameters and train it on the data for 20 epochs
 model = tuner.hypermodel.build(best_hps)
-history = model.fit(train_dataset, epochs=20)
+history = model.fit(train_dataset, epochs=8)
 
 acc_per_epoch = history.history[&#39;accuracy&#39;]
 best_epoch = acc_per_epoch.index(max(acc_per_epoch)) + 1
@@ -1833,12 +1843,6 @@ print(&#39;Best epoch: %d&#39; % (best_epoch,))
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>eval_result = model.evaluate(test_dataset)
 print(&quot;[test loss, test accuracy]:&quot;, eval_result)
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>608/608 [==============================] - 9s 13ms/step - loss: 13.8348 - accuracy: 0.1091
-[test loss, test accuracy]: [13.834805488586426, 0.10905349999666214]
 </pre></div>
 </div>
 </div>
