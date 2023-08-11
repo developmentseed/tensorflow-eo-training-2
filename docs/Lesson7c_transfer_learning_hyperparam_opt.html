@@ -1708,16 +1708,6 @@ print(len(predictions.numpy()), len(label_batch))
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predictions:
- [0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0
- 1 0 0]
-Labels:
- [1 0 6 6]
-40 4
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -1764,19 +1754,6 @@ base_model.trainable = False
 </div>
 </div>
 <p>Now we will instantiate the tuner algorithm, in this case one called <a class="reference external" href="https://arxiv.org/pdf/1603.06560.pdf">Hyperband</a>. Herein, we have to specify the objective to optimize for and the allowable number of epochs to train an experiment for (usually this is to a large value and safeguarded by an early stopping callback which we’ll define next). Note that the <code class="docutils literal notranslate"><span class="pre">project_name</span></code> argument defines a folder that will hold all of the checkpoints and logs from the trials in this experiment. By default, if the search is rerun with this same directory, the search will resume from the state captured in those checkpoints. This can be changed by including <code class="docutils literal notranslate"><span class="pre">overwrite=True</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Move to your workshop directory in order to write data
-%cd $user_outputs_dir
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/My Drive/tf-eo-devseed-2-user_outputs_dir
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tuner = kt.Hyperband(model_builder,

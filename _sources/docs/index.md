@@ -1,7 +1,7 @@
 
 
 <!-- #region -->
-# Deep Learning with TensorFlow: <br> Tutorials for modeling LULC.
+# Deep Learning with TensorFlow: <br> Tutorials for Earth Science Applications.
 
 
 Authored by [**Development Seed**](https://developmentseed.org/) engineers [**Lillianne Thomas**](https://github.com/lillythomas) and [**Ryan Avery**](https://github.com/rbavery)

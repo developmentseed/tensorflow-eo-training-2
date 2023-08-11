@@ -499,6 +499,32 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.3/21.3 MB</span> <span class=" -Color -Color-Red">35.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">52.1/52.1 kB</span> <span class=" -Color -Color-Red">1.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">12.0/12.0 MB</span> <span class=" -Color -Color-Red">24.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">137.4/137.4 kB</span> <span class=" -Color -Color-Red">10.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">63.1/63.1 kB</span> <span class=" -Color -Color-Red">7.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.0/2.0 MB</span> <span class=" -Color -Color-Red">27.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">78.5/78.5 kB</span> <span class=" -Color -Color-Red">5.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25h<span class=" -Color -Color-Red">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.</span>
+<span class=" -Color -Color-Red">google-colab 1.0.0 requires requests==2.31.0, but you have requests 2.27.1 which is incompatible.</span>
+<span class=" -Color -Color-Red">yfinance 0.2.27 requires requests&gt;=2.31, but you have requests 2.27.1 which is incompatible.</span>
+Collecting tensorflow_io==0.32.0
+  Downloading tensorflow_io-0.32.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (28.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">28.0/28.0 MB</span> <span class=" -Color -Color-Red">4.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hCollecting tensorflow-io-gcs-filesystem==0.32.0 (from tensorflow_io==0.32.0)
+  Downloading tensorflow_io_gcs_filesystem-0.32.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (2.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.4/2.4 MB</span> <span class=" -Color -Color-Red">72.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hInstalling collected packages: tensorflow-io-gcs-filesystem, tensorflow_io
+  Attempting uninstall: tensorflow-io-gcs-filesystem
+    Found existing installation: tensorflow-io-gcs-filesystem 0.33.0
+    Uninstalling tensorflow-io-gcs-filesystem-0.33.0:
+      Successfully uninstalled tensorflow-io-gcs-filesystem-0.33.0
+Successfully installed tensorflow-io-gcs-filesystem-0.32.0 tensorflow_io-0.32.0
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -541,6 +567,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mounted at /content/gdrive
+Running on Colab
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -552,11 +584,16 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Move to your user directory in order to write data</span>
-<span class="o">%</span><span class="k">cd</span> $user_outputs_dir
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Move to your user directory in order to write data, we comment this out so that we can train the model without an mlhub api key</span>
+<span class="c1">#%cd $user_outputs_dir</span>
 
 <span class="c1"># NOTE! If you want to use pre-processed outputs, uncomment the line below then skip the cells with topline comment &quot;# Skip if using preprocessed outputs&quot;</span>
-<span class="c1"># %cd $processed_outputs_dir</span>
+<span class="o">%</span><span class="k">cd</span> $processed_outputs_dir
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/gdrive/.shortcut-targets-by-id/1FrSTn9Iq458qQhTw_7rbaVSc739TTw9V/tf-eo-devseed-2-processed-outputs
 </pre></div>
 </div>
 </div>
@@ -568,7 +605,7 @@ this example, which includes Sentinel-1, Sentinel-2 and Landsat 8 rasters and la
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># configure Radiant Earth MLHub access, no need to do this if using pre-processed outputs</span>
-<span class="o">!</span>mlhub<span class="w"> </span>configure
+<span class="c1">#!mlhub configure</span>
 </pre></div>
 </div>
 </div>
@@ -576,17 +613,48 @@ this example, which includes Sentinel-1, Sentinel-2 and Landsat 8 rasters and la
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the available input data</span>
-<span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="c1"># ds = Dataset.fetch(&#39;ref_landcovernet_sa_v1&#39;)</span>
+<span class="c1"># for c in ds.collections:</span>
+<span class="c1">#     print(c.id)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ref_landcovernet_sa_v1_source_sentinel_2
-ref_landcovernet_sa_v1_source_sentinel_1
-ref_landcovernet_sa_v1_source_landsat_8
-ref_landcovernet_sa_v1_labels
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">APIKeyNotFound</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-7-ca083c5dc9a7&gt;</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Check the available input data</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s1">&#39;ref_landcovernet_sa_v1&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ds</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/radiant_mlhub/models/dataset.py</span> in <span class="ni">fetch</span><span class="nt">(cls, dataset_id_or_doi, api_key, profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">238</span><span class="sd">         return cls(</span>
+<span class="ne">--&gt; </span><span class="mi">239</span><span class="sd">             **client.get_dataset(dataset_id_or_doi, api_key=api_key, profile=profile),</span>
+<span class="g g-Whitespace">    </span><span class="mi">240</span><span class="sd">             api_key=api_key,</span>
+<span class="g g-Whitespace">    </span><span class="mi">241</span><span class="sd">             profile=profile,</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/radiant_mlhub/client/datasets.py</span> in <span class="ni">get_dataset</span><span class="nt">(dataset_id_or_doi, api_key, profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span><span class="sd">         return get_dataset_by_doi(dataset_id_or_doi, api_key=api_key, profile=profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span><span class="sd">     else:</span>
+<span class="ne">--&gt; </span><span class="mi">259</span><span class="sd">         return get_dataset_by_id(dataset_id_or_doi, api_key=api_key, profile=profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="sd"> </span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/radiant_mlhub/client/datasets.py</span> in <span class="ni">get_dataset_by_id</span><span class="nt">(dataset_id, api_key, profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span><span class="sd">     dataset : dict</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">224</span>     <span class="n">session</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">225</span>     <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">226</span>         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;datasets/</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+
+<span class="nn">/usr/local/lib/python3.10/dist-packages/radiant_mlhub/session.py</span> in <span class="ni">get_session</span><span class="nt">(api_key, profile)</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span> 
+<span class="g g-Whitespace">    </span><span class="mi">264</span>     <span class="k">except</span> <span class="n">APIKeyNotFound</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">265</span>         <span class="k">raise</span> <span class="n">APIKeyNotFound</span><span class="p">(</span><span class="s1">&#39;Could not resolve an API key from arguments, the environment, or a config file.&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+
+<span class="ne">APIKeyNotFound</span>: Could not resolve an API key from arguments, the environment, or a config file.
 </pre></div>
 </div>
 </div>
@@ -701,6 +769,11 @@ ref_landcovernet_sa_v1_labels
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using pre-processed outputs
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -765,6 +838,11 @@ ref_landcovernet_sa_v1_labels
     <span class="n">partition</span><span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="n">partition</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="mi">1201</span><span class="p">)</span>
     <span class="n">partition</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="mi">1202</span><span class="p">,</span> <span class="mi">2202</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using pre-processed outputs
 </pre></div>
 </div>
 </div>
@@ -896,6 +974,18 @@ ref_landcovernet_sa_v1_labels
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/263fd8e0a3b438391babf659dcf3f67430fd3530e24bd8a10d37388e36a083d9.png" src="../_images/263fd8e0a3b438391babf659dcf3f67430fd3530e24bd8a10d37388e36a083d9.png" />
+<img alt="../_images/4fd9580f3230050936a8712844858d27fa6e805b790be41d9ca54a0dfdc78779.png" src="../_images/4fd9580f3230050936a8712844858d27fa6e805b790be41d9ca54a0dfdc78779.png" />
+<img alt="../_images/d8b0b3de261ffb3d55429d189597fc50cc0e818eaaa89610da46f34e6ce7bff8.png" src="../_images/d8b0b3de261ffb3d55429d189597fc50cc0e818eaaa89610da46f34e6ce7bff8.png" />
+<img alt="../_images/754e636fa3133260b8547abac1952ce477817825c9d105b6c2b90fe707681fa6.png" src="../_images/754e636fa3133260b8547abac1952ce477817825c9d105b6c2b90fe707681fa6.png" />
+<img alt="../_images/43e5a4c3cb4b3483f3f48d2abab7eeebd7c7b9f6e9619a006b56fb5eff0bb0ab.png" src="../_images/43e5a4c3cb4b3483f3f48d2abab7eeebd7c7b9f6e9619a006b56fb5eff0bb0ab.png" />
+<img alt="../_images/eb176247150f6528e36c2491898cb435dcfeb4cd1093b9bde69daab3c0f2c5a5.png" src="../_images/eb176247150f6528e36c2491898cb435dcfeb4cd1093b9bde69daab3c0f2c5a5.png" />
+<img alt="../_images/719e7beedd0567fa554f2ac6f3e71af7e1d1f764ad100fca13ae48b8586be6e1.png" src="../_images/719e7beedd0567fa554f2ac6f3e71af7e1d1f764ad100fca13ae48b8586be6e1.png" />
+<img alt="../_images/55f915a6de1293c5a10ebd6c2bc6609c523a671a3d2c648f3d707dd57d4dd93b.png" src="../_images/55f915a6de1293c5a10ebd6c2bc6609c523a671a3d2c648f3d707dd57d4dd93b.png" />
+<img alt="../_images/209aa441d68180c025a93995c561de594bdb26ee033594029142d32b7b17aeed.png" src="../_images/209aa441d68180c025a93995c561de594bdb26ee033594029142d32b7b17aeed.png" />
+<img alt="../_images/e6903bde9901733660353af56285bc4d87cfe83c532fddb07a436f1e55aa5005.png" src="../_images/e6903bde9901733660353af56285bc4d87cfe83c532fddb07a436f1e55aa5005.png" />
+</div>
 </div>
 </section>
 <section id="load-a-pretrained-segformer-checkpoint-from-hugging-face">
@@ -926,6 +1016,17 @@ ref_landcovernet_sa_v1_labels
     <span class="n">label2id</span><span class="o">=</span><span class="n">label2id</span><span class="p">,</span>
     <span class="n">ignore_mismatched_sizes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "01e276da09bb4b6d9a80fb224917cc95", "version_major": 2, "version_minor": 0}</script><script type="application/vnd.jupyter.widget-view+json">{"model_id": "d06e802258a8476ca82a8a37ad1aae66", "version_major": 2, "version_minor": 0}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:tensorflow:5 out of the last 5 calls to &lt;function Conv._jit_compiled_convolution_op at 0x7a3feff48dc0&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+WARNING:tensorflow:6 out of the last 6 calls to &lt;function Conv._jit_compiled_convolution_op at 0x7a3feff4a680&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+Some layers from the model checkpoint at nvidia/mit-b0 were not used when initializing TFSegformerForSemanticSegmentation: [&#39;classifier&#39;]
+- This IS expected if you are initializing TFSegformerForSemanticSegmentation from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing TFSegformerForSemanticSegmentation from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some layers of TFSegformerForSemanticSegmentation were not initialized from the model checkpoint at nvidia/mit-b0 and are newly initialized: [&#39;decode_head&#39;]
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
 </pre></div>
 </div>
 </div>
@@ -1001,15 +1102,30 @@ attaches a unique decoder head for our custom dataset using associated parameter
 <h2>Train model<a class="headerlink" href="#train-model" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.fit<span class="o">??</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Increase the number of epochs if the results are not of expected quality.</span>
-<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
     <span class="n">train_ds</span><span class="p">,</span>
     <span class="n">validation_data</span><span class="o">=</span><span class="n">test_ds</span><span class="p">,</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">DisplayCallback</span><span class="p">(</span><span class="n">val_ds</span><span class="p">)],</span>
+    <span class="c1"># callbacks=[DisplayCallback(val_ds)],</span>
     <span class="n">epochs</span><span class="o">=</span><span class="n">EPOCHS</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">validation_steps</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">use_multiprocessing</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15/15 [==============================] - 7s 487ms/step - loss: 1.5403 - val_loss: 1.7536
 </pre></div>
 </div>
 </div>
@@ -1025,46 +1141,46 @@ attaches a unique decoder head for our custom dataset using associated parameter
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 217ms/step
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 4s 4s/step
 </pre></div>
 </div>
-<img alt="../_images/cb7c0b22d3d1d3aa71a8b7fd5b67a9ddef7acd182a8b71ec34aae5650db6a6e6.png" src="../_images/cb7c0b22d3d1d3aa71a8b7fd5b67a9ddef7acd182a8b71ec34aae5650db6a6e6.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 174ms/step
+<img alt="../_images/9943a9905c7dcbc151333c41c050be4040f58666d3e8bbf5b0a855294154bdde.png" src="../_images/9943a9905c7dcbc151333c41c050be4040f58666d3e8bbf5b0a855294154bdde.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 110ms/step
 </pre></div>
 </div>
-<img alt="../_images/dbc7d814f12c84a7978239c577ed83507d0dd577c4e23b13077f9f9458189252.png" src="../_images/dbc7d814f12c84a7978239c577ed83507d0dd577c4e23b13077f9f9458189252.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 305ms/step
+<img alt="../_images/2aa441dee889adbcaa149587088c98c10c4f6f3548e14c907b20c48d011bb83d.png" src="../_images/2aa441dee889adbcaa149587088c98c10c4f6f3548e14c907b20c48d011bb83d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 119ms/step
 </pre></div>
 </div>
-<img alt="../_images/1d6456c9f4a400a37bd4c3255e7d41f7f1ffca2e160e67dee810c57529316e15.png" src="../_images/1d6456c9f4a400a37bd4c3255e7d41f7f1ffca2e160e67dee810c57529316e15.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 116ms/step
-</pre></div>
-</div>
-<img alt="../_images/8429860c9d067d7500d037380a19ae35d34cd507ef5a5ba882ec36384639da61.png" src="../_images/8429860c9d067d7500d037380a19ae35d34cd507ef5a5ba882ec36384639da61.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 122ms/step
-</pre></div>
-</div>
-<img alt="../_images/5191ac1f8b6304fe92d5c39868f3860cffbac269e7684a1a4cc8444ff34c225b.png" src="../_images/5191ac1f8b6304fe92d5c39868f3860cffbac269e7684a1a4cc8444ff34c225b.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 105ms/step
-</pre></div>
-</div>
-<img alt="../_images/7f6480bffb0e1a3e217ef57a378c2be769d8b287e15aeae2ec90185226f31afd.png" src="../_images/7f6480bffb0e1a3e217ef57a378c2be769d8b287e15aeae2ec90185226f31afd.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 108ms/step
-</pre></div>
-</div>
-<img alt="../_images/b19b896754a0ca6af5ec65d73dff24268c1e9c05ae706c88cbb3aab8c9f7241d.png" src="../_images/b19b896754a0ca6af5ec65d73dff24268c1e9c05ae706c88cbb3aab8c9f7241d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 127ms/step
-</pre></div>
-</div>
-<img alt="../_images/ab1e642e73ace6165c457bb3c2bca2494b4c69a0e104713339e6d36a01ed078f.png" src="../_images/ab1e642e73ace6165c457bb3c2bca2494b4c69a0e104713339e6d36a01ed078f.png" />
+<img alt="../_images/556724ab9609021676f3c18125c06c3d1e0916478c78f26d6b8a492f0c6d2407.png" src="../_images/556724ab9609021676f3c18125c06c3d1e0916478c78f26d6b8a492f0c6d2407.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 123ms/step
 </pre></div>
 </div>
-<img alt="../_images/1b13246502140233fee2aae9ff8206bd8016c69802196c1899246bf5a339fc41.png" src="../_images/1b13246502140233fee2aae9ff8206bd8016c69802196c1899246bf5a339fc41.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 113ms/step
+<img alt="../_images/1a4ce5d7e8e8656dc10e6200cc44576e2e2fcd01702d8efa927ca89882713402.png" src="../_images/1a4ce5d7e8e8656dc10e6200cc44576e2e2fcd01702d8efa927ca89882713402.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 115ms/step
 </pre></div>
 </div>
-<img alt="../_images/ad7affb54c0f18eb935af295436b257a36096f2a32e7f2e7f1abe107fb9e4a35.png" src="../_images/ad7affb54c0f18eb935af295436b257a36096f2a32e7f2e7f1abe107fb9e4a35.png" />
+<img alt="../_images/4209dc3114afe9bad69d98956cff044fa3da9849686f0f9976065d1dadb88794.png" src="../_images/4209dc3114afe9bad69d98956cff044fa3da9849686f0f9976065d1dadb88794.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 106ms/step
+</pre></div>
+</div>
+<img alt="../_images/994d6b4783afc0ad44750b44c3c751d4d7f4a2b6e9414d422104ed3f511c8fff.png" src="../_images/994d6b4783afc0ad44750b44c3c751d4d7f4a2b6e9414d422104ed3f511c8fff.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 112ms/step
+</pre></div>
+</div>
+<img alt="../_images/b20209e17dbdc0664f89015c8c78ebc95ff298407a2cbb14e5ced1658992145d.png" src="../_images/b20209e17dbdc0664f89015c8c78ebc95ff298407a2cbb14e5ced1658992145d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 114ms/step
+</pre></div>
+</div>
+<img alt="../_images/dbe649c1ddc8f00cf54de70bcce3aba54151b2894ea9112005ecf6a5c302261e.png" src="../_images/dbe649c1ddc8f00cf54de70bcce3aba54151b2894ea9112005ecf6a5c302261e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 98ms/step
+</pre></div>
+</div>
+<img alt="../_images/4072586eea49fb5379eb89ec4ad1f58ba1794b7fd4b91d8bc1794eaaad43da59.png" src="../_images/4072586eea49fb5379eb89ec4ad1f58ba1794b7fd4b91d8bc1794eaaad43da59.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 96ms/step
+</pre></div>
+</div>
+<img alt="../_images/55ab631f2cb4f6c49dc8aacb3e06d54f940725616b1ebe3f149b3aa10f2c24b5.png" src="../_images/55ab631f2cb4f6c49dc8aacb3e06d54f940725616b1ebe3f149b3aa10f2c24b5.png" />
 </div>
 </div>
 </section>
