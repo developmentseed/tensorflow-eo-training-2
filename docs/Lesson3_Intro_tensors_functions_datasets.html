@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson3_Intro_tensors_functions_datasets';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Regression using TensorFlow with Google Earth Engine Python API" href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -488,10 +510,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensors-tensorflow-functions-and-tensorflow-datasets">
-<h1>Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets<a class="headerlink" href="#introduction-to-tensors-tensorflow-functions-and-tensorflow-datasets" title="Permalink to this heading">#</a></h1>
+<h1>Introduction to Tensors, TensorFlow Functions and TensorFlow Datasets<a class="headerlink" href="#introduction-to-tensors-tensorflow-functions-and-tensorflow-datasets" title="Link to this heading">#</a></h1>
 <p>In this tutorial, we will learn about some key aspects of TensorFlow. First we will start by discussing tensors, tensorflow’s fundamental data type. Next, we’ll cover <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> and when to use it for performance optimization and model portability. Lastly we will discuss <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> methods and how to create tensor-formatted datasets for efficient datapipelines that operate on large datasets.</p>
 <p>This is an adaptation from <a class="reference external" href="https://www.tensorflow.org/guide/tensor">Introduction to Tensors</a>, <a class="reference external" href="https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/guide/function.ipynb#scrollTo=HQrG5_kOiKl_">TensorFlow Functions</a>, and <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset API</a>.</p>
 <div class="cell docutils container">
@@ -503,7 +525,7 @@ import numpy as np
 </div>
 </div>
 <section id="basics-of-tensors">
-<h2>Basics of tensors<a class="headerlink" href="#basics-of-tensors" title="Permalink to this heading">#</a></h2>
+<h2>Basics of tensors<a class="headerlink" href="#basics-of-tensors" title="Link to this heading">#</a></h2>
 <p>Let’s create some basic tensors.</p>
 <p>A tensor is a multi-dimensional array with a consistent type (known as a <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).  All supported <code class="docutils literal notranslate"><span class="pre">dtypes</span></code> can be seen with <code class="docutils literal notranslate"><span class="pre">tf.dtypes.DType</span></code>.</p>
 <p>Tensors are similar to <a class="reference external" href="https://numpy.org/devdocs/user/quickstart.html">NumPy</a>  <code class="docutils literal notranslate"><span class="pre">np.arrays</span></code>.</p>
@@ -511,7 +533,7 @@ import numpy as np
 <p>Note that we will use <code class="docutils literal notranslate"><span class="pre">tf.constant</span></code> regularly, and sometimes you’ll see <code class="docutils literal notranslate"><span class="pre">tf.variable</span></code> for similarly looking assignments. The difference between the two in TensorFlow usage is that, the value assigned to a constant cannot be changed in the future; it is static and the initialization is with a value, not an operation. Whereas for variable, the initialization can be a value or an operation, both of which can change. In the context of machine learning, we would want to assign the loss value as a variable as it changes with each epoch, whereas we would want to assign fixed hyper-parameters like batch size as a constant. Training samples (images for example) are also converted to tensors as constants as they don’t change.</p>
 <p>Can you guess where else in the machine learning life cycle we would want to use variables instead of constants and vice versa?</p>
 <section id="significance-of-tensor-shapes">
-<h3>Significance of Tensor shapes<a class="headerlink" href="#significance-of-tensor-shapes" title="Permalink to this heading">#</a></h3>
+<h3>Significance of Tensor shapes<a class="headerlink" href="#significance-of-tensor-shapes" title="Link to this heading">#</a></h3>
 <p>A tensor has a shape.  Some key terms to know:</p>
 <ul class="simple">
 <li><p><strong>Shape</strong>: Describes the number of axes and length (number of elements) in each axis of a tensor.</p></li>
@@ -623,7 +645,7 @@ print(rank_3_tensor)
 </div>
 </section>
 <section id="interpreting-tensor-shapes">
-<h3>Interpreting tensor shapes<a class="headerlink" href="#interpreting-tensor-shapes" title="Permalink to this heading">#</a></h3>
+<h3>Interpreting tensor shapes<a class="headerlink" href="#interpreting-tensor-shapes" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tf.TensorShape</span></code> objects describe some key properties of tensor shapes which help us understand the dimensionality of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -669,7 +691,7 @@ print(&quot;Total number of elements (3*2*4*5): &quot;, tf.size(rank_4_tensor).n
 </tr>
 </table></section>
 <section id="types-of-tensors-often-used">
-<h3>Types of tensors often used<a class="headerlink" href="#types-of-tensors-often-used" title="Permalink to this heading">#</a></h3>
+<h3>Types of tensors often used<a class="headerlink" href="#types-of-tensors-often-used" title="Link to this heading">#</a></h3>
 <p>Most tensors we encounter in computer vision contain floats and integers, but tensors can also represent other types, such as:</p>
 <ul class="simple">
 <li><p>complex numbers</p></li>
@@ -754,7 +776,7 @@ print(tf.nn.softmax(c))
 </div>
 </section>
 <section id="variables">
-<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<h3>Variables<a class="headerlink" href="#variables" title="Link to this heading">#</a></h3>
 <p>As previously mentioned, normal <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>s are immutable. However, some objects will change over time, like the trainable weights in a machine learning model. We want to store these values, so in order to do that, we need a tensor that can change. Enter the <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -780,9 +802,9 @@ print(tf.nn.softmax(c))
 </section>
 </section>
 <section id="indexing">
-<h2>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
+<h2>Indexing<a class="headerlink" href="#indexing" title="Link to this heading">#</a></h2>
 <section id="single-axis-indexing">
-<h3>Single-axis indexing<a class="headerlink" href="#single-axis-indexing" title="Permalink to this heading">#</a></h3>
+<h3>Single-axis indexing<a class="headerlink" href="#single-axis-indexing" title="Link to this heading">#</a></h3>
 <p>In TensorFlow, standard Python indexing rules apply. Indexing tensors looks similar to <a class="reference external" href="https://docs.python.org/3/tutorial/introduction.html#strings">indexing a list in Python</a>. The same applied for NumPy-style indexing.</p>
 <ul class="simple">
 <li><p>indexes begin at <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
@@ -822,7 +844,7 @@ print(&quot;Reversed:&quot;, rank_1_tensor[::-1].numpy())
 </div>
 </section>
 <section id="multi-axis-indexing">
-<h3>Multi-axis indexing<a class="headerlink" href="#multi-axis-indexing" title="Permalink to this heading">#</a></h3>
+<h3>Multi-axis indexing<a class="headerlink" href="#multi-axis-indexing" title="Link to this heading">#</a></h3>
 <p>When working with higher ranks of tensors, we may have to use multiple indices.</p>
 <p>To do this, we treat each axis independently with the exact same rules as in the single-axis case.</p>
 <div class="cell docutils container">
@@ -879,7 +901,7 @@ print(rank_2_tensor[1:, :].numpy(), &quot;\n&quot;)
 </section>
 </section>
 <section id="manipulating-tensor-shapes">
-<h2>Manipulating tensor shapes<a class="headerlink" href="#manipulating-tensor-shapes" title="Permalink to this heading">#</a></h2>
+<h2>Manipulating tensor shapes<a class="headerlink" href="#manipulating-tensor-shapes" title="Link to this heading">#</a></h2>
 <p>Sometimes, we need to reshape a tensor. For example, we flatten rank 2 tensors to rank 1 when computing things like confusion matrices.</p>
 <p>Notes:</p>
 <ul class="simple">
@@ -987,7 +1009,7 @@ Some good reshapes.
 </table>
 </section>
 <section id="tensor-dtypes">
-<h2>Tensor <code class="docutils literal notranslate"><span class="pre">DTypes</span></code><a class="headerlink" href="#tensor-dtypes" title="Permalink to this heading">#</a></h2>
+<h2>Tensor <code class="docutils literal notranslate"><span class="pre">DTypes</span></code><a class="headerlink" href="#tensor-dtypes" title="Link to this heading">#</a></h2>
 <p>We can find a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>’s data type by inspecting the <code class="docutils literal notranslate"><span class="pre">Tensor.dtype</span></code> property.</p>
 <p>Datatypes can be optionally specified when creating a <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code> from a Python object. If left unspecified, TensorFlow inuits and assigns a datatype that can reasonably represent the data. By default, TensorFlow translates Python integers as <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code> and Python floating point numbers as <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code>.</p>
 <p>Tensors can be cast to other types.</p>
@@ -1004,7 +1026,7 @@ print(the_u8_tensor)
 </div>
 </section>
 <section id="broadcasting">
-<h2>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<h2>Broadcasting<a class="headerlink" href="#broadcasting" title="Link to this heading">#</a></h2>
 <p>Broadcasting in TensorFlow is based on the <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html">equivalent method in NumPy</a>.  The premise is that sometimes we need to stretch smaller tensors automatically to fit the size of larger tensors to run combined operations on them.</p>
 <p>A simple example is multiplying or adding a tensor to a scalar. The scalar in this case is broadcast to the same shape as the tensor.</p>
 <div class="cell docutils container">
@@ -1073,13 +1095,13 @@ print(x_stretch * y_stretch)  # Again, operator overloading
 <p>More on broadcasting can be found in <a class="reference external" href="https://jakevdp.github.io/PythonDataScienceHandbook/02.05-computation-on-arrays-broadcasting.html">this section</a> of Jake VanderPlas’s book <em>Python Data Science Handbook</em>.</p>
 </section>
 <section id="tf-convert-to-tensor">
-<h2>tf.convert_to_tensor<a class="headerlink" href="#tf-convert-to-tensor" title="Permalink to this heading">#</a></h2>
+<h2>tf.convert_to_tensor<a class="headerlink" href="#tf-convert-to-tensor" title="Link to this heading">#</a></h2>
 <p>As a reminder, most TensorFlow operations that expect arguments of class <code class="docutils literal notranslate"><span class="pre">tf.Tensor</span></code>, such as <code class="docutils literal notranslate"><span class="pre">tf.matmul</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.reshape</span></code>, will also accept Python objects shaped like tensors.</p>
 <p>Under the hood, most TensorFlow ops apply <code class="docutils literal notranslate"><span class="pre">convert_to_tensor</span></code> to non-tensor arguments, such as NumPy’s <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="docutils literal notranslate"><span class="pre">TensorShape</span></code>, Python lists, and <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>, all of which will convert automatically.</p>
 <p>See the conversion registry <code class="docutils literal notranslate"><span class="pre">tf.register_tensor_conversion_function</span></code> to know whether a data type will automatically convert.</p>
 </section>
 <section id="string-tensors">
-<h2>String tensors<a class="headerlink" href="#string-tensors" title="Permalink to this heading">#</a></h2>
+<h2>String tensors<a class="headerlink" href="#string-tensors" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tf.string</span></code> is a <code class="docutils literal notranslate"><span class="pre">dtype</span></code> that represents data as strings (variable-length byte arrays) in tensors.</p>
 <p>However, string tensors are atomic meaning that they cannot be indexed the way Python strings can. See <code class="docutils literal notranslate"><span class="pre">tf.strings</span></code> for ways to manipulate them.</p>
 <p>An example of a scalar string tensor:</p>
@@ -1136,7 +1158,7 @@ print(tf.strings.to_number(tf.strings.split(text, &quot; &quot;)))
 <p>In TensorFlow, the <code class="docutils literal notranslate"><span class="pre">tf.string</span></code> dtype describes all raw bytes data. The <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> module is used to convert data to and from bytes, as is done when decoding images and parsing text.</p>
 </section>
 <section id="sparse-tensors">
-<h2>Sparse tensors<a class="headerlink" href="#sparse-tensors" title="Permalink to this heading">#</a></h2>
+<h2>Sparse tensors<a class="headerlink" href="#sparse-tensors" title="Link to this heading">#</a></h2>
 <p>Data can sometimes be sparse, as might be the case for a wide embedding space.  TensorFlow has a data type called <code class="docutils literal notranslate"><span class="pre">tf.sparse.SparseTensor</span></code> and related operations to support sparse data and work efficiently with it.</p>
 <table>
 <tr>
@@ -1164,8 +1186,8 @@ print(tf.sparse.to_dense(sparse_tensor))
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="functions">
-<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">#</a></h1>
-<p>In TensorFlow 2, <span class="xref myst">eager execution</span> mode is on by default. This mode enables intuitive use, rapid experimentation and flexibility. However, this mode faces limits with performance and deployability.</p>
+<h1>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h1>
+<p>In TensorFlow 2, <a class="reference internal" href="#eager.ipynb"><span class="xref myst">eager execution</span></a> mode is on by default. This mode enables intuitive use, rapid experimentation and flexibility. However, this mode faces limits with performance and deployability.</p>
 <p><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is used to make graphs out of programs. The critical case for it is when we need to build Python-independent dataflow graphs from Python code, with goal of creating performant and portable models. In fact, compiling in <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is required to use the <code class="docutils literal notranslate"><span class="pre">SavedModel</span></code> class.</p>
 <p>We will discuss some of the main uses for <code class="docutils literal notranslate"><span class="pre">tf.function</span></code>.</p>
 <p>Before that, it’s worth knowing how and when <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> is recommended:</p>
@@ -1186,7 +1208,7 @@ print(tf.sparse.to_dense(sparse_tensor))
 <li><p>It is easy to use and performant, as it automatically uses TensorFlow graphs under the hood.</p></li>
 </ul>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
 <p>A <code class="docutils literal notranslate"><span class="pre">Function</span></code> in TensorFlow, (which can be created by adding the <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> decorator) behaves like a core TensorFlow operation. It can be executed eagerly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1232,7 +1254,7 @@ print(&quot;Note how there&#39;s not much difference in performance for convolut
 </div>
 </div>
 <section id="use-unknown-dimensions-for-flexibility">
-<h3>Use unknown dimensions for flexibility<a class="headerlink" href="#use-unknown-dimensions-for-flexibility" title="Permalink to this heading">#</a></h3>
+<h3>Use unknown dimensions for flexibility<a class="headerlink" href="#use-unknown-dimensions-for-flexibility" title="Link to this heading">#</a></h3>
 <p>TensorFlow matches tensors on the basis of their shape. We can use a <code class="docutils literal notranslate"><span class="pre">None</span></code> dimension as a wildcard to allow <code class="docutils literal notranslate"><span class="pre">Function</span></code>s to run on variably-sized input. Variably-sized input is frequent when dealing with sequences of different length, or images of different spatial dimensions (sizes) across batches.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1249,7 +1271,7 @@ print(g(tf.constant([1, 2, 3, 4, 5])))
 </div>
 </section>
 <section id="using-iterators-and-generators">
-<h3>Using iterators and generators<a class="headerlink" href="#using-iterators-and-generators" title="Permalink to this heading">#</a></h3>
+<h3>Using iterators and generators<a class="headerlink" href="#using-iterators-and-generators" title="Link to this heading">#</a></h3>
 <p>TensorFlow has a <code class="docutils literal notranslate"><span class="pre">tf.data.Iterator</span></code> for iteration. The <a class="reference external" href="https://www.tensorflow.org/guide/data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a> API helps implement generator patterns. TensorFlow’s iterators and generators help avoid Python side effects which can surface outside of eager mode.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1286,7 +1308,7 @@ good_consume_next(iterator)
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="data">
-<h1>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h1>
+<h1>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">API</a> represents methods to create tensor-formatted datasets out of many different types of data.</p>
 <p>Usage of the API follows the below pattern:</p>
 <ul class="simple">
@@ -1357,13 +1379,13 @@ dataset
 </div>
 </div>
 <section id="data-pipelines">
-<h2>Data pipelines<a class="headerlink" href="#data-pipelines" title="Permalink to this heading">#</a></h2>
+<h2>Data pipelines<a class="headerlink" href="#data-pipelines" title="Link to this heading">#</a></h2>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> API iterators and generators to construct data pipelines. A data pipeline is used to map a set of processing steps on a large amount of data. With such pipelines, we can stream data iteratively to the same reusable code for processing and have it contribute to the same dataset (e.g. training or validation). As an example, an image data pipeline might involve reading image files from a file system, applying random perturbations or other augmentations to each image, and then randomly shuffling and appending images to a batch for training. In essence, data pipelines built with the <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> API enable large amounts of data to be read, with support for different data formats, and complex transformations. We will explore a data pipeline in a subsequent lesson, but if you’re curious about data pipelines, you can read more via this <a class="reference external" href="https://www.tensorflow.org/guide/data">guide</a>.</p>
 <figure class="align-default" id="datapipe-fig">
 <a class="reference internal image-reference" href="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png"><img alt="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png" src="https://storage.googleapis.com/jalammar-ml/tf.data/images/tf.data-simple-pipeline.png" style="width: 650px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 22 </span><span class="caption-text">Figure from <a class="reference external" href="https://www.kaggle.com/code/jalammar/intro-to-data-input-pipelines-with-tf-data">Intro to Data Input Pipelines with tf.data
-</a></span><a class="headerlink" href="#datapipe-fig" title="Permalink to this image">#</a></p>
+</a></span><a class="headerlink" href="#datapipe-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>This discussion on datasets is different than the <a class="reference external" href="https://www.tensorflow.org/datasets">TensorFlow Datasets collection</a> which hosts prepared datasets for TensorFlow models and analysis. We will explore use of the TensorFlow Datasets collection also in other lessons.</p>
@@ -1412,11 +1434,10 @@ dataset
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson2c_Intro_TF2_Keras_TFDS_RadiantEarth.html"
@@ -1436,10 +1457,7 @@ dataset
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1447,6 +1465,7 @@ dataset
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1509,6 +1528,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1517,6 +1537,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -1528,8 +1556,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

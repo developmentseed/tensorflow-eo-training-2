@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Transfer learning, fine-tuning and hyperparameter tuning &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson7c_transfer_learning_hyperparam_opt';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="TensorFlow advanced applications with deep learning object detection, time-series analysis" href="Lesson8_advanced_applications.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -483,13 +505,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transfer-learning-fine-tuning-and-hyperparameter-tuning">
-<h1>Transfer learning, fine-tuning and hyperparameter tuning<a class="headerlink" href="#transfer-learning-fine-tuning-and-hyperparameter-tuning" title="Permalink to this heading">#</a></h1>
+<h1>Transfer learning, fine-tuning and hyperparameter tuning<a class="headerlink" href="#transfer-learning-fine-tuning-and-hyperparameter-tuning" title="Link to this heading">#</a></h1>
 <p>This tutorial will walk through the process of transfer learning from a pre-trained network and a minimal approach to hyperparamater tuning. We’ll discuss what transfer learning and hyperparamater tuning are, when to consider them and demonstrate how to do so practically. This is an adaptation of this <a class="reference external" href="https://www.tensorflow.org/tutorials/images/transfer_learning#data_download">example</a> and this <a class="reference external" href="https://www.tensorflow.org/tutorials/keras/keras_tuner">one</a>.</p>
 <section id="transfer-learning-and-fine-tuning">
-<h2>Transfer learning and fine-tuning<a class="headerlink" href="#transfer-learning-and-fine-tuning" title="Permalink to this heading">#</a></h2>
+<h2>Transfer learning and fine-tuning<a class="headerlink" href="#transfer-learning-and-fine-tuning" title="Link to this heading">#</a></h2>
 <p>A pre-trained model is the result of a network that has been trained already on a large dataset, usually characterized by a high degree of generalization. These models, which require a long training time using significant computing resources, have most often learned to understand very basic representations of features across domains, such as edges and shapes. Because of their generalizability, they can be helpful in expediting the training process for a custom task because they’ve already grasped the basic features, allowing for any new training to focus on the more particular, higher-order features. This is the intuition behind a process known as transfer learning. In practice, transfer learning can help to reduce the amount of time it takes to train a performant custom model. Sometimes pre-trained models are referred to as “backbone” networks.</p>
 <p>There are two main strategies to transfer learning, which we will discuss and practice in this tutorial:</p>
 <ol class="arabic simple">
@@ -498,7 +520,7 @@ document.write(`
 </ol>
 </section>
 <section id="hyperparameter-tuning">
-<h2>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading">#</a></h2>
+<h2>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Link to this heading">#</a></h2>
 <p>Hyperparameters are the variables in a machine learning network that determine the topology and regulate the training process. Unlike trainable parameters, these variables do not change during training. There are exceptions to this, such as in the case of learning rate decay. One way to think of hyperparameters is in the sense of gears that you tune to affect the performance of the model. They can be largely broken down into two groups:</p>
 <ol class="arabic simple">
 <li><p>Model hyperparameters: these relate to aspects such as how many hidden layers a network has, how wide the layers are, what the kernel size is.</p></li>
@@ -511,7 +533,7 @@ document.write(`
 </ol>
 <p>Typically, many hyperparameters can remain fixed when fine-tuning. Usually, this gets a machine learning model the vast majority of the way toward peak performance. However, some pitfalls can arise if learning rates are too large (resulting in failure to converge) or epochs too few. And when transferring models to finetune on larger and higher resolution images, sometimes hyperparameters need to be tuned to account for smaller object sizes. We recommend starting a machine learning experiment with manual hyperparameter tuning and gradually adjusting values to understand how you need to adjust the learning process for your problem. Automatic hyperparameter tuning can be overkill and expensive because it requires running potentially many iterative experiments, utilizing resources and time, to arrive at what may be negligible differences in configuration (and performance) compared with manual tuning. That said, if you are not resource constrained and have an idea of what informative experiments you would like to run up front, automatic hyperparameter tuning can be an efficient way to select a best performing model. In this tutorial, we’ll explore how to do a minimal, automatic hyperparameter tuning experiment using the Keras library.</p>
 <section id="let-s-get-started">
-<h3>Let’s get started<a class="headerlink" href="#let-s-get-started" title="Permalink to this heading">#</a></h3>
+<h3>Let’s get started<a class="headerlink" href="#let-s-get-started" title="Link to this heading">#</a></h3>
 <p>So, now that we have these two tranfer learning strategies and hyperparameter tuning in mind, let’s get started with a practical example. We will revisit the use case in which we want to classify satellite images from the <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">Eurosat RGB land cover image classification dataset available on TensorFlow Datasets</a>. The goal will be to see how transfer learning and hyperparameter tuning may help us arrive at a performant model quickly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -596,7 +618,7 @@ Running on Colab
 </section>
 </section>
 <section id="data-loading-and-pre-processing">
-<h2>Data loading and pre-processing<a class="headerlink" href="#data-loading-and-pre-processing" title="Permalink to this heading">#</a></h2>
+<h2>Data loading and pre-processing<a class="headerlink" href="#data-loading-and-pre-processing" title="Link to this heading">#</a></h2>
 <p>We will again use the Eurosat dataset, which contains labeled Sentinel-2 image patches classified into 10 land cover types. More details here: <a class="reference external" href="https://www.tensorflow.org/datasets/catalog/eurosat">https://www.tensorflow.org/datasets/catalog/eurosat</a></p>
 <p>The classes in this dataset are: <code class="docutils literal notranslate"><span class="pre">['Industrial',</span> <span class="pre">'Pasture',</span> <span class="pre">'River',</span> <span class="pre">'Forest',</span> <span class="pre">'AnnualCrop',</span> <span class="pre">'PermanentCrop',</span> <span class="pre">'Highway',</span> <span class="pre">'HerbaceousVegetation',</span> <span class="pre">'Residential',</span> <span class="pre">'SeaLake']</span></code></p>
 <p>The dataset will be partitioned into training, validation and testing splits with a 70:20:10 ratio, respectively.</p>
@@ -697,7 +719,7 @@ print(train_dataset.element_spec)
 </div>
 </div>
 <section id="prepare-the-dataset-for-performance">
-<h3>Prepare the dataset for performance<a class="headerlink" href="#prepare-the-dataset-for-performance" title="Permalink to this heading">#</a></h3>
+<h3>Prepare the dataset for performance<a class="headerlink" href="#prepare-the-dataset-for-performance" title="Link to this heading">#</a></h3>
 <p>We will use buffered prefetching to efficiently load samples from disk with I/O blockages. Read more on this technique in this <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">data performance</a> guide.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -712,7 +734,7 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 </div>
 </section>
 <section id="augment-the-data">
-<h3>Augment the data<a class="headerlink" href="#augment-the-data" title="Permalink to this heading">#</a></h3>
+<h3>Augment the data<a class="headerlink" href="#augment-the-data" title="Link to this heading">#</a></h3>
 <p>We will apply various transformations (that reflect realistic representations) to improve the robustness of our dataset. For example, these will include rotation and flipping. In effect, these will help the model see more variety and avoid overfitting. Another good guide for data augmentation can be found <a class="reference external" href="https://www.tensorflow.org/tutorials/images/data_augmentation">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -746,7 +768,7 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 </div>
 </section>
 <section id="rescale-pixel-values">
-<h3>Rescale pixel values<a class="headerlink" href="#rescale-pixel-values" title="Permalink to this heading">#</a></h3>
+<h3>Rescale pixel values<a class="headerlink" href="#rescale-pixel-values" title="Link to this heading">#</a></h3>
 <p>We want our custom data, in this case the Eurosat images, to fit the scale expected by the pre-trained model. We will load the pretrained <code class="docutils literal notranslate"><span class="pre">tf.keras.applications.MobileNetV2</span></code> model soon, which expects pixel values between <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> so let’s rescale the new data to fit that criteria and add this as a preprocessing step in our final model set up.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -767,7 +789,7 @@ test_dataset = test_dataset.prefetch(buffer_size=AUTOTUNE)
 </section>
 </section>
 <section id="load-the-pre-trained-network-backbone">
-<h2>Load the pre-trained network (backbone)<a class="headerlink" href="#load-the-pre-trained-network-backbone" title="Permalink to this heading">#</a></h2>
+<h2>Load the pre-trained network (backbone)<a class="headerlink" href="#load-the-pre-trained-network-backbone" title="Link to this heading">#</a></h2>
 <p>Now we will load the model that will serve as the base from which we transfer learn using our Eurosat dataset. <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2/MobileNetV2">MobileNetV2</a> is a model that was developed at Google. It learned from the ImageNet dataset, which is a large and generalized dataset of natural images which has been used extensively for development of pre-trained models in computer vision.</p>
 <p>We will use the final-most pre-classification layer from the pre-trained network, known as the “bottleneck layer”, for feature extraction.</p>
 <p>A key step when loading the pre-trained network is to specify the <code class="docutils literal notranslate"><span class="pre">include_top=False</span></code> argument, which prevents inclusion of the classification layer.</p>
@@ -810,10 +832,10 @@ print(feature_batch.shape)
 </div>
 </section>
 <section id="feature-extraction">
-<h2>Feature extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this heading">#</a></h2>
+<h2>Feature extraction<a class="headerlink" href="#feature-extraction" title="Link to this heading">#</a></h2>
 <p>The next step is to freeze the pre-trained convolutional network we loaded, and implement it as a feature extractor, which will serve as input to a newly added top-level classifier that we will train using our custom data.</p>
 <section id="freeze-the-pre-trained-network">
-<h3>Freeze the pre-trained network<a class="headerlink" href="#freeze-the-pre-trained-network" title="Permalink to this heading">#</a></h3>
+<h3>Freeze the pre-trained network<a class="headerlink" href="#freeze-the-pre-trained-network" title="Link to this heading">#</a></h3>
 <p>Freezing the convolutional base network before compiling and training the model is crucial. By setting by setting <code class="docutils literal notranslate"><span class="pre">layer.trainable</span> <span class="pre">=</span> <span class="pre">False</span></code> for a layer, we ensure its weights don’t get updated/re-trained during training. There are many layers in MobileNetV2, so we will just freeze the whole network by setting the entire network’s <code class="docutils literal notranslate"><span class="pre">trainable</span></code> flag to False.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -824,7 +846,7 @@ print(feature_batch.shape)
 </div>
 </section>
 <section id="critical-note-for-use-of-batchnormalization-layers">
-<h3>Critical note for use of BatchNormalization layers<a class="headerlink" href="#critical-note-for-use-of-batchnormalization-layers" title="Permalink to this heading">#</a></h3>
+<h3>Critical note for use of BatchNormalization layers<a class="headerlink" href="#critical-note-for-use-of-batchnormalization-layers" title="Link to this heading">#</a></h3>
 <p>It’s common to include <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.BatchNormalization</span></code> layers in a model, but in the context of fine-tuning which we will explore later on, it’s important that these layers are treated with precaution.</p>
 <p>Under the mode of <code class="docutils literal notranslate"><span class="pre">layer.trainable</span> <span class="pre">=</span> <span class="pre">False</span></code>, a <code class="docutils literal notranslate"><span class="pre">BatchNormalization</span></code> layer won’t apply any updates to its mean and variance statistics. This is called inference mode. Keeping BatchNormalization layers in inference mode during fine-tuning is important, otherwise, the non-trainable weights will be updated and this will corrupt what the pre-trained model has already learned.</p>
 <p>More on this can be read in this <a class="reference external" href="https://www.tensorflow.org/guide/keras/transfer_learning">transfer learning guide</a>.</p>
@@ -1239,7 +1261,7 @@ ________________________________________________________________________________
 </div>
 </section>
 <section id="add-a-new-classification-layer-head">
-<h3>Add a new classification layer (head)<a class="headerlink" href="#add-a-new-classification-layer-head" title="Permalink to this heading">#</a></h3>
+<h3>Add a new classification layer (head)<a class="headerlink" href="#add-a-new-classification-layer-head" title="Link to this heading">#</a></h3>
 <p>We will add a layer that averages over the feature maps and produce a flat vector for each sample in the batch.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1287,7 +1309,7 @@ model = tf.keras.Model(inputs, outputs)
 </div>
 </section>
 <section id="compile-the-model">
-<h3>Compile the model<a class="headerlink" href="#compile-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Compile the model<a class="headerlink" href="#compile-the-model" title="Link to this heading">#</a></h3>
 <p>Compile the model. There are 10 classes in the Eurosat dataset, so we will use an appropriate loss function for multi-class classification, <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.SparseCategoricalCrossentropy</span></code>, with <code class="docutils literal notranslate"><span class="pre">from_logits=True</span></code> as this model generates linear output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1354,7 +1376,7 @@ _________________________________________________________________
 </div>
 </section>
 <section id="train-the-model">
-<h3>Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Train the model<a class="headerlink" href="#train-the-model" title="Link to this heading">#</a></h3>
 <p>We will train for some epochs, and then check the accuracy on the validation set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1419,7 +1441,7 @@ Epoch 10/10
 </div>
 </section>
 <section id="learning-curves">
-<h3>Learning curves<a class="headerlink" href="#learning-curves" title="Permalink to this heading">#</a></h3>
+<h3>Learning curves<a class="headerlink" href="#learning-curves" title="Link to this heading">#</a></h3>
 <p>The learning curves for the training and validation accuracy/loss help us visualize what happens when we use the MobileNetV2 pre-trained model as a fixed feature extractor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1474,13 +1496,13 @@ Test accuracy : 0.8469135761260986
 </section>
 </section>
 <section id="fine-tuning">
-<h2>Fine tuning<a class="headerlink" href="#fine-tuning" title="Permalink to this heading">#</a></h2>
+<h2>Fine tuning<a class="headerlink" href="#fine-tuning" title="Link to this heading">#</a></h2>
 <p>When we were using the pre-trained network for feature extraction alone, we were only training a minimal set of added layers on top of the MobileNetV2 backbone. None of the backbone was trained.</p>
 <p>It’s possible we can improve the accuracy of our model further by fine-tuning the weights from the final-most pre-classification layers of the backbone by training them with our added classification layers.</p>
 <p>This fused training should refine the pre-trained feature maps from a generic to more specific representation of the custom data.</p>
 <p>Note: It’s best to fine-tune after having trained the top-level classifier with the backbone set to non-trainable. Reason being, if we were to try to jointly train a randomly initialized classifier on top of a pre-trained model, the computed gradients will be too large, causing major gradient updates and information degradation to the pre-trained model. As well, a best practice is to only fine-tune a minimal set of top-most layers from the backbone instead of the entire network since the bottom-most layers are really just learning simple, generic features. This harkens back to the goal of fine-tuning, which is to refine the higher-order feature maps to the custom data.</p>
 <section id="un-freeze-some-top-layers-of-the-model">
-<h3>Un-freeze some top layers of the model<a class="headerlink" href="#un-freeze-some-top-layers-of-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Un-freeze some top layers of the model<a class="headerlink" href="#un-freeze-some-top-layers-of-the-model" title="Link to this heading">#</a></h3>
 <p>We will unfreeze our backbone, the <code class="docutils literal notranslate"><span class="pre">base_model</span></code>, and instead, just set the bottom (generic) layers to be un-trainable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1511,7 +1533,7 @@ for layer in base_model.layers[:fine_tune_at]:
 </div>
 </section>
 <section id="id1">
-<h3>Compile the model<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Compile the model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>We must then recompile the model for these changes to take effect. It’s key to use a low learning rate because otherwise, we might overfit with such a large model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1576,7 +1598,7 @@ _________________________________________________________________
 </div>
 </section>
 <section id="continue-training-the-model">
-<h3>Continue training the model<a class="headerlink" href="#continue-training-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Continue training the model<a class="headerlink" href="#continue-training-the-model" title="Link to this heading">#</a></h3>
 <p>Lastly, we will fine-tune by resuming training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1674,7 +1696,7 @@ plt.show()
 </div>
 </section>
 <section id="evaluation-and-prediction">
-<h3>Evaluation and prediction<a class="headerlink" href="#evaluation-and-prediction" title="Permalink to this heading">#</a></h3>
+<h3>Evaluation and prediction<a class="headerlink" href="#evaluation-and-prediction" title="Link to this heading">#</a></h3>
 <p>Now let’s measure the performance of the fine-tuned model on new data from the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1712,7 +1734,7 @@ print(len(predictions.numpy()), len(label_batch))
 </section>
 </section>
 <section id="id2">
-<h2>Hyperparameter Tuning<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<h2>Hyperparameter Tuning<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>To use the <a class="reference external" href="https://keras.io/api/keras_tuner/">Keras tuner library</a>, we have to format our model in a model builder function. All this takes is enveloping the constituent layers we defined above in a function, ensuring that any arguments such as <code class="docutils literal notranslate"><span class="pre">INPUT_SHAPE</span></code> have been defined outside of the function.</p>
 <p>We will tune the learning rate in the following experiment, with the goal of selecting the optimal value from a range between <code class="docutils literal notranslate"><span class="pre">[0.0001,</span> <span class="pre">0.01]</span></code>.</p>
 <p>The function will return the compiled model using the selection of hyperparameters defined.</p>
@@ -1884,11 +1906,10 @@ print(&quot;[test loss, test accuracy]:&quot;, eval_result)
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson7b_comparing_RNN_transformer_architectures.html"
@@ -1908,10 +1929,7 @@ print(&quot;[test loss, test accuracy]:&quot;, eval_result)
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1919,6 +1937,7 @@ print(&quot;[test loss, test accuracy]:&quot;, eval_result)
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1976,6 +1995,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1984,6 +2004,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -1995,8 +2023,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

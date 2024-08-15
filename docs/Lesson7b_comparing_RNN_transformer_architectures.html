@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Comparing RNNs and Transformers for Imagery &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson7b_comparing_RNN_transformer_architectures';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Transfer learning, fine-tuning and hyperparameter tuning" href="Lesson7c_transfer_learning_hyperparam_opt.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -468,15 +490,15 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="comparing-rnns-and-transformers-for-imagery">
-<h1>Comparing RNNs and Transformers for Imagery<a class="headerlink" href="#comparing-rnns-and-transformers-for-imagery" title="Permalink to this heading">#</a></h1>
+<h1>Comparing RNNs and Transformers for Imagery<a class="headerlink" href="#comparing-rnns-and-transformers-for-imagery" title="Link to this heading">#</a></h1>
 <blockquote>
 <div><p>A guide for selecting deep-learning architectures for land use / land cover mapping and change detection in satellite imagery.</p>
 </div></blockquote>
 <section id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Understand RNNs and the differences in structure from CNNs</p></li>
 <li><p>Cover a short history of RNNs for time series forecasting and prediction</p></li>
@@ -484,25 +506,25 @@ document.write(`
 <li><p>Cover CNN and Transformer models for time series prediction and how they address RNN challenges.</p></li>
 </ul>
 <section id="rnn-architectures-for-forecasting-and-change-detection-in-1-d-and-imagery-sequences">
-<h3>RNN Architectures for Forecasting and Change Detection in 1-D and Imagery Sequences<a class="headerlink" href="#rnn-architectures-for-forecasting-and-change-detection-in-1-d-and-imagery-sequences" title="Permalink to this heading">#</a></h3>
+<h3>RNN Architectures for Forecasting and Change Detection in 1-D and Imagery Sequences<a class="headerlink" href="#rnn-architectures-for-forecasting-and-change-detection-in-1-d-and-imagery-sequences" title="Link to this heading">#</a></h3>
 <p>Until now, our discussions have centered on fixed-length datasets composed of 3-band images. While CNNs excel with these types of datasets, understanding the relationship between images in a sequence requires a more intricate structure that takes into account interactions along the time dimension.</p>
 <p>Recurrent Neural Networks (RNNs) are tailored for modeling variable-length sequences, whether they’re text, 1-dimensional time series, or sequences of images like videos. Unlike CNNs, RNNs maintain a “hidden state” at each time step, representing the outcome from all hidden layers within the RNN. This state, along with the sequence input, is fed into the subsequent RNN time step. To illustrate, consider the task of predicting the next letter in the word “dogs” using an RNN:</p>
 <figure class="align-default" id="rnnfig">
 <a class="reference internal image-reference" href="https://miro.medium.com/v2/resize:fit:720/format:webp/1*dyfwJJuGT2Svy10iYAVDEQ.png"><img alt="https://miro.medium.com/v2/resize:fit:720/format:webp/1*dyfwJJuGT2Svy10iYAVDEQ.png" src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*dyfwJJuGT2Svy10iYAVDEQ.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Ben Khuong, The Basics of Recurrent Neural Networks (RNNs)</span><a class="headerlink" href="#rnnfig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Ben Khuong, The Basics of Recurrent Neural Networks (RNNs)</span><a class="headerlink" href="#rnnfig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Here, the hidden states, represented by “h”, are derived from individual sequence samples. The nodes of the hidden layers, “a”, embody the learned weights and biases for each state. Because each state depends on its predecessor, states must be computed sequentially, not in parallel.</p>
 <p>The computational demands of RNNs are substantial due to their sequential nature. Furthermore, the direct links between adjacent time steps give the network a short-term memory biased towards length t=1. While inputs farther than t=1 can influence a hidden state, conventional RNNs grapple with the vanishing (or exploding) gradient issue. As a remedy, Long Short-Term Memory networks (LSTMs) were crafted to tackle more complex sequence modeling challenges and combat the vanishing gradient problem. We’ll delve into LSTMs shortly.</p>
 </section>
 <section id="long-short-term-memory-networks-hochreiter-and-schmidhuber-1997">
-<h3>Long Short-Term Memory Networks (Hochreiter and Schmidhuber, 1997)<a class="headerlink" href="#long-short-term-memory-networks-hochreiter-and-schmidhuber-1997" title="Permalink to this heading">#</a></h3>
+<h3>Long Short-Term Memory Networks (Hochreiter and Schmidhuber, 1997)<a class="headerlink" href="#long-short-term-memory-networks-hochreiter-and-schmidhuber-1997" title="Link to this heading">#</a></h3>
 <p>LSTMs introduced the concept of “memory cell state” to RNN computations, termed the “memory block”. This memory block empowers LSTMs to determine which learned contexts to retain or discard and how much of it to relay to the next step. These decisions are steered by gates, which mitigate the vanishing gradient issue by ensuring that only informative gradients are computed. Think of the memory block as the RAM of your computer, always keeping relevant short term or long term information updated and ready for the LSTM. In contrast, a regular RNN has no memory cell, so they have difficulty accessing information in the distant past.</p>
 <figure class="align-default" id="lstmrnnfig">
 <a class="reference internal image-reference" href="https://d2l.ai/_images/lstm-2.svg"><img alt="https://d2l.ai/_images/lstm-2.svg" src="https://d2l.ai/_images/lstm-2.svg" width="450px" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Long Short-Term Memory (LSTM) from “Dive into Deep Learning” by <a class="reference external" href="http://d2l.ai">d2l.ai</a>, used under CC BY-SA 4.0</span><a class="headerlink" href="#lstmrnnfig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Long Short-Term Memory (LSTM) from “Dive into Deep Learning” by <a class="reference external" href="http://d2l.ai">d2l.ai</a>, used under CC BY-SA 4.0</span><a class="headerlink" href="#lstmrnnfig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The figure above depicts:</p>
@@ -512,12 +534,12 @@ An output gate, which influences the final output based on the current memory ce
 LSTMs, along with architectures like bi-directional RNNs, dominated sequence prediction between 2011 and 2017. Transformers would soon dethrone them. However, the intrinsic limitation of RNNs—that they don’t support parallel training—renders them less favorable for training sizable models on extensive image datasets. We’ll soon explore how Transformers and other architectures overcome this shortcoming.</p>
 </section>
 <section id="the-transformer-vaswani-et-al-2017">
-<h3>The Transformer (Vaswani et al. 2017)<a class="headerlink" href="#the-transformer-vaswani-et-al-2017" title="Permalink to this heading">#</a></h3>
+<h3>The Transformer (Vaswani et al. 2017)<a class="headerlink" href="#the-transformer-vaswani-et-al-2017" title="Link to this heading">#</a></h3>
 <p>For decades, CNNs have reigned in computer vision, while LSTMs have led natural language processing. Despite numerous advancements in activation functions (like ReLU), training methodologies (e.g., Batch Norm), and architectural refinements (such as residual connections), these classic architectures persisted. However, the Transformer’s introduction marked a significant shift in foundational computing architectures, ushering in the era of self-attention.</p>
 <p>Initially, Vaswani and colleagues (2017) introduced the Transformer for transduction tasks—converting input sequences into output sequences. By 2020, Dosovitskiy et al. demonstrated that Transformers could achieve near state-of-the-art results in image classification, surpassing complex CNN-based models in terms of computational efficiency.</p>
 </section>
 <section id="encoder-decoder-models-and-the-self-attention-mechanism">
-<h3>Encoder-Decoder Models and the Self-Attention Mechanism<a class="headerlink" href="#encoder-decoder-models-and-the-self-attention-mechanism" title="Permalink to this heading">#</a></h3>
+<h3>Encoder-Decoder Models and the Self-Attention Mechanism<a class="headerlink" href="#encoder-decoder-models-and-the-self-attention-mechanism" title="Link to this heading">#</a></h3>
 <p>When processing image time series, our primary goals are either:</p>
 <ol class="arabic simple">
 <li><p>do pixel-wise segmentation of the time series at each time step, producing an equivalent length time series of maps</p></li>
@@ -528,35 +550,35 @@ LSTMs, along with architectures like bi-directional RNNs, dominated sequence pre
 <figure class="align-default" id="id1">
 <a class="reference internal image-reference" href="https://d2l.ai/_images/cnn-rnn-self-attention.svg"><img alt="https://d2l.ai/_images/cnn-rnn-self-attention.svg" src="https://d2l.ai/_images/cnn-rnn-self-attention.svg" width="450px" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 40 </span><span class="caption-text"><a class="reference external" href="https://d2l.ai/_images/cnn-rnn-self-attention.svg">A Comparison of Self-Attention to CNN and RNN based methods for Sequence Processing</a> from “Dive into Deep Learning” by <a class="reference external" href="http://d2l.ai">d2l.ai</a>, used under CC BY-SA 4.0</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text"><a class="reference external" href="https://d2l.ai/_images/cnn-rnn-self-attention.svg">A Comparison of Self-Attention to CNN and RNN based methods for Sequence Processing</a> from “Dive into Deep Learning” by <a class="reference external" href="http://d2l.ai">d2l.ai</a>, used under CC BY-SA 4.0</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In the RNN, as we have described in the previous section, inputs X1, X2, and so on must be processed independently. In contrast, for the CNN and self-attention, inputs may be processed in parallel. The primary difference between CNNs and self-attention is that self-attention has a shorter path length when computing between different points in a sequence. But, self-attention requires quadratic computational complexity (a problem addressed by GoogleNet in 2014). This increase in computational complexity when training self-attention models is important to keep in mind. Even though the representational power of these models may be higher than CNNs given enough training data and compute, you may not have the resources needed to take advantage of self-attention when training models from scratch.</p>
 </section>
 <section id="vision-transformer-dosovitskiy-2020">
-<h3>Vision Transformer (Dosovitskiy 2020)<a class="headerlink" href="#vision-transformer-dosovitskiy-2020" title="Permalink to this heading">#</a></h3>
+<h3>Vision Transformer (Dosovitskiy 2020)<a class="headerlink" href="#vision-transformer-dosovitskiy-2020" title="Link to this heading">#</a></h3>
 <p>Notably, the Vison Transformer, or ViT, has been shown to greatly outperform Resnets given enough training data (Dosovitskiy 2020).</p>
 <figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-01-26_at_9.43.31_PM_uI4jjMq.png"><img alt="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-01-26_at_9.43.31_PM_uI4jjMq.png" src="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-01-26_at_9.43.31_PM_uI4jjMq.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 41 </span><span class="caption-text"><a class="reference external" href="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-01-26_at_9.43.31_PM_uI4jjMq.png">An image is worth 16x16 words: Transformers in Image Recognition at Scale</a></span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text"><a class="reference external" href="https://production-media.paperswithcode.com/methods/Screen_Shot_2021-01-26_at_9.43.31_PM_uI4jjMq.png">An image is worth 16x16 words: Transformers in Image Recognition at Scale</a></span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>However, because transformers have less assumptions of local structure in images than CNNs, they can still underperform CNNs when pretrained on datasets on the scale of ImageNet (under 2 million images). Since ViT’s introduction, developments in transformers for vision are moving quickly to address computational challenges and input requirements of the architecture. Notably, the SWiN Transformer addresses the quadratic complexity problem, producing state of the art results on Imagenet classfication by introducing CNN-like priors (Liu et al. 2021). And a very recent development, NaViT (Dehghani 2023) removes a common input constraint of CNNs and older ViT implementations where the aspect ratio and resolution of images must be the same as what was used during training. There is still much investigation to be done on the transferrability of ViT-based models to the remote sensing domain given most are pretrained on natural images, and to develop foundational models in the remote sensing domain on satellite imagery.</p>
 <p>ConvMixer is an alternative with lower computational burden, that is CNN and MLP based, available from the Keras team: <a class="reference external" href="https://huggingface.co/keras-io/convmixer">https://huggingface.co/keras-io/convmixer</a></p>
 </section>
 <section id="foundational-transformer-models">
-<h3>Foundational Transformer Models<a class="headerlink" href="#foundational-transformer-models" title="Permalink to this heading">#</a></h3>
+<h3>Foundational Transformer Models<a class="headerlink" href="#foundational-transformer-models" title="Link to this heading">#</a></h3>
 <p>Because of their higher computational complexity and high performance, a recent trend in deep learning has been to focus efforts on training foundational models. Foundational models are large models in the sense that they have a large number of parameters, have been exposed to data from many different domains, and can be fine-tuned for a variety of tasks across text, vision, speech, or even between these disparate domains.</p>
 <p>While foundational image models have been developed, the image domains they have been trained on are typically limited to natural images, i.e. street view scenes, photographs, and other imagery that is not in the top-down sensor domain we typically deal with. Yet there have been some very recent releases of foundational models that are relevant in the top-down sensor domain.</p>
 <section id="segment-anything">
-<h4>Segment Anything<a class="headerlink" href="#segment-anything" title="Permalink to this heading">#</a></h4>
+<h4>Segment Anything<a class="headerlink" href="#segment-anything" title="Link to this heading">#</a></h4>
 <p>In March 2023, Facebook AI Research released Segment Anything Model (SAM). SAM was trained on a massive dataset of 1 billion masks—data that is 100 times the order of magnitude of ImageNet or COCO, two other popular pretraining datasets in computer vision.</p>
 <p>With SAM, users can drop a point on objects in satellite imagery and, in many cases, automatically generate great segmentation predictions. This model uses a two-stage prediction approach. First, an encoder converts an image to image features (embeddings). Then, a decoder takes an encoded prompt and a user supplied input (point(s), bounding box, or text), converting them into segmentation masks that delineate the boundary of an object or objects (Figure 1).</p>
 <figure class="align-default" id="samfig">
 <a class="reference internal image-reference" href="https://developmentseed.org/static/c3618a07aa1830901ed491b4a4bd01e6/00405/sam-blog-fig1.png"><img alt="https://developmentseed.org/static/c3618a07aa1830901ed491b4a4bd01e6/00405/sam-blog-fig1.png" src="https://developmentseed.org/static/c3618a07aa1830901ed491b4a4bd01e6/00405/sam-blog-fig1.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 42 </span><span class="caption-text"><a class="reference external" href="https://developmentseed.org/static/c3618a07aa1830901ed491b4a4bd01e6/00405/sam-blog-fig1.png">The Segment Anything Model Architecture</a> from “Introducing Segment Anything: Working toward the first foundation model for image segmentation” by Meta.</span><a class="headerlink" href="#samfig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text"><a class="reference external" href="https://developmentseed.org/static/c3618a07aa1830901ed491b4a4bd01e6/00405/sam-blog-fig1.png">The Segment Anything Model Architecture</a> from “Introducing Segment Anything: Working toward the first foundation model for image segmentation” by Meta.</span><a class="headerlink" href="#samfig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In our initial explorations, SAM is more robust and has better domain adaptability than Imagenet or COCO pre-trained weights out of the box. What’s more, SAM can be adapted on the fly for particular detection problems through user prompting! With prompting, as a user supplies inputs that relate to objects of interest, the model adapts to get better at generating segments for the problem at hand.</p>
@@ -565,11 +587,11 @@ LSTMs, along with architectures like bi-directional RNNs, dominated sequence pre
 </section>
 </section>
 <section id="alternatives-to-vision-transformers">
-<h3>Alternatives to Vision Transformers<a class="headerlink" href="#alternatives-to-vision-transformers" title="Permalink to this heading">#</a></h3>
+<h3>Alternatives to Vision Transformers<a class="headerlink" href="#alternatives-to-vision-transformers" title="Link to this heading">#</a></h3>
 <p>While vision transformers are powerful architectures, a big limitation is the lack of foundational models trained in the remote sensing domain. Because of the lack of CNN priors, vision transformers can learn more helpful image features but can also be more difficult to train with limited data. Because of this, be aware of other approaches that can work with limited labeled datasets that are typical in remote sensing. In the next section, we’ll cover approaches we’ve used at Development Seed for change detection and mapping, including U-Net and TinyCD. We’ll also cover state of the art pixel based approaches that have recently demonstrated strong performance in the remote sensing domain.</p>
 </section>
 <section id="references">
-<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h3>
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>[i] <a class="reference external" href="https://arxiv.org/abs/1706.03762">Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., … &amp; Polosukhin, I. (2017). Attention is all you need.</a></p></li>
 <li><p>[ii] <a class="reference external" href="https://arxiv.org/abs/2010.11929">Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., … &amp; Uszkoreit, J. (2020). An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.</a></p></li>
@@ -605,11 +627,10 @@ LSTMs, along with architectures like bi-directional RNNs, dominated sequence pre
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson7a_comparing_architectures.html"
@@ -629,10 +650,7 @@ LSTMs, along with architectures like bi-directional RNNs, dominated sequence pre
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -640,6 +658,7 @@ LSTMs, along with architectures like bi-directional RNNs, dominated sequence pre
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -682,6 +701,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -690,6 +710,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -701,8 +729,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

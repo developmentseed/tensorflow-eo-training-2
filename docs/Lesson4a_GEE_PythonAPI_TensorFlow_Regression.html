@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Regression using TensorFlow with Google Earth Engine Python API &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson4a_GEE_PythonAPI_TensorFlow_Regression';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="What are cloud providers? Why might I need them for ML and Earth observation data?" href="Lesson4b_Integrations_with_Google_Cloud_Platform.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -469,10 +491,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="regression-using-tensorflow-with-google-earth-engine-python-api">
-<h1>Regression using TensorFlow with Google Earth Engine Python API<a class="headerlink" href="#regression-using-tensorflow-with-google-earth-engine-python-api" title="Permalink to this heading">#</a></h1>
+<h1>Regression using TensorFlow with Google Earth Engine Python API<a class="headerlink" href="#regression-using-tensorflow-with-google-earth-engine-python-api" title="Link to this heading">#</a></h1>
 <p>This tutorial demonstrates how to train a model to predict continuous output (regression) from geospatial data. To do this, we will use the impervious surface area dataset from <a class="reference external" href="https://www.mrlc.gov/data">NLCD</a> and a Landsat 8 composite. Both datasets will be acquired from Google Earth Engine. Using the Keras sequential API, we will show how to train a <a class="reference external" href="https://arxiv.org/abs/1505.04597">U-Net</a> model to predict impervious surface area percentage for each pixel in an image.</p>
 <p>This tutorial is an adaptation of this <a class="reference external" href="https://developers.google.com/earth-engine/guides/tf_examples#regression-with-an-fcnn">example</a>.</p>
 <p>This tutorial covers:</p>
@@ -483,7 +505,7 @@ document.write(`
 <li><p>Generating predictions with the trained model and plotting them.</p></li>
 </ol>
 <section id="what-is-regression">
-<h2>What is regression?<a class="headerlink" href="#what-is-regression" title="Permalink to this heading">#</a></h2>
+<h2>What is regression?<a class="headerlink" href="#what-is-regression" title="Link to this heading">#</a></h2>
 <p>Suppose we want to predict something like earthquake intensity or soil mositure given a satellite image. These express as continuous targets across pixels. This makes the objective different than classification, where a discrete set of classes are predicted across pixels. Models designed to predict a continuous output are performing regression. In a supervised context, the goal of regression is to produce results with the minimum difference (error) between the true and predicted values. We can approach this through a number of machine learning algorithms, to include deep learning with convolutional neural networks. You may have seen ConvNets used extensively for classification, but they have significant power for modeling regression problems. That said, it’s important to be aware of when deep learning is useful for regression.</p>
 <p>There are two common types of regression problems:</p>
 <ol class="arabic simple">
@@ -500,7 +522,7 @@ document.write(`
 <figure class="align-default" id="u-net-for-regression">
 <a class="reference internal image-reference" href="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png"><img alt="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png" src="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 23 </span><span class="caption-text"><a class="reference external" href="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png">U-Net for regression</a> from <a class="reference external" href="https://www.researchgate.net/publication/352181228_Deep_Learning-Based_Radar_Composite_Reflectivity_Factor_Estimations_from_Fengyun-4A_Geostationary_Satellite_Observations">“Deep Learning-Based Radar Composite Reflectivity Factor Estimations from Fengyun-4A Geostationary Satellite Observations” by Sun et. al, 2021</a></span><a class="headerlink" href="#u-net-for-regression" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text"><a class="reference external" href="https://www.researchgate.net/profile/Fenglin-Sun-2/publication/352181228/figure/fig2/AS:1032041529368581&#64;1623069283910/A-U-net-regression-architecture-example-of-50-80-pixels-in-the-lowest-resolution.png">U-Net for regression</a> from <a class="reference external" href="https://www.researchgate.net/publication/352181228_Deep_Learning-Based_Radar_Composite_Reflectivity_Factor_Estimations_from_Fengyun-4A_Geostationary_Satellite_Observations">“Deep Learning-Based Radar Composite Reflectivity Factor Estimations from Fengyun-4A Geostationary Satellite Observations” by Sun et. al, 2021</a></span><a class="headerlink" href="#u-net-for-regression" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In this tutorial, we’ll look at a practical example of using satellite imagery with descriptive features to predict pixel-wise percentages. Naturally, our labels and predictions will be constrained to a range of [0,1]. The goals will be to train a model that:</p>
@@ -510,7 +532,7 @@ document.write(`
 </ol>
 </section>
 <section id="imports-and-authentication">
-<h2>Imports and authentication<a class="headerlink" href="#imports-and-authentication" title="Permalink to this heading">#</a></h2>
+<h2>Imports and authentication<a class="headerlink" href="#imports-and-authentication" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cloud authentication.</span>
@@ -575,15 +597,15 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span># Move to your user_outputs_dir directory in order to write data
-%cd $user_outputs_dir
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Move to your user_outputs_dir directory in order to write data</span>
+<span class="o">%</span><span class="n">cd</span> <span class="err">$</span><span class="n">user_outputs_dir</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="set-global-parameters">
-<h2>Set global parameters<a class="headerlink" href="#set-global-parameters" title="Permalink to this heading">#</a></h2>
+<h2>Set global parameters<a class="headerlink" href="#set-global-parameters" title="Link to this heading">#</a></h2>
 <p>Below we’ll set up the <code class="docutils literal notranslate"><span class="pre">FEATURES_DICT</span></code> metadata objects that will help us access the satellite imagery bands we will use for training. We’ll also define the paths to our dataset splits we’ll use for training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -651,7 +673,7 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!ls fcnn-demo
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">ls</span> <span class="n">fcnn</span><span class="o">-</span><span class="n">demo</span>
 </pre></div>
 </div>
 </div>
@@ -659,7 +681,7 @@ document.write(`
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="imagery">
-<h1>Imagery<a class="headerlink" href="#imagery" title="Permalink to this heading">#</a></h1>
+<h1>Imagery<a class="headerlink" href="#imagery" title="Link to this heading">#</a></h1>
 <p>Collect and process the input imagery (cloud masking, compositing).  Display the composite.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -779,7 +801,7 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="sampling">
-<h1>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">#</a></h1>
+<h1>Sampling<a class="headerlink" href="#sampling" title="Link to this heading">#</a></h1>
 <p>Now we will use those geometries to extract samples from the stacked image array. Within each geometry we take a 256x256 neighborhood of pixels around several points, shard them to prevent memory error and then collect them into a single tfrecord. This is done for the training and validation data separately.</p>
 <p>Note: for brevity’s sake in this tutorial, we are only sampling from 2 training geometries. You can revise <code class="docutils literal notranslate"><span class="pre">range(2):</span> <span class="pre">#range(trainingPolys.size().getInfo())</span></code> if you wish to use all geometries.</p>
 <div class="cell docutils container">
@@ -883,7 +905,7 @@ document.write(`
 <p>Since the above cell takes a long time to run, let’s cancel it and switch to using the directory with the prepared intermediate and final data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $processed_outputs_dir
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="err">$</span><span class="n">processed_outputs_dir</span>
 </pre></div>
 </div>
 </div>
@@ -892,7 +914,7 @@ document.write(`
 <p>!ls fcnn-demo</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="training-data">
-<h1>Training data<a class="headerlink" href="#training-data" title="Permalink to this heading">#</a></h1>
+<h1>Training data<a class="headerlink" href="#training-data" title="Link to this heading">#</a></h1>
 <p>Now that we have exported a TFRecord from Earth Engine, let’s load it into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.  Unfortunately, there isn’t a path to load the data directly from Earth Engine into a <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -962,7 +984,7 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="validation-data">
-<h1>Validation data<a class="headerlink" href="#validation-data" title="Permalink to this heading">#</a></h1>
+<h1>Validation data<a class="headerlink" href="#validation-data" title="Link to this heading">#</a></h1>
 <p>Parse the validation dataset.  Note that the validation dataset has a batch size of 1 which is different from the training dataset. Another distinction is that the validation dataset is not shuffled.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -983,7 +1005,7 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="model">
-<h1>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h1>
+<h1>Model<a class="headerlink" href="#model" title="Link to this heading">#</a></h1>
 <p>For our model, we will use a Keras implementation of the U-Net model, and provide the network with 256x256 pixel image patches as input. The output will be probabilities for each pixel (a continuous output).</p>
 <p>As this is a regression problem, we apply mean squared error as our loss function. As well, we implement a saturating activation function to address any artifacts that are produced from squashing the range of values to [0,1] (something we need to do to make a sensible measurement of impervious surface fraction per pixel).</p>
 <div class="cell docutils container">
@@ -1044,7 +1066,7 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="training-the-model">
-<h1>Training the model<a class="headerlink" href="#training-the-model" title="Permalink to this heading">#</a></h1>
+<h1>Training the model<a class="headerlink" href="#training-the-model" title="Link to this heading">#</a></h1>
 <p>Now we train the compiled network by calling <code class="docutils literal notranslate"><span class="pre">.fit()</span></code>.  Typically we would train at least a full epoch, which is a full pass through the trainind dataset. However, this takes prohibitively long when using Google Clab + Google Drive for storage, an epoch takes 10 minutes on a T4 GPU. We will instead train for 2 reduced epochs of step size 20, meaning we will train on 40 samples, which works for a demo.  On a faster infrasturcture setup, the model may improve with more iteration, which can be experimented with by <a class="reference external" href="https://cloud.google.com/ml-engine/docs/tensorflow/using-hyperparameter-tuning">hyperparameter tuning</a> and implementation of early stopping mechanisms.</p>
 <p>Notice in the Google Colab Resource usage window how long it takes for GPU memory to start being utilized. it’s helpful during training to inspect the GPU and CPU resource usage in real time to understand what resources your model training needs.</p>
 <div class="cell docutils container">
@@ -1063,7 +1085,7 @@ document.write(`
 <p>Let’s save the trained model to file. We need to switch back to the user outputs dir briefly in order to save to a writeable user folder in your personal Google Drive.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $user_outputs_dir
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="err">$</span><span class="n">user_outputs_dir</span>
 </pre></div>
 </div>
 </div>
@@ -1081,7 +1103,7 @@ document.write(`
 <p>We will switch back to the already processed outputs to load a model trained for 2 full epochs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>%cd $processed_outputs_dir
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="err">$</span><span class="n">processed_outputs_dir</span>
 </pre></div>
 </div>
 </div>
@@ -1099,7 +1121,7 @@ document.write(`
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="prediction">
-<h1>Prediction<a class="headerlink" href="#prediction" title="Permalink to this heading">#</a></h1>
+<h1>Prediction<a class="headerlink" href="#prediction" title="Link to this heading">#</a></h1>
 <p>Now, let’s make predictions for a new area to see how the model generalizes to new data. Bear in mind, the model was trained on data in the US because that is where the labels were available, but let’s see the trained model applies to a region of Lima, Peru.</p>
 <p>Again, we will use a defined geometry to process and export imagery from Earth Engine in TFRecord format. Then we’ll use our trained model to predict impervious surface area percentages on the new imagery and write the predictions to both a TFRecord file and image patches (true color and prediction).</p>
 <p>We separate the image export from the predict function because the export only needs to happen once, but perhaps you’ll experiment with the model setup and run new predictions several times.</p>
@@ -1145,93 +1167,93 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>def get_files_list(out_image_base):
-    &quot;&quot;&quot;Retrieve the list of image and JSON files.&quot;&quot;&quot;
-    filesList = glob.glob(f&quot;{FOLDER}/*&quot;)
-    exportFilesList = [s for s in filesList if out_image_base in s]
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_files_list</span><span class="p">(</span><span class="n">out_image_base</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve the list of image and JSON files.&quot;&quot;&quot;</span>
+    <span class="n">filesList</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/*&quot;</span><span class="p">)</span>
+    <span class="n">exportFilesList</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">filesList</span> <span class="k">if</span> <span class="n">out_image_base</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
 
-    imageFilesList = []
-    jsonFile = None
-    for f in exportFilesList:
-        if f.endswith(&#39;.tfrecord.gz&#39;):
-            imageFilesList.append(f)
-        elif f.endswith(&#39;.json&#39;):
-            jsonFile = f
+    <span class="n">imageFilesList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">jsonFile</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">exportFilesList</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.tfrecord.gz&#39;</span><span class="p">):</span>
+            <span class="n">imageFilesList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+            <span class="n">jsonFile</span> <span class="o">=</span> <span class="n">f</span>
             
-    imageFilesList.sort()
+    <span class="n">imageFilesList</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
     
-    return imageFilesList, jsonFile
+    <span class="k">return</span> <span class="n">imageFilesList</span><span class="p">,</span> <span class="n">jsonFile</span>
 
-def load_json(jsonFile):
-    &quot;&quot;&quot;Load the JSON mixer file.&quot;&quot;&quot;
-    jsonText = !cat {jsonFile}
-    mixer = json.loads(jsonText.nlstr)
-    return mixer
+<span class="k">def</span> <span class="nf">load_json</span><span class="p">(</span><span class="n">jsonFile</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the JSON mixer file.&quot;&quot;&quot;</span>
+    <span class="n">jsonText</span> <span class="o">=</span> <span class="err">!</span><span class="n">cat</span> <span class="p">{</span><span class="n">jsonFile</span><span class="p">}</span>
+    <span class="n">mixer</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonText</span><span class="o">.</span><span class="n">nlstr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mixer</span>
 
-def save_predictions(predictions, patches, x_buffer, y_buffer):
-    &quot;&quot;&quot;Process and save the predictions.&quot;&quot;&quot;
-    for i, prediction in zip(range(len(predictions)), predictions):
-        predictionPatch = prediction[
-            x_buffer:x_buffer+KERNEL_SIZE, y_buffer:y_buffer+KERNEL_SIZE]
-        p_image_array = np.array(predictionPatch)
-        tifffile.imsave(f&quot;{FOLDER}/{PREDICTIONS}/patch_pred_{i}.tif&quot;, p_image_array)
+<span class="k">def</span> <span class="nf">save_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">x_buffer</span><span class="p">,</span> <span class="n">y_buffer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process and save the predictions.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)),</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="n">predictionPatch</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">[</span>
+            <span class="n">x_buffer</span><span class="p">:</span><span class="n">x_buffer</span><span class="o">+</span><span class="n">KERNEL_SIZE</span><span class="p">,</span> <span class="n">y_buffer</span><span class="p">:</span><span class="n">y_buffer</span><span class="o">+</span><span class="n">KERNEL_SIZE</span><span class="p">]</span>
+        <span class="n">p_image_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictionPatch</span><span class="p">)</span>
+        <span class="n">tifffile</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FOLDER</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">PREDICTIONS</span><span class="si">}</span><span class="s2">/patch_pred_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">.tif&quot;</span><span class="p">,</span> <span class="n">p_image_array</span><span class="p">)</span>
 
-def get_image_features_dict(bands, buffered_shape):
-    &quot;&quot;&quot;Generate the image features dictionary.&quot;&quot;&quot;
-    imageColumns = [
-        tf.io.FixedLenFeature(shape=buffered_shape, dtype=tf.float32) for k in bands
-    ]
-    imageFeaturesDict = dict(zip(bands, imageColumns))
-    return imageFeaturesDict
+<span class="k">def</span> <span class="nf">get_image_features_dict</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">buffered_shape</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate the image features dictionary.&quot;&quot;&quot;</span>
+    <span class="n">imageColumns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">buffered_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">bands</span>
+    <span class="p">]</span>
+    <span class="n">imageFeaturesDict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bands</span><span class="p">,</span> <span class="n">imageColumns</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">imageFeaturesDict</span>
 
-def process_dataset(imageFilesList, imageFeaturesDict):
-    &quot;&quot;&quot;Process the image dataset.&quot;&quot;&quot;
-    def parse_image(example_proto):
-        return tf.io.parse_single_example(example_proto, imageFeaturesDict)
+<span class="k">def</span> <span class="nf">process_dataset</span><span class="p">(</span><span class="n">imageFilesList</span><span class="p">,</span> <span class="n">imageFeaturesDict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process the image dataset.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">parse_image</span><span class="p">(</span><span class="n">example_proto</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span><span class="n">example_proto</span><span class="p">,</span> <span class="n">imageFeaturesDict</span><span class="p">)</span>
 
-    def toTupleImage(inputs):
-        inputsList = [inputs.get(key) for key in BANDS]
-        stacked = tf.stack(inputsList, axis=0)
-        stacked = tf.transpose(stacked, [1, 2, 0])
-        return stacked
+    <span class="k">def</span> <span class="nf">toTupleImage</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+        <span class="n">inputsList</span> <span class="o">=</span> <span class="p">[</span><span class="n">inputs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">BANDS</span><span class="p">]</span>
+        <span class="n">stacked</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">inputsList</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">stacked</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">stacked</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">stacked</span>
 
-    imageDataset = tf.data.TFRecordDataset(imageFilesList, compression_type=&#39;GZIP&#39;)
-    imageDataset = imageDataset.map(parse_image, num_parallel_calls=5)
-    imageDataset = imageDataset.map(toTupleImage).batch(1)
+    <span class="n">imageDataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">imageFilesList</span><span class="p">,</span> <span class="n">compression_type</span><span class="o">=</span><span class="s1">&#39;GZIP&#39;</span><span class="p">)</span>
+    <span class="n">imageDataset</span> <span class="o">=</span> <span class="n">imageDataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">parse_image</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">imageDataset</span> <span class="o">=</span> <span class="n">imageDataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">toTupleImage</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     
-    return imageDataset
+    <span class="k">return</span> <span class="n">imageDataset</span>
 
-def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
-    &quot;&quot;&quot;Perform inference on exported imagery, upload to Earth Engine.&quot;&quot;&quot;
-    # Assuming BANDS, KERNEL_SHAPE, and FOLDER are defined globally or can be set here
+<span class="k">def</span> <span class="nf">doPrediction</span><span class="p">(</span><span class="n">out_image_base</span><span class="p">,</span> <span class="n">kernel_buffer</span><span class="p">,</span> <span class="n">save_prediction</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perform inference on exported imagery, upload to Earth Engine.&quot;&quot;&quot;</span>
+    <span class="c1"># Assuming BANDS, KERNEL_SHAPE, and FOLDER are defined globally or can be set here</span>
     
-    # 1. Calculate required parameters
-    x_buffer = int(kernel_buffer[0] / 2)
-    y_buffer = int(kernel_buffer[1] / 2)
-    buffered_shape = [
-        KERNEL_SHAPE[0] + kernel_buffer[0],
-        KERNEL_SHAPE[1] + kernel_buffer[1]
-    ]
+    <span class="c1"># 1. Calculate required parameters</span>
+    <span class="n">x_buffer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kernel_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">y_buffer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kernel_buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">buffered_shape</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">KERNEL_SHAPE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">kernel_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">KERNEL_SHAPE</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">kernel_buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">]</span>
     
-    # 2. Retrieve the list of files
-    imageFilesList, jsonFile = get_files_list(out_image_base)
+    <span class="c1"># 2. Retrieve the list of files</span>
+    <span class="n">imageFilesList</span><span class="p">,</span> <span class="n">jsonFile</span> <span class="o">=</span> <span class="n">get_files_list</span><span class="p">(</span><span class="n">out_image_base</span><span class="p">)</span>
 
-    # 3. Generate the image features dictionary
-    imageFeaturesDict = get_image_features_dict(BANDS, buffered_shape)
+    <span class="c1"># 3. Generate the image features dictionary</span>
+    <span class="n">imageFeaturesDict</span> <span class="o">=</span> <span class="n">get_image_features_dict</span><span class="p">(</span><span class="n">BANDS</span><span class="p">,</span> <span class="n">buffered_shape</span><span class="p">)</span>
 
-    # 4. Process the image dataset
-    imageDataset = process_dataset(imageFilesList, imageFeaturesDict)
+    <span class="c1"># 4. Process the image dataset</span>
+    <span class="n">imageDataset</span> <span class="o">=</span> <span class="n">process_dataset</span><span class="p">(</span><span class="n">imageFilesList</span><span class="p">,</span> <span class="n">imageFeaturesDict</span><span class="p">)</span>
 
-    # 5. Perform predictions
-    mixer = load_json(jsonFile)
-    patches = mixer[&#39;totalPatches&#39;]
-    predictions = m.predict(imageDataset, steps=patches, verbose=1)
+    <span class="c1"># 5. Perform predictions</span>
+    <span class="n">mixer</span> <span class="o">=</span> <span class="n">load_json</span><span class="p">(</span><span class="n">jsonFile</span><span class="p">)</span>
+    <span class="n">patches</span> <span class="o">=</span> <span class="n">mixer</span><span class="p">[</span><span class="s1">&#39;totalPatches&#39;</span><span class="p">]</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">imageDataset</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">patches</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    # 6. Save the predictions
-    if save_prediction:
-      save_predictions(predictions, patches, x_buffer, y_buffer)
+    <span class="c1"># 6. Save the predictions</span>
+    <span class="k">if</span> <span class="n">save_prediction</span><span class="p">:</span>
+      <span class="n">save_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">patches</span><span class="p">,</span> <span class="n">x_buffer</span><span class="p">,</span> <span class="n">y_buffer</span><span class="p">)</span>
 
-    return predictions, patches
+    <span class="k">return</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">patches</span>
 </pre></div>
 </div>
 </div>
@@ -1274,7 +1296,7 @@ def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="display-the-output">
-<h1>Display the output<a class="headerlink" href="#display-the-output" title="Permalink to this heading">#</a></h1>
+<h1>Display the output<a class="headerlink" href="#display-the-output" title="Link to this heading">#</a></h1>
 <p>Let’s take a look at randomly indexed samples from our prediction output. We also will check the minimum and maximum values (impervious surface area percentages) in the prediction image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1342,11 +1364,10 @@ def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson3_Intro_tensors_functions_datasets.html"
@@ -1366,10 +1387,7 @@ def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1377,6 +1395,7 @@ def doPrediction(out_image_base, kernel_buffer, save_prediction = False):
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1420,6 +1439,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1428,6 +1448,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -1439,8 +1467,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

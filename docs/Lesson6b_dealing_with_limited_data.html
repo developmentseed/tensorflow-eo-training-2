@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Dealing with limited data for semantic segmentation &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson6b_dealing_with_limited_data';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Comparing deep learning architectures for different computer vision tasks on satellite imagery" href="Lesson7a_comparing_architectures.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -475,10 +497,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dealing-with-limited-data-for-semantic-segmentation">
-<h1>Dealing with limited data for semantic segmentation<a class="headerlink" href="#dealing-with-limited-data-for-semantic-segmentation" title="Permalink to this heading">#</a></h1>
+<h1>Dealing with limited data for semantic segmentation<a class="headerlink" href="#dealing-with-limited-data-for-semantic-segmentation" title="Link to this heading">#</a></h1>
 <blockquote>
 <div><p>Strategies for efficiently collecting more data to target specific areas of underperforming models and techniques to adopt to maximize utility of the data</p>
 </div></blockquote>
@@ -496,7 +518,7 @@ document.write(`
 <p>Part 1 of this Lesson will describe considerations for setting up an annotation campaign, keeping in mind data quality issues.</p>
 <p>Part 2 will cover techniques for maximizing the performance of models trained with limited data, assuming label quality is sufficient.</p>
 <section id="specific-concepts-that-will-be-covered">
-<h2>Specific concepts that will be covered<a class="headerlink" href="#specific-concepts-that-will-be-covered" title="Permalink to this heading">#</a></h2>
+<h2>Specific concepts that will be covered<a class="headerlink" href="#specific-concepts-that-will-be-covered" title="Link to this heading">#</a></h2>
 <p>Part 1:</p>
 <ul class="simple">
 <li><p>How to decide on a class hierarchy prior to an annotation campaign and what inputs should be made available to an annotator</p></li>
@@ -514,14 +536,14 @@ document.write(`
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="part-1-setting-up-an-annotation-campaign">
-<h1>Part 1: Setting up an Annotation Campaign<a class="headerlink" href="#part-1-setting-up-an-annotation-campaign" title="Permalink to this heading">#</a></h1>
+<h1>Part 1: Setting up an Annotation Campaign<a class="headerlink" href="#part-1-setting-up-an-annotation-campaign" title="Link to this heading">#</a></h1>
 <section id="deciding-what-classes-to-annotate-and-what-imagery-to-use-as-a-basemap">
-<h2>Deciding what classes to annotate and what imagery to use as a basemap<a class="headerlink" href="#deciding-what-classes-to-annotate-and-what-imagery-to-use-as-a-basemap" title="Permalink to this heading">#</a></h2>
+<h2>Deciding what classes to annotate and what imagery to use as a basemap<a class="headerlink" href="#deciding-what-classes-to-annotate-and-what-imagery-to-use-as-a-basemap" title="Link to this heading">#</a></h2>
 <p>Annotating objects of interest in remotely sensed imagery is particularly challenging. Satellite images can be difficult to interpret and may require domain knowledge/training to annotate. The imagery that is best suited for annotation may not be in RGB format. And boundaries of the object of interest may be very complex or even mixed with surrounding pixels.</p>
 <figure class="align-default" id="sundarbans-fig">
 <a class="reference internal image-reference" href="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png"><img alt="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png" src="https://miro.medium.com/max/436/1*pN8_LyZtq8-6AsY_tzSjqQ.png" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 26 </span><span class="caption-text">A flooded forest in Sundarbans National Park, India [<a class="reference external" href="https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929">https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929</a>).</span><a class="headerlink" href="#sundarbans-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">A flooded forest in Sundarbans National Park, India [<a class="reference external" href="https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929">https://towardsdatascience.com/land-cover-classification-in-satellite-imagery-using-python-ae39dbf2929</a>).</span><a class="headerlink" href="#sundarbans-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The example above, a mangrove in Sundarban National Park, India, illustrates many of these difficulties. While rivers have relatively clear cut boundaries, flooded zones in the center of the image are more complex, with many dfferent land cover types mixed together in a close setting. When looking at the image on the left, some considerations for setting up an annotation would be:</p>
@@ -554,12 +576,12 @@ document.write(`
 </ul>
 </section>
 <section id="tips-for-efficiently-annotating-geospatial-imagery-for-semantic-segmentation-pixel-wise-classification">
-<h2>Tips for efficiently annotating geospatial imagery for semantic segmentation (pixel-wise classification)<a class="headerlink" href="#tips-for-efficiently-annotating-geospatial-imagery-for-semantic-segmentation-pixel-wise-classification" title="Permalink to this heading">#</a></h2>
+<h2>Tips for efficiently annotating geospatial imagery for semantic segmentation (pixel-wise classification)<a class="headerlink" href="#tips-for-efficiently-annotating-geospatial-imagery-for-semantic-segmentation-pixel-wise-classification" title="Link to this heading">#</a></h2>
 <p>An additional consideration for an annotation campaign is, can our annotators accurately and efficiently annotate the classes we prioritize. Let’s consider the following example, where want to map urban tree cover, buildings, and parking lots.</p>
 <figure class="align-default" id="lulc-labeling">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1"><img alt="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1" src="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/lulc_labeling.gif?raw=1" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Our Data Team labeling segments in a complex scene using JOSM, the Java Open Street Map Editor.</span><a class="headerlink" href="#lulc-labeling" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Our Data Team labeling segments in a complex scene using JOSM, the Java Open Street Map Editor.</span><a class="headerlink" href="#lulc-labeling" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>LULC classes are often directly adjacent to each other. Therefore, it can be very helpful to annotate in a platform that supports snapping edges to existing annotations and editing both in tandem, as the gif demonstrates. The background class does not need to be annotated manually.</p>
@@ -567,25 +589,25 @@ document.write(`
 <p>Annotations should be reviewed by some supervisor/expert that can assess quality, diagnose issues, and work with annotators to incorporate their feedback, possibly adjusting the task or improving instruction given to annotators ahead of the annotation task</p>
 </section>
 <section id="when-it-makes-sense-to-annotate-for-instance-segmentation-predictions-are-vectors-instead-of-semantic-segmentation-predictions-are-rasters">
-<h2>When it makes sense to annotate for instance segmentation (predictions are vectors) instead of semantic segmentation (predictions are rasters)<a class="headerlink" href="#when-it-makes-sense-to-annotate-for-instance-segmentation-predictions-are-vectors-instead-of-semantic-segmentation-predictions-are-rasters" title="Permalink to this heading">#</a></h2>
+<h2>When it makes sense to annotate for instance segmentation (predictions are vectors) instead of semantic segmentation (predictions are rasters)<a class="headerlink" href="#when-it-makes-sense-to-annotate-for-instance-segmentation-predictions-are-vectors-instead-of-semantic-segmentation-predictions-are-rasters" title="Link to this heading">#</a></h2>
 <p>The output of U-nets and other semantic segmentation models tell you the class probability (or a set of class probabilities) at a single pixel. If you’re interested in estiamting total area of parking lots, or knowing all the locations of parking lot pixels, semantic segmentation will suffice.</p>
 <p>However, if you’d like to count parking lots (or agricultural fields or mines) and know the location and extent of individiual parking lots, an instance segmentation approach is required. The output of an instance segmentation approach tells you the class probabilities at each pixel as well as the object membership of a pixel.</p>
 <p>There are many ways to get to an instance segmentation output. Some deep learning models, such as Mask R-CNN, train a model end-to-end to take raster inputs and return instance segmentation outputs (which can be thought of as vectors or polygon coordinates). Another approach is to post-process the results from a semantic segmentation model to delineate polygon boundaries from a map of class probabilities or class ids.</p>
 <section id="choosing-a-sampling-strategy-that-represents-classes-of-interest">
-<h3>Choosing a sampling strategy that represents classes of interest<a class="headerlink" href="#choosing-a-sampling-strategy-that-represents-classes-of-interest" title="Permalink to this heading">#</a></h3>
+<h3>Choosing a sampling strategy that represents classes of interest<a class="headerlink" href="#choosing-a-sampling-strategy-that-represents-classes-of-interest" title="Link to this heading">#</a></h3>
 <p>Detection problems in remote sensing are unique because oftentimes we are dealing with very large, megapizxel images, but small objects of interest. Because of this, it is important to sample our annotation areas so that we capture many examples of the classes we care about detecting. A simple random sample of tiles within an AOI is most likely not the correct approach here, as it would undersample our classes of interest and lead to class imbalance.</p>
 <p>An example of this challenge is marine debris detection with Planet Labs imagery.</p>
 <figure class="align-default" id="marine-debris-detection-with-planet-labs">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1"><img alt="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1" src="https://github.com/developmentseed/tensorflow-eo-training/blob/main/ds_book/docs/images/marine_debris.png?raw=1" style="width: 450px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">An annotated Planet Labs image containing marine plastic pollution.</span><a class="headerlink" href="#marine-debris-detection-with-planet-labs" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">An annotated Planet Labs image containing marine plastic pollution.</span><a class="headerlink" href="#marine-debris-detection-with-planet-labs" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In this case, Lilly’s AOI was the entire ocean. a simple random sample of the whole ocean, or even all coastlines or major currents, would result in an overhelming amount of the background class. Instead annotation areas were targeted based on geolocated reports of marine debris. An approach DevSeed uses in a lot of projects is to try to develop as many represnetative sampels of the main class of interest as possible, and additionally develop representative samples of hard negatives (which look like the class of interest). We then control the amount of “easy negatives” that are introduced in the training set so that we minimize class imbalance.</p>
 </section>
 </section>
 <section id="part-2-limited-data-techniques">
-<h2>Part 2: Limited Data Techniques<a class="headerlink" href="#part-2-limited-data-techniques" title="Permalink to this heading">#</a></h2>
+<h2>Part 2: Limited Data Techniques<a class="headerlink" href="#part-2-limited-data-techniques" title="Link to this heading">#</a></h2>
 <p>We’ll shift gears now to learning techniques for magnifying the impact of the data that we already have, assuming that we’ve considered all the questions above. To start with, we’ll make sure we have our libraires installed and imported.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -663,7 +685,7 @@ document.write(`
 </div>
 </div>
 <section id="enabling-gpu">
-<h3>Enabling GPU<a class="headerlink" href="#enabling-gpu" title="Permalink to this heading">#</a></h3>
+<h3>Enabling GPU<a class="headerlink" href="#enabling-gpu" title="Link to this heading">#</a></h3>
 <p>This notebook can utilize a GPU and works better if you use one. Hopefully this notebook is using a GPU, and we can check with the following code.</p>
 <p>If it’s not using a GPU you can change your session/notebook to use a GPU. See <a class="reference external" href="https://colab.research.google.com/notebooks/gpu.ipynb#scrollTo=sXnDmXR7RDr2">Instructions</a></p>
 <div class="cell docutils container">
@@ -678,7 +700,7 @@ document.write(`
 </div>
 </section>
 <section id="check-out-the-labels">
-<h3>Check out the labels<a class="headerlink" href="#check-out-the-labels" title="Permalink to this heading">#</a></h3>
+<h3>Check out the labels<a class="headerlink" href="#check-out-the-labels" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Read the classes</span>
@@ -735,7 +757,7 @@ document.write(`
 </div>
 </section>
 <section id="setting-up-our-augmentations">
-<h3>Setting up our Augmentations<a class="headerlink" href="#setting-up-our-augmentations" title="Permalink to this heading">#</a></h3>
+<h3>Setting up our Augmentations<a class="headerlink" href="#setting-up-our-augmentations" title="Link to this heading">#</a></h3>
 <p><a class="reference external" href="https://albumentations.ai/docs/examples/tensorflow-example/">albumentations</a> is a library that contains hundreds of options for transforming images to multiply your training dataset. While each additional image may not be as additively valuable as independent samples, showing your model harder to classify copies of your existing samples can help improve your model’s ability to generalize. Plus, augmentations are basically free training data!</p>
 <p>Common augmentations include brightening images, applying blur, saturation, flipping, rotating, and randomly cropping and resizing. We’ll apply a few augmentations from the <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> library to highlight how to set up an augmentation pipeline. This differs from coding your own augmentations, like we did in episode 3 with our horizontal flip and veritcal flip functions, saving time and lines of code.</p>
 <div class="cell docutils container">
@@ -863,7 +885,7 @@ document.write(`
 <p>Now that we have a variety of augmentations that will be applied to each image in each batch, let’s train a model using our augmentations and pretraining.</p>
 </section>
 <section id="display-functions-for-monitoring-model-progress-and-visualizing-arrays">
-<h3>Display functions for monitoring model progress and visualizing arrays<a class="headerlink" href="#display-functions-for-monitoring-model-progress-and-visualizing-arrays" title="Permalink to this heading">#</a></h3>
+<h3>Display functions for monitoring model progress and visualizing arrays<a class="headerlink" href="#display-functions-for-monitoring-model-progress-and-visualizing-arrays" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_mask</span><span class="p">(</span><span class="n">pred_mask</span><span class="p">):</span>
@@ -997,11 +1019,10 @@ document.write(`
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson6a_evaluation.html"
@@ -1021,10 +1042,7 @@ document.write(`
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1032,6 +1050,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1081,6 +1100,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1089,6 +1109,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -1100,8 +1128,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Semantic segmentation with Convolutional Neural Networks &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson5b_deeplearning_segmentation_UNet';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Semantic segmentation with Vision Transformers, Hugging Face and TensorFlow" href="Lesson5c_segmentation_ViT.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -480,10 +502,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="semantic-segmentation-with-convolutional-neural-networks">
-<h1>Semantic segmentation with Convolutional Neural Networks<a class="headerlink" href="#semantic-segmentation-with-convolutional-neural-networks" title="Permalink to this heading">#</a></h1>
+<h1>Semantic segmentation with Convolutional Neural Networks<a class="headerlink" href="#semantic-segmentation-with-convolutional-neural-networks" title="Link to this heading">#</a></h1>
 <blockquote>
 <div><p>A guide for using deep-learning based semantic segmentation to land use / land cover in satellite imagery.</p>
 </div></blockquote>
@@ -491,7 +513,7 @@ document.write(`
 <p>Specifically, in this tutorial we will be using data from a <a class="reference external" href="https://mlhub.earth/data/dlr_fusion_competition_germany">fusion dataset for crop type classification in Germany</a>. It leverages Planet 5 day composites and polygon labels.</p>
 <p>Our task will be to predict the crop types (a form of land use / land cover) in an image on a pixel-wise basis.</p>
 <section id="specific-concepts-that-will-be-covered">
-<h2>Specific concepts that will be covered<a class="headerlink" href="#specific-concepts-that-will-be-covered" title="Permalink to this heading">#</a></h2>
+<h2>Specific concepts that will be covered<a class="headerlink" href="#specific-concepts-that-will-be-covered" title="Link to this heading">#</a></h2>
 <p>In the process, we will build practical experience and develop intuition around the following concepts:</p>
 <ul class="simple">
 <li><p><strong><a class="reference external" href="https://keras.io/getting-started/functional-api-guide/">Functional API</a></strong> - we will be implementing UNet, a convolutional network model classically used for biomedical image segmentation with the Functional API.</p>
@@ -506,7 +528,7 @@ and <strong>accuracy</strong>. We’ll also generate confusion matrices during e
 <li><p><strong>Saving and loading Keras models</strong> - We’ll save our best model to file. When we want to perform inference/evaluate our model in the future, we can load the model file.</p></li>
 </ul>
 <section id="general-workflow">
-<h3>General Workflow<a class="headerlink" href="#general-workflow" title="Permalink to this heading">#</a></h3>
+<h3>General Workflow<a class="headerlink" href="#general-workflow" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Load image and label datasets (acquired and processed in the prior lesson) from Google Drive</p></li>
 <li><p>Visualize data/perform some exploratory data analysis</p></li>
@@ -517,7 +539,7 @@ and <strong>accuracy</strong>. We’ll also generate confusion matrices during e
 </ol>
 </section>
 <section id="objectives">
-<h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h3>
+<h3>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Practice with the Keras Functional API as a means to run TensorFlow models</p></li>
 <li><p>Experience training a segmentation model and monitoring progress</p></li>
@@ -528,7 +550,7 @@ and <strong>accuracy</strong>. We’ll also generate confusion matrices during e
 </section>
 </section>
 <section id="setup-notebook">
-<h2>Setup Notebook<a class="headerlink" href="#setup-notebook" title="Permalink to this heading">#</a></h2>
+<h2>Setup Notebook<a class="headerlink" href="#setup-notebook" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python<span class="w"> </span>--version
@@ -560,18 +582,18 @@ tensorflow/examples- we only install this to access the pix2pix upsampling block
 <p><code class="docutils literal notranslate"><span class="pre">segmentation-models</span></code> - a Keras library implementing many standard, popular deep learning models and metrics for segmentation. The library is somewhat dated but is still useful in that it organizes Keras model architectures and metrics specifically for segmentation in one package.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># install required libraries
-!pip install -q git+https://github.com/tensorflow/examples.git
-!pip install -q -U tfds-nightly==4.9.2
-!pip install -q geopandas==0.13.2
-!pip install -q focal-loss==0.0.7
-#!pip install -q matplotlib==3.5 # UNCOMMENT if running on LOCAL
-!pip install -q scikit-learn==1.2.2
-!pip install -q scikit-image==0.19.3
-!pip install -q tf-explain==0.3.1
-!pip install -q segmentation_models==1.0.1 # we&#39;ll use this for pretraining later and for the IOU segmentation performance metric
-!pip install -q tensorflow==2.2.1
-!pip install -q keras==2.5
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># install required libraries</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>git+https://github.com/tensorflow/examples.git
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>-U<span class="w"> </span>tfds-nightly<span class="o">==</span><span class="m">4</span>.9.2
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">geopandas</span><span class="o">==</span><span class="m">0</span>.13.2
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>focal-loss<span class="o">==</span><span class="m">0</span>.0.7
+<span class="c1">#!pip install -q matplotlib==3.5 # UNCOMMENT if running on LOCAL</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-learn<span class="o">==</span><span class="m">1</span>.2.2
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>scikit-image<span class="o">==</span><span class="m">0</span>.19.3
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>tf-explain<span class="o">==</span><span class="m">0</span>.3.1
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">segmentation_models</span><span class="o">==</span><span class="m">1</span>.0.1<span class="w"> </span>#<span class="w"> </span>we<span class="err">&#39;</span>ll<span class="w"> </span>use<span class="w"> </span>this<span class="w"> </span><span class="k">for</span><span class="w"> </span>pretraining<span class="w"> </span>later<span class="w"> </span>and<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>IOU<span class="w"> </span>segmentation<span class="w"> </span>performance<span class="w"> </span>metric
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">tensorflow</span><span class="o">==</span><span class="m">2</span>.2.1
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span><span class="nv">keras</span><span class="o">==</span><span class="m">2</span>.5
 </pre></div>
 </div>
 </div>
@@ -612,7 +634,7 @@ tensorflow/examples- we only install this to access the pix2pix upsampling block
 </div>
 </div>
 <section id="getting-set-up-with-the-data">
-<h3>Getting set up with the data<a class="headerlink" href="#getting-set-up-with-the-data" title="Permalink to this heading">#</a></h3>
+<h3>Getting set up with the data<a class="headerlink" href="#getting-set-up-with-the-data" title="Link to this heading">#</a></h3>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The tiled imagery is available at the following path that is accessible with the google.colab <code class="docutils literal notranslate"><span class="pre">drive</span></code> module: <code class="docutils literal notranslate"><span class="pre">'/content/gdrive/My</span> <span class="pre">Drive/tf-eo-devseed-processed-outputs/'</span></code></p>
@@ -663,7 +685,7 @@ tensorflow/examples- we only install this to access the pix2pix upsampling block
 </div>
 </section>
 <section id="enabling-gpu">
-<h3>Enabling GPU<a class="headerlink" href="#enabling-gpu" title="Permalink to this heading">#</a></h3>
+<h3>Enabling GPU<a class="headerlink" href="#enabling-gpu" title="Link to this heading">#</a></h3>
 <p>This notebook can utilize a GPU and works better if you use one. Hopefully this notebook is using a GPU, and we can check with the following code.</p>
 <p>If it’s not using a GPU you can change your session/notebook to use a GPU. See <a class="reference external" href="https://colab.research.google.com/notebooks/gpu.ipynb#scrollTo=sXnDmXR7RDr2">Instructions</a></p>
 <div class="cell docutils container">
@@ -678,7 +700,7 @@ tensorflow/examples- we only install this to access the pix2pix upsampling block
 </div>
 </section>
 <section id="check-out-the-labels">
-<h3>Check out the labels<a class="headerlink" href="#check-out-the-labels" title="Permalink to this heading">#</a></h3>
+<h3>Check out the labels<a class="headerlink" href="#check-out-the-labels" title="Link to this heading">#</a></h3>
 <p>Class names and identifiers extracted from the documentation provided here: <a class="reference external" href="https://radiantearth.blob.core.windows.net/mlhub/esa-food-security-challenge/Crops_GT_Brandenburg_Doc.pdf">https://radiantearth.blob.core.windows.net/mlhub/esa-food-security-challenge/Crops_GT_Brandenburg_Doc.pdf</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -696,7 +718,7 @@ tensorflow/examples- we only install this to access the pix2pix upsampling block
 </div>
 </section>
 <section id="read-into-tensorflow-datasets">
-<h3>Read into tensorflow datasets<a class="headerlink" href="#read-into-tensorflow-datasets" title="Permalink to this heading">#</a></h3>
+<h3>Read into tensorflow datasets<a class="headerlink" href="#read-into-tensorflow-datasets" title="Link to this heading">#</a></h3>
 <p>Now we will compile the spectral index image and label tiles into training, validation, and test datasets for use with TensorFlow.</p>
 <p>Get lists of image and label tile pairs for training and testing.</p>
 <div>&#8681</div>
@@ -839,7 +861,7 @@ The code below checks for values in train, val, and test partitions.</p>
 </div>
 </section>
 <section id="visualize-the-data">
-<h3>Visualize the data<a class="headerlink" href="#visualize-the-data" title="Permalink to this heading">#</a></h3>
+<h3>Visualize the data<a class="headerlink" href="#visualize-the-data" title="Link to this heading">#</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><strong>Long running cell</strong> <br />
@@ -898,7 +920,7 @@ The code below loads foreground examples randomly.</p>
 </div>
 </section>
 <section id="read-the-tiles-into-tensors">
-<h3>Read the tiles into tensors<a class="headerlink" href="#read-the-tiles-into-tensors" title="Permalink to this heading">#</a></h3>
+<h3>Read the tiles into tensors<a class="headerlink" href="#read-the-tiles-into-tensors" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set input image shape</span>
@@ -1233,12 +1255,12 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </section>
 <section id="define-the-model">
-<h3>Define the model<a class="headerlink" href="#define-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Define the model<a class="headerlink" href="#define-the-model" title="Link to this heading">#</a></h3>
 <p>The model being used here is a modified U-Net. A U-Net consists of an encoder (downsampler) and decoder (upsampler). In-order to learn robust features, and reduce the number of trainable parameters, an optionally pretrained model can be used as the encoder. Thus, the encoder for this task will be a pretrained MobileNetV2 model, whose intermediate outputs will be used, and the decoder will be the upsample block already implemented in TensorFlow Examples in the Pix2pix tutorial.</p>
 <figure class="align-default" id="unet-mobilenetv2-arch-arch-fig">
 <a class="reference internal image-reference" href="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1"><img alt="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1" src="https://github.com/developmentseed/servir-amazonia-ml/blob/main/ds_book/docs/images/Unet_mobilenetv2_arch_arch.png?raw=1" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 25 </span><span class="caption-text">U-shaped MobileNetV2 (adapted U-Net) architecture diagram (from <a class="reference external" href="https://www.researchgate.net/publication/339266308_Surface-Defect_Segmentation_using_U-shaped_Inverted_Residuals">Sarakon et al., 2019</a>).</span><a class="headerlink" href="#unet-mobilenetv2-arch-arch-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">U-shaped MobileNetV2 (adapted U-Net) architecture diagram (from <a class="reference external" href="https://www.researchgate.net/publication/339266308_Surface-Defect_Segmentation_using_U-shaped_Inverted_Residuals">Sarakon et al., 2019</a>).</span><a class="headerlink" href="#unet-mobilenetv2-arch-arch-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The reason to output nine channels is because there are nine possible labels for each pixel. Think of this as multi-classification where each pixel is being classified into nine classes.</p>
@@ -1317,7 +1339,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </section>
 <section id="train-the-model">
-<h3>Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this heading">#</a></h3>
+<h3>Train the model<a class="headerlink" href="#train-the-model" title="Link to this heading">#</a></h3>
 <p>Now, all that is left to do is to compile and train the model. The loss being used here is SparseCategoricalFocalLoss(from_logits=True). The reason to use this loss function is 1) because the network is trying to assign each pixel a label, just like multi-class prediction, and 2) because focal loss weights the relative contribution of each class by the distribution in the dataset to emphasize under-represented classes and dampen over-represented classes. In the true segmentation mask, each pixel has a value between 0-10. The network here is outputting ten channels. Essentially, each channel is trying to learn to predict a class, and SparseCategoricalFocalLoss(from_logits=True) is the recommended loss for such a scenario. Using the output of the network, the label assigned to the pixel is the channel with the highest value. This is what the create_mask function is doing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1481,7 +1503,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </div>
 <section id="fit-and-view">
-<h4>Fit and View<a class="headerlink" href="#fit-and-view" title="Permalink to this heading">#</a></h4>
+<h4>Fit and View<a class="headerlink" href="#fit-and-view" title="Link to this heading">#</a></h4>
 <p>Now we will actually train the model for 4 epochs (full cycles through the training dataset), visualizing predictions on a validation image after each epoch. In practice, you would want to train the model until validation loss starts to increase (a clear indication of overfitting). Empirically with this dataset, convergence occurred around 50 epochs. We’ve reduced to 4 epochs purely for rapid demonstration purposes. As a preview, at 50 epochs you should observe a test prediction similar to:</p>
 <p><img alt="testimage" src="../_images/epoch50_testimage.png" /></p>
 <p>Don’t be alarmed if you see blank predictions after only 4 epochs.</p>
@@ -1522,7 +1544,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </section>
 <section id="start-tensorboard">
-<h4>Start TensorBoard<a class="headerlink" href="#start-tensorboard" title="Permalink to this heading">#</a></h4>
+<h4>Start TensorBoard<a class="headerlink" href="#start-tensorboard" title="Link to this heading">#</a></h4>
 <p>You set the <code class="docutils literal notranslate"><span class="pre">logdir</span></code> in the below command to <code class="docutils literal notranslate"><span class="pre">..logs/visualizations</span></code> to see the activations or <code class="docutils literal notranslate"><span class="pre">..logs/fit</span></code> to see the model scalars, graphs, distributions and histograms (described below).</p>
 <p>The dashboards can be selected from the tabs in top navigation bar.</p>
 <ol class="arabic simple">
@@ -1540,7 +1562,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </section>
 <hr class="docutils" />
 <section id="save-model-to-file">
-<h4>Save model to file<a class="headerlink" href="#save-model-to-file" title="Permalink to this heading">#</a></h4>
+<h4>Save model to file<a class="headerlink" href="#save-model-to-file" title="Link to this heading">#</a></h4>
 <p>We will export the final model weights to your own google drive folder.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1557,7 +1579,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </section>
 </section>
 <section id="make-predictions">
-<h3>Make predictions<a class="headerlink" href="#make-predictions" title="Permalink to this heading">#</a></h3>
+<h3>Make predictions<a class="headerlink" href="#make-predictions" title="Link to this heading">#</a></h3>
 <p>Let’s make some predictions. In the interest of saving time, the number of epochs was kept small, but you may set this higher to achieve more accurate results. We’ll load from the rea donly workshop directory in case you weren’t able to save your own model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1590,7 +1612,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </div>
 <section id="single-image-example">
-<h4>Single image example<a class="headerlink" href="#single-image-example" title="Permalink to this heading">#</a></h4>
+<h4>Single image example<a class="headerlink" href="#single-image-example" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display_num</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1625,7 +1647,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 </div>
 </section>
 <section id="multi-image-example">
-<h4>Multi image example<a class="headerlink" href="#multi-image-example" title="Permalink to this heading">#</a></h4>
+<h4>Multi image example<a class="headerlink" href="#multi-image-example" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tiled_prediction_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">user_outputs_dir</span><span class="p">,</span><span class="s1">&#39;predictions_test_focal_loss/&#39;</span><span class="p">)</span>
@@ -1726,11 +1748,10 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson5a_prep_data_ML_segmentation.html"
@@ -1750,10 +1771,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1761,6 +1779,7 @@ By using Tensorflow Datasets, we can parallelize the augmentation step on the GP
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1815,6 +1834,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1823,6 +1843,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -1834,8 +1862,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

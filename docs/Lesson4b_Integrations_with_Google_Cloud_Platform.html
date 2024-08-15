@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>What are cloud providers? Why might I need them for ML and Earth observation data? &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson4b_Integrations_with_Google_Cloud_Platform';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Processing earth observation data for semantic segmentation with deep learning" href="Lesson5a_prep_data_ML_segmentation.html" />
@@ -76,7 +72,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -111,11 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -130,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -142,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -405,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -468,10 +490,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="what-are-cloud-providers-why-might-i-need-them-for-ml-and-earth-observation-data">
-<h1>What are cloud providers? Why might I need them for ML and Earth observation data?<a class="headerlink" href="#what-are-cloud-providers-why-might-i-need-them-for-ml-and-earth-observation-data" title="Permalink to this heading">#</a></h1>
+<h1>What are cloud providers? Why might I need them for ML and Earth observation data?<a class="headerlink" href="#what-are-cloud-providers-why-might-i-need-them-for-ml-and-earth-observation-data" title="Link to this heading">#</a></h1>
 <p>The three big cloud providers, Amazon Web Services, Microsoft Azure, and Google Cloud Platform, each provide three general services that can be essential when developing machine learning models and services on top of geospatial imagery:</p>
 <ol class="arabic simple">
 <li><p>data warehouses containing many popular satellite, climate, weather, and other geospatial data archives</p></li>
@@ -485,7 +507,7 @@ document.write(`
 <figure class="align-default" id="cloud-computing-fig">
 <a class="reference internal image-reference" href="https://cdn.fastmetrics.com/blog/wp-content/uploads/2014/10/how-cloud-computing-works.png"><img alt="https://cdn.fastmetrics.com/blog/wp-content/uploads/2014/10/how-cloud-computing-works.png" src="https://cdn.fastmetrics.com/blog/wp-content/uploads/2014/10/how-cloud-computing-works.png" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Figure from <a class="reference external" href="https://www.fastmetrics.com/blog/tech/what-is-cloud-computing/">https://www.fastmetrics.com/blog/tech/what-is-cloud-computing/</a></span><a class="headerlink" href="#cloud-computing-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Figure from <a class="reference external" href="https://www.fastmetrics.com/blog/tech/what-is-cloud-computing/">https://www.fastmetrics.com/blog/tech/what-is-cloud-computing/</a></span><a class="headerlink" href="#cloud-computing-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We typically need GPUs to train machine learning models. Because they are computationally intensive, we rely on GPUs to run training experiments in a reasonable amount of time (minutes instead of hours, or hours instead of days).</p>
@@ -493,7 +515,7 @@ document.write(`
 <p>Finally, if we want to build complex, event-driven services that use machine learning, cloud-based services are typically the easiest, most reproducible, most fault-tolerant, and most scalable way to build these services.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="what-is-google-cloud-platform-how-is-it-different-from-google-colab">
-<h1>What is Google Cloud Platform? How is it different from Google Colab?<a class="headerlink" href="#what-is-google-cloud-platform-how-is-it-different-from-google-colab" title="Permalink to this heading">#</a></h1>
+<h1>What is Google Cloud Platform? How is it different from Google Colab?<a class="headerlink" href="#what-is-google-cloud-platform-how-is-it-different-from-google-colab" title="Link to this heading">#</a></h1>
 <p>Google Cloud Platform (GCP) is a suite of cloud services including computing, data storage, data analytics and more. For a machine learning engineer looking to develop ML models on large geospatial datasets and integrate those models into applications for monitoring and detection, the following GCP services would be particularly useful:</p>
 <ol class="arabic simple">
 <li><p>Compute Engine: Infrastructure as a Service (IaaS) providing VMs. This is suitable for running geospatial data processing or analysis tasks that require significant compute resources. It has the capability to provision machine types with varying amounts of GPU and CPU computing power as well as RAM and disk space.</p></li>
@@ -516,7 +538,7 @@ document.write(`
 <p>We have a preexisting Google Cloud project for the ACCA team. We’ll use this to demo deploying a Machine Learning workstation with Terraform, which will let us start a Jupyter Notebook on a Compute Engine instance type of our choice, with as many GPUs, RAM, and disk space as we want that is supported by the instance type selection. These can be payed for with your preferred payment method or cloud credits if you have access to cloud credits via a partnership with a Google Affiliated program.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="deploying-cloud-functions-and-cloud-run-for-ml-inference-with-pulumi">
-<h1>Deploying Cloud Functions and Cloud Run for ML Inference with Pulumi<a class="headerlink" href="#deploying-cloud-functions-and-cloud-run-for-ml-inference-with-pulumi" title="Permalink to this heading">#</a></h1>
+<h1>Deploying Cloud Functions and Cloud Run for ML Inference with Pulumi<a class="headerlink" href="#deploying-cloud-functions-and-cloud-run-for-ml-inference-with-pulumi" title="Link to this heading">#</a></h1>
 <p>Let’s walk through an example application that mainly relies on two Google Cloud Platform services: Cloud Run and Cloud Functions.</p>
 <p><strong>The Project</strong>: Client X wants to build a monitoring service for landslides on top of Sentinel-1 imagery. This imagery lives in Amazon Web Services, but they need to develop their application in Google Cloud Platform because this is their preferred cloud. The service should have the following features:</p>
 <ol class="arabic simple">
@@ -531,14 +553,14 @@ document.write(`
 <p>Finally, we use GCP Identity Platform to handle user account authentication when logging in to the frontend application, which also uses the tifeatures API.</p>
 <p>What’s notable about this infrastructure is that it is event driven. We only spin up these resources when the SNS trigger notifies the GCP resources that there is a new satellite scene to process. This helps keep costs low, ensuring we aren’t paying for idle machines.</p>
 <section id="how-do-you-deploy-all-of-this">
-<h2>How do you deploy all of this?<a class="headerlink" href="#how-do-you-deploy-all-of-this" title="Permalink to this heading">#</a></h2>
+<h2>How do you deploy all of this?<a class="headerlink" href="#how-do-you-deploy-all-of-this" title="Link to this heading">#</a></h2>
 <p>We can use infrastracture-as-code tools to write down the resources we would like to deploy in a programming language, and then execute that plan to deploy the cloud resources, stop them, or terminate them entirely.</p>
 <p>One tool we can use is Pulumi, which has a Python API that allows you to write in a Jupyter Notebook or python file how you would like to deploy complex applications in Google Cloud Platform, Amazon Web Services, or Microsoft Azure.</p>
 <p><code class="docutils literal notranslate"><span class="pre">gcp_pulumi_stack/</span></code> contains pulumi files that define the infrastracture to be deployed in order to illustrate what it looks like to deploy the above resources. This code is not executable, but serves as an example for how to define the above resources.</p>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="deploying-a-ml-workstation-with-terraform">
-<h1>Deploying a ML Workstation with Terraform<a class="headerlink" href="#deploying-a-ml-workstation-with-terraform" title="Permalink to this heading">#</a></h1>
+<h1>Deploying a ML Workstation with Terraform<a class="headerlink" href="#deploying-a-ml-workstation-with-terraform" title="Link to this heading">#</a></h1>
 <p>Before we can deploy a ML model on Google Cloud Platform, we have to train it first! Nowadays, most ML model development happens on the cloud on rented GPUs. The benefits of doing so are:</p>
 <ol class="arabic simple">
 <li><p>We can be flexible with the compute infrastructure we need, scaling up to many GPUs when we need to churn through lots of data, or selecting small, cheap GPUs when running less data hungry experiments.</p></li>
@@ -558,7 +580,7 @@ document.write(`
 <p>While Google Colab is a great tool for demos, learning, and running small experiments with small datasets, it’s dependency on Google Drive as a storage backend limits it’s performance, makes it more difficult to collaborate, and more difficult to customize your ML workstation environment.</p>
 <p>Below, we’ll show how to deploy your own ML workstation with a cheap T4 GPU. See the <code class="docutils literal notranslate"><span class="pre">gcpvm/README.md</span></code> for detailed instructions on how to set up and connect to the workstation with Jupyter Lab and VSCode. We’ll go over this in a demo!</p>
 <section id="gcloud-terminal-cli-setup-instructions">
-<h2>GCloud Terminal CLI Setup Instructions<a class="headerlink" href="#gcloud-terminal-cli-setup-instructions" title="Permalink to this heading">#</a></h2>
+<h2>GCloud Terminal CLI Setup Instructions<a class="headerlink" href="#gcloud-terminal-cli-setup-instructions" title="Link to this heading">#</a></h2>
 <ol class="arabic">
 <li><p>Install Google Cloud SDK: If you haven’t installed the Google Cloud SDK on your machine, you can download and install it from the official Google Cloud website: <a class="reference external" href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a>. Then, accept the arguments with “Y” that append the CLI commands to your terminal configuration file, like your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code> file</p></li>
 <li><p>Initialize gcloud: After installing the SDK, open your terminal (command prompt) and run the following command to initialize gcloud:</p>
@@ -574,7 +596,7 @@ document.write(`
 </ol>
 </section>
 <section id="terraform-setup-instructions">
-<h2>Terraform Setup Instructions<a class="headerlink" href="#terraform-setup-instructions" title="Permalink to this heading">#</a></h2>
+<h2>Terraform Setup Instructions<a class="headerlink" href="#terraform-setup-instructions" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Install terraform following these instructions: <a class="reference external" href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli">https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli</a> You can skip the Quickstart tutorial</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">gcpvm/</span></code> folder in this repository: All commands for controlling the VM must be run from the <code class="docutils literal notranslate"><span class="pre">gcpvm/</span></code> folder.</p></li>
@@ -607,7 +629,7 @@ document.write(`
 </ol>
 </section>
 <section id="configuring-terraform-to-change-deployment-parameters">
-<h2>Configuring Terraform to change deployment parameters<a class="headerlink" href="#configuring-terraform-to-change-deployment-parameters" title="Permalink to this heading">#</a></h2>
+<h2>Configuring Terraform to change deployment parameters<a class="headerlink" href="#configuring-terraform-to-change-deployment-parameters" title="Link to this heading">#</a></h2>
 <p>We can control the most frequently edited variables for our VM using the <code class="docutils literal notranslate"><span class="pre">terraform.tfvars</span></code> file</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>instance-type<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;n1-standard-8&quot;</span><span class="w"> </span><span class="c1"># &quot;n1-standard-8&quot; is a good default. only n1 types can add gpus https://stackoverflow.com/questions/53968149/add-gpu-to-an-existing-vm-instance-google-compute-engine</span>
 gpu-count<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span>
@@ -645,7 +667,7 @@ ssh:
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="summary">
-<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h1>
+<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
 <p>You’re well on your way to developing models in the cloud and understanding how to deploy them in complex, user-facing applications!</p>
 <p>The big take-away here is that we can use Infrastructure-as-code tools like Terraform and Pulumi to define in code files what infrastructure to create on the cloud. We can do this for both our data science/model development environment or for larger applications.</p>
 <p>This makes it easier to reproduce, redeploy, and edit infra. There are many online resources out there to learn more about Terraform, Pulumi, and other cloud-specific infrastructure-as-code tools.</p>
@@ -680,11 +702,10 @@ ssh:
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Lesson4a_GEE_PythonAPI_TensorFlow_Regression.html"
@@ -704,10 +725,7 @@ ssh:
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -715,6 +733,7 @@ ssh:
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -757,6 +776,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -765,6 +785,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -776,8 +804,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

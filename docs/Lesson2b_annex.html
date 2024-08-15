@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Introduction to TensorFlow and Keras &#8212; Deep learning with TensorFlow</title>
   
@@ -19,50 +18,47 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'docs/Lesson2b_annex';</script>
-    <link rel="shortcut icon" href="../_static/ds.png"/>
+    <link rel="icon" href="../_static/ds.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -74,7 +70,15 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -109,11 +113,16 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -128,9 +137,11 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="index.html">
+  
   
   
   
@@ -140,12 +151,23 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/ds.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/ds.png" class="logo__image only-light" alt="Deep learning with TensorFlow - Home"/>
+    <script>document.write(`<img src="../_static/ds.png" class="logo__image only-dark" alt="Deep learning with TensorFlow - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson1a_Intro_ML_NN_DL.html">Introduction to machine learning, neural networks and deep learning</a></li>
@@ -403,20 +425,22 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -463,24 +487,24 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-tensorflow-and-keras">
-<h1>Introduction to TensorFlow and Keras<a class="headerlink" href="#introduction-to-tensorflow-and-keras" title="Permalink to this heading">#</a></h1>
+<h1>Introduction to TensorFlow and Keras<a class="headerlink" href="#introduction-to-tensorflow-and-keras" title="Link to this heading">#</a></h1>
 <section id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">#</a></h2>
 <p>The goal of this notebook is to teach some basics of the TensorFlow framework and the Keras API.</p>
 <section id="what-is-tensorflow">
-<h3>What is TensorFlow?<a class="headerlink" href="#what-is-tensorflow" title="Permalink to this heading">#</a></h3>
+<h3>What is TensorFlow?<a class="headerlink" href="#what-is-tensorflow" title="Link to this heading">#</a></h3>
 <p><a class="reference external" href="https://www.tensorflow.org/guide%5D">TensorFlow</a> is an open-source framework developed by Google for building various machine learning and deep learning models. Although originally released in late 2015, the first stable version arrived in 2017. TensorFlow is free and open-source, thanks to the Apache Open Source license.</p>
 <p>The main objective of using TensorFlow is to reduce the complexity of implementing computations on large numerical data sets. In practice, these large computations can manifest as training and inference with machine learning or deep learning models.</p>
 <p>TensorFlow was designed to operate with multiple CPUs or GPUs, as well as a growing number of mobile operating systems. The framework includes wrappers in Python, C++, and Java.</p>
 <section id="how-does-it-work">
-<h4>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading">#</a></h4>
+<h4>How does it work?<a class="headerlink" href="#how-does-it-work" title="Link to this heading">#</a></h4>
 <p>TensorFlow accepts inputs as a multi-dimensional array called a Tensor, which allows the programmer to create dataflow graphs and structures specifying how data travels through. The framework is designed to support creation of a flowchart of operations to be applied to input Tensors, which travel in one direction and out the other.</p>
 </section>
 <section id="tensorflows-structure">
-<h4>TensorFlow’s structure<a class="headerlink" href="#tensorflows-structure" title="Permalink to this heading">#</a></h4>
+<h4>TensorFlow’s structure<a class="headerlink" href="#tensorflows-structure" title="Link to this heading">#</a></h4>
 <p>There are three main components to TensorFlow’s structure.</p>
 <ol class="arabic simple">
 <li><p>preprocessing the data</p></li>
@@ -490,7 +514,7 @@ document.write(`
 <p>The name TensorFlow derives from the way in which the framework receives input in the form of a multi-dimensional array, i.e. the tensors. These tensors travel sequentially through the specified flowchart of the operations, entering at one end and culminate as output at the other end.</p>
 </section>
 <section id="what-are-tensorflow-components">
-<h4>What are TensorFlow components?<a class="headerlink" href="#what-are-tensorflow-components" title="Permalink to this heading">#</a></h4>
+<h4>What are TensorFlow components?<a class="headerlink" href="#what-are-tensorflow-components" title="Link to this heading">#</a></h4>
 <p><strong>Tensor</strong></p>
 <p>Tensors, the basic unit of data in this framework, are involved in every computation of TensorFlow. A tensor is an n-dimensional vector or matrix. In theory, a tensor may represent any form of data. The values belonging to a tensor all share the same data type and often the same shape / dimensionality. A tensor can describe the input data and the output of a calculation.</p>
 <p>In TensorFlow, all operations are carried out within a graph, which in effect is a series of computations that happen in order. Each indivisual operation is referred to as an op node.</p>
@@ -506,17 +530,17 @@ document.write(`
 <figure class="align-default" id="tfgraph-fig">
 <a class="reference internal image-reference" href="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif"><img alt="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" src="https://miro.medium.com/max/1838/1*aOYUa3hHKi9HlYnnFAipUQ.gif" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-text">TensorFlow graph example (from <a class="reference external" href="https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4">https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4</a>).</span><a class="headerlink" href="#tfgraph-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">TensorFlow graph example (from <a class="reference external" href="https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4">https://medium.com/the-artificial-impostor/notes-understanding-tensorflow-part-1-5f0ebb253ad4</a>).</span><a class="headerlink" href="#tfgraph-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="why-do-so-many-people-like-tensorflow">
-<h4>Why do so many people like TensorFlow?<a class="headerlink" href="#why-do-so-many-people-like-tensorflow" title="Permalink to this heading">#</a></h4>
+<h4>Why do so many people like TensorFlow?<a class="headerlink" href="#why-do-so-many-people-like-tensorflow" title="Link to this heading">#</a></h4>
 <p>TensorFlow is intentionally user-friendly, with helpful plugins to visualize model training and a useful software debugging tool. As well, TensorFlow is highly scalable, with easy deployment on both CPUs and GPUs.</p>
 </section>
 </section>
 <section id="what-is-keras">
-<h3>What is Keras?<a class="headerlink" href="#what-is-keras" title="Permalink to this heading">#</a></h3>
+<h3>What is Keras?<a class="headerlink" href="#what-is-keras" title="Link to this heading">#</a></h3>
 <p><a class="reference external" href="https://keras.io/about/">Keras</a> is an API built on Python, with human readability at the forefront of its design. With simple and consistent structures and methods extensible across many machine learning and deep learning applications, Keras reduces the cognitive load associated with programming models. Furthermore, the API seeks to minimize the need for programmer interaction by abstracting many complexities into easily callable functions. Lastly, Keras features clear &amp; actionable error messaging, complemented by comprehensive and digestible documentation and developer guides.</p>
 <p>Keras is what some might call a wrapper for TensorFlow. By that, one means to say that Keras simplifies a programmer’s interaction with TensorFlow through refinement of key methods and constructs.</p>
 <p>Importantly, Keras is intended for rapid experimentation.</p>
@@ -534,7 +558,7 @@ document.write(`
 <figure class="align-default" id="keras-fig">
 <a class="reference internal image-reference" href="../_images/Keras_functional_API.jpg"><img alt="../_images/Keras_functional_API.jpg" src="../_images/Keras_functional_API.jpg" style="width: 650px;" /></a>
 <figcaption>
-<p><span class="caption-text">Keras Functional API diagram (from <span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span>).</span><a class="headerlink" href="#keras-fig" title="Permalink to this image">#</a></p>
+<p><span class="caption-text">Keras Functional API diagram (from <a class="reference internal" href="#hhttps://miro.com/app/board/o9J_lhnKhVE=/"><span class="xref myst">https://miro.com/app/board/o9J_lhnKhVE=/</span></a>).</span><a class="headerlink" href="#keras-fig" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -566,16 +590,12 @@ document.write(`
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -583,6 +603,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -622,6 +643,7 @@ By Development Seed
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -630,6 +652,14 @@ By Development Seed
   
   <div class="footer-item">
     
+<div class="extra_footer">
+  <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" 
+ href="https://developmentseed.org/tensorflow-eo-training-2/">Deep Learning with TensorFlow and EO Data</a> was funded by <a property="dct:title" rel="cc:attributionURL"
+ href="https://www.nasa.gov/servir/">NASA SERVIR</a> and is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Apache License, Version 2.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://www.apache.org/foundation/press/kit/asf_logo.svg"></a>
+</p> 
+
+</div>
   </div>
   
 </div>
@@ -641,8 +671,8 @@ By Development Seed
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
